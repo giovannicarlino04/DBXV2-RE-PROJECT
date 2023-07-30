@@ -40,6 +40,8 @@ namespace XV2Reborn
 
         string datapath;
         string flexsdkpath;
+        string language;
+
         public msg file;
         string MSGFileName;
 
@@ -51,6 +53,19 @@ namespace XV2Reborn
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            if(Properties.Settings.Default.language.Length == 0) 
+            {
+                comboBox1.SelectedIndex = 5;
+                Settings.Default.language = comboBox1.SelectedItem.ToString();
+                Settings.Default.Save();
+            }
+            else
+            {
+                comboBox1.SelectedItem = Settings.Default.language;
+            }
+
+            language = Settings.Default.language;
+
             FolderBrowserDialog datadialog = new FolderBrowserDialog();
             datadialog.Description = "Select \"DB Xenoverse 2\" data folder";
 
@@ -132,6 +147,15 @@ namespace XV2Reborn
             // Call the function to load character images and add them to the FlowLayoutPanel.
             LoadCharacterImages();
             AddCharacterImagesToFlowLayoutPanel();
+
+            // Load the default MSG file
+            MSGFileName = Properties.Settings.Default.datafolder + @"\msg\proper_noun_character_name_" + language + ".msg";
+            file = msgStream.Load(MSGFileName);
+            cbList.Items.Clear();
+            for (int i = 0; i < file.data.Length; i++)
+                cbList.Items.Add(file.data[i].ID.ToString() + " - " + file.data[i].NameID);
+
+            loadLvItems();
         }
 
         private void saveLvItems()
@@ -1196,6 +1220,173 @@ namespace XV2Reborn
 
             // Compile Scripts
             CompileScripts();
+        }
+
+        private void msgSaveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            msgStream.Save(file, MSGFileName);
+            MessageBox.Show("MSG File Saved Successfully", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+            Application.Restart();
+        }
+
+        private void msgAddToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            msgData[] expand = new msgData[file.data.Length + 1];
+            Array.Copy(file.data, expand, file.data.Length);
+            string nameid = file.data[file.data.Length - 1].NameID;
+            int endid = int.Parse(nameid.Substring(nameid.Length - 3, 3));
+            expand[expand.Length - 1].ID = file.data.Length;
+            expand[expand.Length - 1].Lines = new string[] { "New Entry" };
+            expand[expand.Length - 1].NameID = nameid.Substring(0, nameid.Length - 3) + (endid + 1).ToString("000");
+
+            file.data = expand;
+
+            cbList.Items.Clear();
+            for (int i = 0; i < file.data.Length; i++)
+                cbList.Items.Add(file.data[i].ID.ToString() + "-" + file.data[i].NameID);
+
+        }
+
+        private void msgRemoveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            msgData[] reduce = new msgData[file.data.Length - 1];
+            Array.Copy(file.data, reduce, file.data.Length - 1);
+            file.data = reduce;
+
+            cbList.Items.Clear();
+            for (int i = 0; i < file.data.Length; i++)
+                cbList.Items.Add(file.data[i].ID.ToString() + "-" + file.data[i].NameID);
+
+        }
+
+        private void charactersToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+            MSGFileName = Properties.Settings.Default.datafolder + @"\msg\proper_noun_character_name_" + language + ".msg";
+            file = msgStream.Load(MSGFileName);
+
+            cbList.Items.Clear();
+            for (int i = 0; i < file.data.Length; i++)
+                cbList.Items.Add(file.data[i].ID.ToString() + " - " + file.data[i].NameID);
+
+        }
+
+        private void superInfoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MSGFileName = Properties.Settings.Default.datafolder + @"\msg\proper_noun_skill_spa_info_" + language + ".msg";
+            file = msgStream.Load(MSGFileName);
+
+            cbList.Items.Clear();
+            for (int i = 0; i < file.data.Length; i++)
+                cbList.Items.Add(file.data[i].ID.ToString() + " - " + file.data[i].NameID);
+        }
+
+        private void ultimatesInfoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MSGFileName = Properties.Settings.Default.datafolder + @"\msg\proper_noun_skill_ult_info_" + language + ".msg";
+            file = msgStream.Load(MSGFileName);
+
+            cbList.Items.Clear();
+            for (int i = 0; i < file.data.Length; i++)
+                cbList.Items.Add(file.data[i].ID.ToString() + " - " + file.data[i].NameID);
+        }
+
+        private void evasivesInfoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MSGFileName = Properties.Settings.Default.datafolder + @"\msg\proper_noun_skill_esc_info_" + language + ".msg";
+            file = msgStream.Load(MSGFileName);
+
+            cbList.Items.Clear();
+            for (int i = 0; i < file.data.Length; i++)
+                cbList.Items.Add(file.data[i].ID.ToString() + " - " + file.data[i].NameID);
+        }
+
+        private void supersToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MSGFileName = Properties.Settings.Default.datafolder + @"\msg\proper_noun_skill_spa_name_" + language + ".msg";
+            file = msgStream.Load(MSGFileName);
+
+            cbList.Items.Clear();
+            for (int i = 0; i < file.data.Length; i++)
+                cbList.Items.Add(file.data[i].ID.ToString() + " - " + file.data[i].NameID);
+        }
+
+        private void ultimatesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MSGFileName = Properties.Settings.Default.datafolder + @"\msg\proper_noun_skill_ult_name_" + language + ".msg";
+            file = msgStream.Load(MSGFileName);
+
+            cbList.Items.Clear();
+            for (int i = 0; i < file.data.Length; i++)
+                cbList.Items.Add(file.data[i].ID.ToString() + " - " + file.data[i].NameID);
+        }
+
+        private void evasivesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MSGFileName = Properties.Settings.Default.datafolder + @"\msg\proper_noun_skill_esc_name_" + language + ".msg";
+            file = msgStream.Load(MSGFileName);
+
+            cbList.Items.Clear();
+            for (int i = 0; i < file.data.Length; i++)
+                cbList.Items.Add(file.data[i].ID.ToString() + " - " + file.data[i].NameID);
+        }
+
+        private void awokenToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MSGFileName = Properties.Settings.Default.datafolder + @"\msg\proper_noun_skill_met_name_" + language + ".msg";
+            file = msgStream.Load(MSGFileName);
+
+            cbList.Items.Clear();
+            for (int i = 0; i < file.data.Length; i++)
+                cbList.Items.Add(file.data[i].ID.ToString() + " - " + file.data[i].NameID);
+        }
+
+        private void awokenInfoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MSGFileName = Properties.Settings.Default.datafolder + @"\msg\proper_noun_skill_met_info_" + language + ".msg";
+            file = msgStream.Load(MSGFileName);
+
+            cbList.Items.Clear();
+            for (int i = 0; i < file.data.Length; i++)
+                cbList.Items.Add(file.data[i].ID.ToString() + " - " + file.data[i].NameID);
+        }
+
+        private void cbList_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            txtName.Text = file.data[cbList.SelectedIndex].NameID;
+            txtID.Text = file.data[cbList.SelectedIndex].ID.ToString();
+            cbLine.Items.Clear();
+            for (int i = 0; i < file.data[cbList.SelectedIndex].Lines.Length; i++)
+                cbLine.Items.Add(i);
+
+            cbLine.SelectedIndex = 0;
+            txtText.Text = file.data[cbList.SelectedIndex].Lines[cbLine.SelectedIndex];
+
+        }
+
+        private void cbLine_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            txtText.Text = file.data[cbList.SelectedIndex].Lines[cbLine.SelectedIndex];
+
+        }
+
+        private void txtName_TextChanged(object sender, EventArgs e)
+        {
+            file.data[cbList.SelectedIndex].NameID = txtName.Text;
+            cbList.Items[cbList.SelectedIndex] = file.data[cbList.SelectedIndex].ID.ToString() + "-" + file.data[cbList.SelectedIndex].NameID;
+
+        }
+
+        private void txtText_TextChanged(object sender, EventArgs e)
+        {
+            file.data[cbList.SelectedIndex].Lines[cbLine.SelectedIndex] = txtText.Text;
+        }
+
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Settings.Default.language = comboBox1.SelectedItem.ToString();
+            Settings.Default.Save();
         }
     }
 }
