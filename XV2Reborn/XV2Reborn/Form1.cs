@@ -14,6 +14,7 @@ using System.Net.Security;
 using System.Reflection;
 using System.Reflection.Emit;
 using System.Runtime.InteropServices;
+using System.Runtime.InteropServices.ComTypes;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -31,6 +32,19 @@ namespace XV2Reborn
                 this.AllowDrop = true;
             }
         }
+
+        string CSOFileName;
+        List<CSO_Data> CSOData = new List<CSO_Data>();
+        CSO_Data CSOcurrent;
+        bool CSOlck = true;
+
+        string CMSFileName;
+        List<Char_Model_Spec> cms = new List<Char_Model_Spec>();
+        Char_Model_Spec CMScurrent;
+        Char_Model_Spec CMSCopyCMS;
+        bool CMScanPaste = false;
+        bool CMSlck = true;
+        bool[] CMSselective;
 
         List<DraggableButton> buttonCharacters = new List<DraggableButton>();
         // Assuming you have a class-level variable to store the character codes and their corresponding images.
@@ -148,14 +162,28 @@ namespace XV2Reborn
             LoadCharacterImages();
             AddCharacterImagesToFlowLayoutPanel();
 
+            // Load listview Items
+            loadLvItems();
+
+
             // Load the default MSG file
             MSGFileName = Properties.Settings.Default.datafolder + @"\msg\proper_noun_character_name_" + language + ".msg";
             file = msgStream.Load(MSGFileName);
-            cbList.Items.Clear();
+            cbListMSG.Items.Clear();
             for (int i = 0; i < file.data.Length; i++)
-                cbList.Items.Add(file.data[i].ID.ToString() + " - " + file.data[i].NameID);
+                cbListMSG.Items.Add(file.data[i].ID.ToString() + " - " + file.data[i].NameID);
 
-            loadLvItems();
+            // Load the CMS File
+            CMSFileName = datapath + @"/system/char_model_spec.cms";
+            cms.Clear();
+            cms.AddRange(CMS.Read(CMSFileName));
+            CMSselective = new bool[cms.Count];
+            CMSCombobox.Items.Clear();
+            for (int i = 0; i < cms.Count; i++)
+            {
+                CMSCombobox.Items.Add(cms[i].id.ToString("000") + " - " + cms[i].shortname);
+                CMSselective[i] = false;
+            }
         }
 
         private void saveLvItems()
@@ -330,9 +358,9 @@ namespace XV2Reborn
 
                         file.data = expand;
 
-                        cbList.Items.Clear();
+                        cbListMSG.Items.Clear();
                         for (int i = 0; i < file.data.Length; i++)
-                            cbList.Items.Add(file.data[i].ID.ToString() + "-" + file.data[i].NameID);
+                            cbListMSG.Items.Add(file.data[i].ID.ToString() + "-" + file.data[i].NameID);
 
                         msgStream.Save(file, MSGFileName);
                     }
@@ -1242,9 +1270,9 @@ namespace XV2Reborn
 
             file.data = expand;
 
-            cbList.Items.Clear();
+            cbListMSG.Items.Clear();
             for (int i = 0; i < file.data.Length; i++)
-                cbList.Items.Add(file.data[i].ID.ToString() + "-" + file.data[i].NameID);
+                cbListMSG.Items.Add(file.data[i].ID.ToString() + "-" + file.data[i].NameID);
 
         }
 
@@ -1254,9 +1282,9 @@ namespace XV2Reborn
             Array.Copy(file.data, reduce, file.data.Length - 1);
             file.data = reduce;
 
-            cbList.Items.Clear();
+            cbListMSG.Items.Clear();
             for (int i = 0; i < file.data.Length; i++)
-                cbList.Items.Add(file.data[i].ID.ToString() + "-" + file.data[i].NameID);
+                cbListMSG.Items.Add(file.data[i].ID.ToString() + "-" + file.data[i].NameID);
 
         }
 
@@ -1266,9 +1294,9 @@ namespace XV2Reborn
             MSGFileName = Properties.Settings.Default.datafolder + @"\msg\proper_noun_character_name_" + language + ".msg";
             file = msgStream.Load(MSGFileName);
 
-            cbList.Items.Clear();
+            cbListMSG.Items.Clear();
             for (int i = 0; i < file.data.Length; i++)
-                cbList.Items.Add(file.data[i].ID.ToString() + " - " + file.data[i].NameID);
+                cbListMSG.Items.Add(file.data[i].ID.ToString() + " - " + file.data[i].NameID);
 
         }
 
@@ -1277,9 +1305,9 @@ namespace XV2Reborn
             MSGFileName = Properties.Settings.Default.datafolder + @"\msg\proper_noun_skill_spa_info_" + language + ".msg";
             file = msgStream.Load(MSGFileName);
 
-            cbList.Items.Clear();
+            cbListMSG.Items.Clear();
             for (int i = 0; i < file.data.Length; i++)
-                cbList.Items.Add(file.data[i].ID.ToString() + " - " + file.data[i].NameID);
+                cbListMSG.Items.Add(file.data[i].ID.ToString() + " - " + file.data[i].NameID);
         }
 
         private void ultimatesInfoToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1287,9 +1315,9 @@ namespace XV2Reborn
             MSGFileName = Properties.Settings.Default.datafolder + @"\msg\proper_noun_skill_ult_info_" + language + ".msg";
             file = msgStream.Load(MSGFileName);
 
-            cbList.Items.Clear();
+            cbListMSG.Items.Clear();
             for (int i = 0; i < file.data.Length; i++)
-                cbList.Items.Add(file.data[i].ID.ToString() + " - " + file.data[i].NameID);
+                cbListMSG.Items.Add(file.data[i].ID.ToString() + " - " + file.data[i].NameID);
         }
 
         private void evasivesInfoToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1297,9 +1325,9 @@ namespace XV2Reborn
             MSGFileName = Properties.Settings.Default.datafolder + @"\msg\proper_noun_skill_esc_info_" + language + ".msg";
             file = msgStream.Load(MSGFileName);
 
-            cbList.Items.Clear();
+            cbListMSG.Items.Clear();
             for (int i = 0; i < file.data.Length; i++)
-                cbList.Items.Add(file.data[i].ID.ToString() + " - " + file.data[i].NameID);
+                cbListMSG.Items.Add(file.data[i].ID.ToString() + " - " + file.data[i].NameID);
         }
 
         private void supersToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1307,9 +1335,9 @@ namespace XV2Reborn
             MSGFileName = Properties.Settings.Default.datafolder + @"\msg\proper_noun_skill_spa_name_" + language + ".msg";
             file = msgStream.Load(MSGFileName);
 
-            cbList.Items.Clear();
+            cbListMSG.Items.Clear();
             for (int i = 0; i < file.data.Length; i++)
-                cbList.Items.Add(file.data[i].ID.ToString() + " - " + file.data[i].NameID);
+                cbListMSG.Items.Add(file.data[i].ID.ToString() + " - " + file.data[i].NameID);
         }
 
         private void ultimatesToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1317,9 +1345,9 @@ namespace XV2Reborn
             MSGFileName = Properties.Settings.Default.datafolder + @"\msg\proper_noun_skill_ult_name_" + language + ".msg";
             file = msgStream.Load(MSGFileName);
 
-            cbList.Items.Clear();
+            cbListMSG.Items.Clear();
             for (int i = 0; i < file.data.Length; i++)
-                cbList.Items.Add(file.data[i].ID.ToString() + " - " + file.data[i].NameID);
+                cbListMSG.Items.Add(file.data[i].ID.ToString() + " - " + file.data[i].NameID);
         }
 
         private void evasivesToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1327,9 +1355,9 @@ namespace XV2Reborn
             MSGFileName = Properties.Settings.Default.datafolder + @"\msg\proper_noun_skill_esc_name_" + language + ".msg";
             file = msgStream.Load(MSGFileName);
 
-            cbList.Items.Clear();
+            cbListMSG.Items.Clear();
             for (int i = 0; i < file.data.Length; i++)
-                cbList.Items.Add(file.data[i].ID.ToString() + " - " + file.data[i].NameID);
+                cbListMSG.Items.Add(file.data[i].ID.ToString() + " - " + file.data[i].NameID);
         }
 
         private void awokenToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1337,9 +1365,9 @@ namespace XV2Reborn
             MSGFileName = Properties.Settings.Default.datafolder + @"\msg\proper_noun_skill_met_name_" + language + ".msg";
             file = msgStream.Load(MSGFileName);
 
-            cbList.Items.Clear();
+            cbListMSG.Items.Clear();
             for (int i = 0; i < file.data.Length; i++)
-                cbList.Items.Add(file.data[i].ID.ToString() + " - " + file.data[i].NameID);
+                cbListMSG.Items.Add(file.data[i].ID.ToString() + " - " + file.data[i].NameID);
         }
 
         private void awokenInfoToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1347,46 +1375,397 @@ namespace XV2Reborn
             MSGFileName = Properties.Settings.Default.datafolder + @"\msg\proper_noun_skill_met_info_" + language + ".msg";
             file = msgStream.Load(MSGFileName);
 
-            cbList.Items.Clear();
+            cbListMSG.Items.Clear();
             for (int i = 0; i < file.data.Length; i++)
-                cbList.Items.Add(file.data[i].ID.ToString() + " - " + file.data[i].NameID);
+                cbListMSG.Items.Add(file.data[i].ID.ToString() + " - " + file.data[i].NameID);
         }
 
         private void cbList_SelectedIndexChanged(object sender, EventArgs e)
         {
-            txtName.Text = file.data[cbList.SelectedIndex].NameID;
-            txtID.Text = file.data[cbList.SelectedIndex].ID.ToString();
-            cbLine.Items.Clear();
-            for (int i = 0; i < file.data[cbList.SelectedIndex].Lines.Length; i++)
-                cbLine.Items.Add(i);
+            txtNameMSG.Text = file.data[cbListMSG.SelectedIndex].NameID;
+            txtIDMSG.Text = file.data[cbListMSG.SelectedIndex].ID.ToString();
+            cbLineMSG.Items.Clear();
+            for (int i = 0; i < file.data[cbListMSG.SelectedIndex].Lines.Length; i++)
+                cbLineMSG.Items.Add(i);
 
-            cbLine.SelectedIndex = 0;
-            txtText.Text = file.data[cbList.SelectedIndex].Lines[cbLine.SelectedIndex];
+            cbLineMSG.SelectedIndex = 0;
+            txtTextMSG.Text = file.data[cbListMSG.SelectedIndex].Lines[cbLineMSG.SelectedIndex];
 
         }
 
         private void cbLine_SelectedIndexChanged(object sender, EventArgs e)
         {
-            txtText.Text = file.data[cbList.SelectedIndex].Lines[cbLine.SelectedIndex];
+            txtTextMSG.Text = file.data[cbListMSG.SelectedIndex].Lines[cbLineMSG.SelectedIndex];
 
         }
 
         private void txtName_TextChanged(object sender, EventArgs e)
         {
-            file.data[cbList.SelectedIndex].NameID = txtName.Text;
-            cbList.Items[cbList.SelectedIndex] = file.data[cbList.SelectedIndex].ID.ToString() + "-" + file.data[cbList.SelectedIndex].NameID;
+            file.data[cbListMSG.SelectedIndex].NameID = txtNameMSG.Text;
+            cbListMSG.Items[cbListMSG.SelectedIndex] = file.data[cbListMSG.SelectedIndex].ID.ToString() + "-" + file.data[cbListMSG.SelectedIndex].NameID;
 
         }
 
         private void txtText_TextChanged(object sender, EventArgs e)
         {
-            file.data[cbList.SelectedIndex].Lines[cbLine.SelectedIndex] = txtText.Text;
+            file.data[cbListMSG.SelectedIndex].Lines[cbLineMSG.SelectedIndex] = txtTextMSG.Text;
         }
+
+        // CMS
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
             Settings.Default.language = comboBox1.SelectedItem.ToString();
             Settings.Default.Save();
+        }
+
+        private void CMSCombobox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            CMSlck = false;
+            CMScurrent = cms[CMSCombobox.SelectedIndex];
+            txtChar.Text = CMScurrent.id.ToString();
+            txtSN.Text = CMScurrent.shortname;
+            txt1.Text = CMScurrent.unk1.ToString();
+            txt2.Text = CMScurrent.unk2.ToString();
+            txt3.Text = CMScurrent.unk3.ToString();
+            txt4.Text = CMScurrent.unk4.ToString();
+            txt5.Text = CMScurrent.unk5.ToString();
+            txt6.Text = CMScurrent.Paths[0];
+            txt7.Text = CMScurrent.Paths[1];
+            txt8.Text = CMScurrent.Paths[2];
+            textBox1.Text = CMScurrent.Paths[3];
+            txt9.Text = CMScurrent.Paths[4];
+            txt10.Text = CMScurrent.Paths[5];
+            txt11.Text = CMScurrent.Paths[6];
+            txt12.Text = CMScurrent.Paths[7];
+            txt13.Text = CMScurrent.Paths[8];
+            checkBox1.Checked = CMSselective[CMSCombobox.SelectedIndex];
+            CMSlck = true;
+
+        }
+        private void txtChar_TextChanged(object sender, EventArgs e)
+        {
+            int p;
+            if (CMSlck && int.TryParse(txtChar.Text, out p))
+            {
+                CMSlck = false;
+                CMScurrent.id = p;
+                cms[CMSCombobox.SelectedIndex] = CMScurrent;
+
+                int temp = CMSCombobox.SelectedIndex;
+                CMSCombobox.SelectedIndex = 0;
+                CMSCombobox.Items.Clear();
+                for (int i = 0; i < cms.Count; i++)
+                    CMSCombobox.Items.Add(cms[i].id.ToString("000") + " - " + cms[i].shortname);
+                CMSCombobox.SelectedIndex = temp;
+                CMSlck = true;
+            }
+        }
+
+        private void txtSN_TextChanged(object sender, EventArgs e)
+        {
+            if (CMSlck)
+            {
+                CMSlck = false;
+                CMScurrent.shortname = txtSN.Text;
+                cms[CMSCombobox.SelectedIndex] = CMScurrent;
+
+                int temp = CMSCombobox.SelectedIndex;
+                CMSCombobox.SelectedIndex = 0;
+                CMSCombobox.Items.Clear();
+                for (int i = 0; i < cms.Count; i++)
+                    CMSCombobox.Items.Add(cms[i].id.ToString("000") + " - " + cms[i].shortname);
+                CMSCombobox.SelectedIndex = temp;
+                CMSlck = true;
+            }
+        }
+
+        private void txt1_TextChanged(object sender, EventArgs e)
+        {
+            int p;
+            if (int.TryParse(txt1.Text, out p))
+            {
+                CMScurrent.unk1 = p;
+                cms[CMSCombobox.SelectedIndex] = CMScurrent;
+            }
+        }
+
+        private void txt2_TextChanged(object sender, EventArgs e)
+        {
+            short p;
+            if (short.TryParse(txt2.Text, out p))
+            {
+                CMScurrent.unk2 = p;
+                cms[CMSCombobox.SelectedIndex] = CMScurrent;
+            }
+        }
+
+        private void txt3_TextChanged(object sender, EventArgs e)
+        {
+            short p;
+            if (short.TryParse(txt3.Text, out p))
+            {
+                CMScurrent.unk3 = p;
+                cms[CMSCombobox.SelectedIndex] = CMScurrent;
+            }
+        }
+
+        private void txt4_TextChanged(object sender, EventArgs e)
+        {
+            short p;
+            if (short.TryParse(txt4.Text, out p))
+            {
+                CMScurrent.unk4 = p;
+                cms[CMSCombobox.SelectedIndex] = CMScurrent;
+            }
+        }
+
+        private void txt5_TextChanged(object sender, EventArgs e)
+        {
+            short p;
+            if (short.TryParse(txt5.Text, out p))
+            {
+                CMScurrent.unk5 = p;
+                cms[CMSCombobox.SelectedIndex] = CMScurrent;
+            }
+        }
+
+        private void txt6_TextChanged(object sender, EventArgs e)
+        {
+            CMScurrent.Paths[0] = txt6.Text;
+            cms[CMSCombobox.SelectedIndex] = CMScurrent;
+        }
+
+        private void txt7_TextChanged(object sender, EventArgs e)
+        {
+            CMScurrent.Paths[1] = txt7.Text;
+            cms[CMSCombobox.SelectedIndex] = CMScurrent;
+        }
+
+        private void txt8_TextChanged(object sender, EventArgs e)
+        {
+            CMScurrent.Paths[2] = txt8.Text;
+            cms[CMSCombobox.SelectedIndex] = CMScurrent;
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+            CMScurrent.Paths[3] = textBox1.Text;
+            cms[CMSCombobox.SelectedIndex] = CMScurrent;
+        }
+
+        private void txt9_TextChanged(object sender, EventArgs e)
+        {
+            CMScurrent.Paths[4] = txt9.Text;
+            cms[CMSCombobox.SelectedIndex] = CMScurrent;
+        }
+
+        private void txt10_TextChanged(object sender, EventArgs e)
+        {
+            CMScurrent.Paths[5] = txt10.Text;
+            cms[CMSCombobox.SelectedIndex] = CMScurrent;
+        }
+
+        private void txt11_TextChanged(object sender, EventArgs e)
+        {
+            CMScurrent.Paths[6] = txt11.Text;
+            cms[CMSCombobox.SelectedIndex] = CMScurrent;
+        }
+
+        private void txt12_TextChanged(object sender, EventArgs e)
+        {
+            CMScurrent.Paths[7] = txt12.Text;
+            cms[CMSCombobox.SelectedIndex] = CMScurrent;
+        }
+
+        private void txt13_TextChanged(object sender, EventArgs e)
+        {
+            CMScurrent.Paths[8] = txt13.Text;
+            cms[CMSCombobox.SelectedIndex] = CMScurrent;
+        }
+
+        private void CMSSave_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void CMSSelectiveSave_Click(object sender, EventArgs e)
+        {
+            List<Char_Model_Spec> SelectCMS = new List<Char_Model_Spec>();
+
+            for (int i = 0; i < cms.Count; i++)
+            {
+                if (CMSselective[i])
+                    SelectCMS.Add(cms[i]);
+
+            }
+
+            CMS.Write("Selective.cms", SelectCMS.ToArray());
+        }
+
+        private void CMSAppend_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog browseFile = new OpenFileDialog();
+            browseFile.Filter = "Xenoverse Char_Model_Spec (*.cms)|*.cms";
+            browseFile.Title = "Browse for CMS File";
+            if (browseFile.ShowDialog() == DialogResult.Cancel)
+                return;
+            CMSFileName = browseFile.FileName;
+
+            cms.AddRange(CMS.Read(CMSFileName));
+            CMSselective = new bool[cms.Count];
+
+
+            CMSCombobox.Items.Clear();
+            for (int i = 0; i < cms.Count; i++)
+            {
+                CMSCombobox.Items.Add(cms[i].id.ToString("000") + " - " + cms[i].shortname);
+                CMSselective[i] = false;
+            }
+        }
+
+        private void CMSAdd_Click(object sender, EventArgs e)
+        {
+            Char_Model_Spec c = new Char_Model_Spec();
+            c.Paths = new string[9];
+            cms.Add(c);
+            CMSCombobox.Items.Clear();
+            for (int i = 0; i < cms.Count; i++)
+                CMSCombobox.Items.Add(cms[i].id.ToString("000") + " - " + cms[i].shortname);
+
+            Array.Resize<bool>(ref CMSselective, CMSselective.Length + 1);
+
+            CMSselective[CMSselective.Length - 1] = false;
+        }
+
+        private void CMSRemove_Click(object sender, EventArgs e)
+        {
+            cms.RemoveAt(CMSCombobox.SelectedIndex);
+            CMSCombobox.Items.Clear();
+            for (int i = 0; i < cms.Count; i++)
+                CMSCombobox.Items.Add(cms[i].id.ToString("000") + " - " + cms[i].shortname);
+
+            Array.Resize<bool>(ref CMSselective, CMSselective.Length - 1);
+        }
+
+        private void CMSCopy_Click(object sender, EventArgs e)
+        {
+            CMSCopyCMS = CMScurrent;
+        }
+
+        private void CMSPaste_Click(object sender, EventArgs e)
+        {
+            CMScurrent = CMSCopyCMS;
+            cms[CMSCombobox.SelectedIndex] = CMScurrent;
+            txtChar.Text = CMScurrent.id.ToString();
+            txtSN.Text = CMScurrent.shortname;
+            txt1.Text = CMScurrent.unk1.ToString();
+            txt2.Text = CMScurrent.unk2.ToString();
+            txt3.Text = CMScurrent.unk3.ToString();
+            txt4.Text = CMScurrent.unk4.ToString();
+            txt5.Text = CMScurrent.unk5.ToString();
+            txt6.Text = CMScurrent.Paths[0];
+            txt7.Text = CMScurrent.Paths[1];
+            txt8.Text = CMScurrent.Paths[2];
+            textBox1.Text = CMScurrent.Paths[3];
+            txt9.Text = CMScurrent.Paths[4];
+            txt10.Text = CMScurrent.Paths[5];
+            txt11.Text = CMScurrent.Paths[6];
+            txt12.Text = CMScurrent.Paths[7];
+            txt13.Text = CMScurrent.Paths[8];
+            CMScurrent = cms[CMSCombobox.SelectedIndex];
+
+            int temp = CMSCombobox.SelectedIndex;
+            CMSCombobox.SelectedIndex = 0;
+            CMSCombobox.Items.Clear();
+            for (int i = 0; i < cms.Count; i++)
+                CMSCombobox.Items.Add(cms[i].id.ToString("000") + " - " + cms[i].shortname);
+            CMSCombobox.SelectedIndex = temp;
+        }
+
+        private void CMSInject_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        {
+            CMSselective[CMSCombobox.SelectedIndex] = checkBox1.Checked;
+        }
+        //////////////////////////////////////////////////////////////////
+
+        // CSO
+
+        private void CSOtoolStripMenuItem5_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void CSOsaveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void CSOaddToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void CSOremoveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void cbListCSO_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBox6CSO_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void txtCostumeCSO_TextChanged(object sender, EventArgs e)
+        {
+            int p;
+            if (CSOlck && int.TryParse(txtCostumeCSO.Text, out p))
+            {
+                CSOlck = false;
+                CSOcurrent.Costume_ID = p;
+                CSOData[cbListCSO.SelectedIndex] = CSOcurrent;
+                int temp = cbListCSO.SelectedIndex;
+                cbListCSO.SelectedIndex = 0;
+                cbListCSO.Items.Clear();
+                for (int i = 0; i < CSOData.Count; i++)
+                    cbListCSO.Items.Add("Character " + CSOData[i].Char_ID.ToString("000") + " - Costume " + CSOData[i].Costume_ID.ToString("00"));
+                cbListCSO.SelectedIndex = temp;
+                CSOlck = true;
+            }
+        }
+
+        private void textBox5CSO_TextChanged(object sender, EventArgs e)
+        {
+            CSOcurrent.Paths[0] = textBox5CSO.Text;
+            CSOData[cbListCSO.SelectedIndex] = CSOcurrent;
+        }
+
+        private void textBox4CSO_TextChanged(object sender, EventArgs e)
+        {
+            CSOcurrent.Paths[1] = textBox4CSO.Text;
+            CSOData[cbListCSO.SelectedIndex] = CSOcurrent;
+        }
+
+        private void textBox3CSO_TextChanged(object sender, EventArgs e)
+        {
+            CSOcurrent.Paths[2] = textBox3CSO.Text;
+            CSOData[cbListCSO.SelectedIndex] = CSOcurrent;
+        }
+
+        private void textBox2CSO_TextChanged(object sender, EventArgs e)
+        {
+            CSOcurrent.Paths[3] = textBox2CSO.Text;
+            CSOData[cbListCSO.SelectedIndex] = CSOcurrent;
         }
     }
 }
