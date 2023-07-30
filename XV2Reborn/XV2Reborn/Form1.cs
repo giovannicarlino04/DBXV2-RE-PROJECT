@@ -15,10 +15,12 @@ using System.Reflection;
 using System.Reflection.Emit;
 using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.ComTypes;
+using System.Security.AccessControl;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Xml.Linq;
 using XV2Reborn.Properties;
 
 namespace XV2Reborn
@@ -45,6 +47,13 @@ namespace XV2Reborn
         bool CMScanPaste = false;
         bool CMSlck = true;
         bool[] CMSselective;
+        charSkillSet charskillset = new charSkillSet();
+
+        PSC PSCfile = new PSC();
+        PSC_Costume PSCCopy;
+        string PSCFileName;
+        string[] PSCkeys;
+        bool PSClck = true;
 
         List<DraggableButton> buttonCharacters = new List<DraggableButton>();
         // Assuming you have a class-level variable to store the character codes and their corresponding images.
@@ -56,8 +65,18 @@ namespace XV2Reborn
         string flexsdkpath;
         string language;
 
-        public msg file;
+        public msg MSGfile;
         string MSGFileName;
+
+
+        string CUSFileName;
+        CUSRegistry CUSfile = new CUSRegistry();
+
+        bool CUSlck = true;
+        charSkillSet CUScopySet;
+        charSkillSet CUScurrentSet;
+        skill CUScopySkill;
+        skill CUScurrentSkill;
 
         public Form1()
         {
@@ -168,10 +187,10 @@ namespace XV2Reborn
 
             // Load the default MSG file
             MSGFileName = Properties.Settings.Default.datafolder + @"\msg\proper_noun_character_name_" + language + ".msg";
-            file = msgStream.Load(MSGFileName);
+            MSGfile = msgStream.Load(MSGFileName);
             cbListMSG.Items.Clear();
-            for (int i = 0; i < file.data.Length; i++)
-                cbListMSG.Items.Add(file.data[i].ID.ToString() + " - " + file.data[i].NameID);
+            for (int i = 0; i < MSGfile.data.Length; i++)
+                cbListMSG.Items.Add(MSGfile.data[i].ID.ToString() + " - " + MSGfile.data[i].NameID);
 
             // Load the CMS File
             CMSFileName = datapath + @"/system/char_model_spec.cms";
@@ -184,6 +203,49 @@ namespace XV2Reborn
                 CMSCombobox.Items.Add(cms[i].id.ToString("000") + " - " + cms[i].shortname);
                 CMSselective[i] = false;
             }
+
+            // Load the CSO File
+            CSOFileName = datapath + @"/system/chara_sound.cso";
+            CSOData.AddRange(CSO.Read(CSOFileName));
+            cbListCSO.Items.Clear();
+            for (int i = 0; i < CSOData.Count; i++)
+                cbListCSO.Items.Add("Character " + CSOData[i].Char_ID.ToString("000") + " - Costume " + CSOData[i].Costume_ID.ToString("00"));
+
+            // Load the CUS File
+            CUSFileName = datapath + @"/system/custom_skill.cus";
+            CUSfile.readCUS(CUSFileName);
+            CUSfile.BuildRegistry(datapath + "\\msg", language);
+            CUScbChar.Items.Clear();
+            for (int i = 0; i < CUSfile.css.Count; i++)
+                CUScbChar.Items.Add("Character " + CUSfile.css[i].charID.ToString("000") + " - Costume " + CUSfile.css[i].costumeID.ToString("00"));
+
+            this.CUScbSuper1.Items.AddRange((object[])this.CUSfile.getSkillList(0));
+            this.CUScbSuper2.Items.AddRange((object[])this.CUSfile.getSkillList(0));
+            this.CUScbSuper3.Items.AddRange((object[])this.CUSfile.getSkillList(0));
+            this.CUScbSuper4.Items.AddRange((object[])this.CUSfile.getSkillList(0));
+            this.CUScbUltimate1.Items.AddRange((object[])this.CUSfile.getSkillList(1));
+            this.CUScbUltimate2.Items.AddRange((object[])this.CUSfile.getSkillList(1));
+            this.CUScbEvasive.Items.AddRange((object[])this.CUSfile.getSkillList(2));
+            this.CUScbBlast.Items.AddRange((object[])this.CUSfile.getSkillList(4));
+            this.CUScbAwaken.Items.AddRange((object[])this.CUSfile.getSkillList(5));
+
+            // Load the PSC File
+            PSCFileName = datapath + @"/system/parameter_spec_char.psc";
+            PSCfile.Read(PSCFileName);
+            PSCfile.SetSchema("PSC_Schema.csv");
+
+            PSCcbChar.Items.Clear();
+            for (int i = 0; i < PSCfile.list.Length; i++)
+                PSCcbChar.Items.Add(PSCfile.list[i].id);
+
+            PSClstData.Items.Clear();
+            PSCkeys = PSCfile.schema.getKeys();
+            foreach (string s in PSCkeys)
+            {
+                var Item = new ListViewItem(new[] { s, "0" });
+                PSClstData.Items.Add(Item);
+            }
+
         }
 
         private void saveLvItems()
@@ -348,21 +410,21 @@ namespace XV2Reborn
                         }
 
 
-                        msgData[] expand = new msgData[file.data.Length + 1];
-                        Array.Copy(file.data, expand, file.data.Length);
-                        string nameid = file.data[file.data.Length - 1].NameID;
+                        msgData[] expand = new msgData[MSGfile.data.Length + 1];
+                        Array.Copy(MSGfile.data, expand, MSGfile.data.Length);
+                        string nameid = MSGfile.data[MSGfile.data.Length - 1].NameID;
                         int endid = int.Parse(nameid.Substring(nameid.Length - 3, 3));
-                        expand[expand.Length - 1].ID = file.data.Length;
+                        expand[expand.Length - 1].ID = MSGfile.data.Length;
                         expand[expand.Length - 1].Lines = new string[] { modname };
                         expand[expand.Length - 1].NameID = "chara_" + id + "_" + (endid).ToString("000");
 
-                        file.data = expand;
+                        MSGfile.data = expand;
 
                         cbListMSG.Items.Clear();
-                        for (int i = 0; i < file.data.Length; i++)
-                            cbListMSG.Items.Add(file.data[i].ID.ToString() + "-" + file.data[i].NameID);
+                        for (int i = 0; i < MSGfile.data.Length; i++)
+                            cbListMSG.Items.Add(MSGfile.data[i].ID.ToString() + "-" + MSGfile.data[i].NameID);
 
-                        msgStream.Save(file, MSGFileName);
+                        msgStream.Save(MSGfile, MSGFileName);
                     }
                     else
                     {
@@ -1252,39 +1314,39 @@ namespace XV2Reborn
 
         private void msgSaveToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            msgStream.Save(file, MSGFileName);
-            MessageBox.Show("MSG File Saved Successfully", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            msgStream.Save(MSGfile, MSGFileName);
+            MessageBox.Show("MSG MSGfile Saved Successfully", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
             Application.Restart();
         }
 
         private void msgAddToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            msgData[] expand = new msgData[file.data.Length + 1];
-            Array.Copy(file.data, expand, file.data.Length);
-            string nameid = file.data[file.data.Length - 1].NameID;
+            msgData[] expand = new msgData[MSGfile.data.Length + 1];
+            Array.Copy(MSGfile.data, expand, MSGfile.data.Length);
+            string nameid = MSGfile.data[MSGfile.data.Length - 1].NameID;
             int endid = int.Parse(nameid.Substring(nameid.Length - 3, 3));
-            expand[expand.Length - 1].ID = file.data.Length;
+            expand[expand.Length - 1].ID = MSGfile.data.Length;
             expand[expand.Length - 1].Lines = new string[] { "New Entry" };
             expand[expand.Length - 1].NameID = nameid.Substring(0, nameid.Length - 3) + (endid + 1).ToString("000");
 
-            file.data = expand;
+            MSGfile.data = expand;
 
             cbListMSG.Items.Clear();
-            for (int i = 0; i < file.data.Length; i++)
-                cbListMSG.Items.Add(file.data[i].ID.ToString() + "-" + file.data[i].NameID);
+            for (int i = 0; i < MSGfile.data.Length; i++)
+                cbListMSG.Items.Add(MSGfile.data[i].ID.ToString() + "-" + MSGfile.data[i].NameID);
 
         }
 
         private void msgRemoveToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            msgData[] reduce = new msgData[file.data.Length - 1];
-            Array.Copy(file.data, reduce, file.data.Length - 1);
-            file.data = reduce;
+            msgData[] reduce = new msgData[MSGfile.data.Length - 1];
+            Array.Copy(MSGfile.data, reduce, MSGfile.data.Length - 1);
+            MSGfile.data = reduce;
 
             cbListMSG.Items.Clear();
-            for (int i = 0; i < file.data.Length; i++)
-                cbListMSG.Items.Add(file.data[i].ID.ToString() + "-" + file.data[i].NameID);
+            for (int i = 0; i < MSGfile.data.Length; i++)
+                cbListMSG.Items.Add(MSGfile.data[i].ID.ToString() + "-" + MSGfile.data[i].NameID);
 
         }
 
@@ -1292,123 +1354,123 @@ namespace XV2Reborn
         {
 
             MSGFileName = Properties.Settings.Default.datafolder + @"\msg\proper_noun_character_name_" + language + ".msg";
-            file = msgStream.Load(MSGFileName);
+            MSGfile = msgStream.Load(MSGFileName);
 
             cbListMSG.Items.Clear();
-            for (int i = 0; i < file.data.Length; i++)
-                cbListMSG.Items.Add(file.data[i].ID.ToString() + " - " + file.data[i].NameID);
+            for (int i = 0; i < MSGfile.data.Length; i++)
+                cbListMSG.Items.Add(MSGfile.data[i].ID.ToString() + " - " + MSGfile.data[i].NameID);
 
         }
 
         private void superInfoToolStripMenuItem_Click(object sender, EventArgs e)
         {
             MSGFileName = Properties.Settings.Default.datafolder + @"\msg\proper_noun_skill_spa_info_" + language + ".msg";
-            file = msgStream.Load(MSGFileName);
+            MSGfile = msgStream.Load(MSGFileName);
 
             cbListMSG.Items.Clear();
-            for (int i = 0; i < file.data.Length; i++)
-                cbListMSG.Items.Add(file.data[i].ID.ToString() + " - " + file.data[i].NameID);
+            for (int i = 0; i < MSGfile.data.Length; i++)
+                cbListMSG.Items.Add(MSGfile.data[i].ID.ToString() + " - " + MSGfile.data[i].NameID);
         }
 
         private void ultimatesInfoToolStripMenuItem_Click(object sender, EventArgs e)
         {
             MSGFileName = Properties.Settings.Default.datafolder + @"\msg\proper_noun_skill_ult_info_" + language + ".msg";
-            file = msgStream.Load(MSGFileName);
+            MSGfile = msgStream.Load(MSGFileName);
 
             cbListMSG.Items.Clear();
-            for (int i = 0; i < file.data.Length; i++)
-                cbListMSG.Items.Add(file.data[i].ID.ToString() + " - " + file.data[i].NameID);
+            for (int i = 0; i < MSGfile.data.Length; i++)
+                cbListMSG.Items.Add(MSGfile.data[i].ID.ToString() + " - " + MSGfile.data[i].NameID);
         }
 
         private void evasivesInfoToolStripMenuItem_Click(object sender, EventArgs e)
         {
             MSGFileName = Properties.Settings.Default.datafolder + @"\msg\proper_noun_skill_esc_info_" + language + ".msg";
-            file = msgStream.Load(MSGFileName);
+            MSGfile = msgStream.Load(MSGFileName);
 
             cbListMSG.Items.Clear();
-            for (int i = 0; i < file.data.Length; i++)
-                cbListMSG.Items.Add(file.data[i].ID.ToString() + " - " + file.data[i].NameID);
+            for (int i = 0; i < MSGfile.data.Length; i++)
+                cbListMSG.Items.Add(MSGfile.data[i].ID.ToString() + " - " + MSGfile.data[i].NameID);
         }
 
         private void supersToolStripMenuItem_Click(object sender, EventArgs e)
         {
             MSGFileName = Properties.Settings.Default.datafolder + @"\msg\proper_noun_skill_spa_name_" + language + ".msg";
-            file = msgStream.Load(MSGFileName);
+            MSGfile = msgStream.Load(MSGFileName);
 
             cbListMSG.Items.Clear();
-            for (int i = 0; i < file.data.Length; i++)
-                cbListMSG.Items.Add(file.data[i].ID.ToString() + " - " + file.data[i].NameID);
+            for (int i = 0; i < MSGfile.data.Length; i++)
+                cbListMSG.Items.Add(MSGfile.data[i].ID.ToString() + " - " + MSGfile.data[i].NameID);
         }
 
         private void ultimatesToolStripMenuItem_Click(object sender, EventArgs e)
         {
             MSGFileName = Properties.Settings.Default.datafolder + @"\msg\proper_noun_skill_ult_name_" + language + ".msg";
-            file = msgStream.Load(MSGFileName);
+            MSGfile = msgStream.Load(MSGFileName);
 
             cbListMSG.Items.Clear();
-            for (int i = 0; i < file.data.Length; i++)
-                cbListMSG.Items.Add(file.data[i].ID.ToString() + " - " + file.data[i].NameID);
+            for (int i = 0; i < MSGfile.data.Length; i++)
+                cbListMSG.Items.Add(MSGfile.data[i].ID.ToString() + " - " + MSGfile.data[i].NameID);
         }
 
         private void evasivesToolStripMenuItem_Click(object sender, EventArgs e)
         {
             MSGFileName = Properties.Settings.Default.datafolder + @"\msg\proper_noun_skill_esc_name_" + language + ".msg";
-            file = msgStream.Load(MSGFileName);
+            MSGfile = msgStream.Load(MSGFileName);
 
             cbListMSG.Items.Clear();
-            for (int i = 0; i < file.data.Length; i++)
-                cbListMSG.Items.Add(file.data[i].ID.ToString() + " - " + file.data[i].NameID);
+            for (int i = 0; i < MSGfile.data.Length; i++)
+                cbListMSG.Items.Add(MSGfile.data[i].ID.ToString() + " - " + MSGfile.data[i].NameID);
         }
 
         private void awokenToolStripMenuItem_Click(object sender, EventArgs e)
         {
             MSGFileName = Properties.Settings.Default.datafolder + @"\msg\proper_noun_skill_met_name_" + language + ".msg";
-            file = msgStream.Load(MSGFileName);
+            MSGfile = msgStream.Load(MSGFileName);
 
             cbListMSG.Items.Clear();
-            for (int i = 0; i < file.data.Length; i++)
-                cbListMSG.Items.Add(file.data[i].ID.ToString() + " - " + file.data[i].NameID);
+            for (int i = 0; i < MSGfile.data.Length; i++)
+                cbListMSG.Items.Add(MSGfile.data[i].ID.ToString() + " - " + MSGfile.data[i].NameID);
         }
 
         private void awokenInfoToolStripMenuItem_Click(object sender, EventArgs e)
         {
             MSGFileName = Properties.Settings.Default.datafolder + @"\msg\proper_noun_skill_met_info_" + language + ".msg";
-            file = msgStream.Load(MSGFileName);
+            MSGfile = msgStream.Load(MSGFileName);
 
             cbListMSG.Items.Clear();
-            for (int i = 0; i < file.data.Length; i++)
-                cbListMSG.Items.Add(file.data[i].ID.ToString() + " - " + file.data[i].NameID);
+            for (int i = 0; i < MSGfile.data.Length; i++)
+                cbListMSG.Items.Add(MSGfile.data[i].ID.ToString() + " - " + MSGfile.data[i].NameID);
         }
 
         private void cbList_SelectedIndexChanged(object sender, EventArgs e)
         {
-            txtNameMSG.Text = file.data[cbListMSG.SelectedIndex].NameID;
-            txtIDMSG.Text = file.data[cbListMSG.SelectedIndex].ID.ToString();
+            txtNameMSG.Text = MSGfile.data[cbListMSG.SelectedIndex].NameID;
+            txtIDMSG.Text = MSGfile.data[cbListMSG.SelectedIndex].ID.ToString();
             cbLineMSG.Items.Clear();
-            for (int i = 0; i < file.data[cbListMSG.SelectedIndex].Lines.Length; i++)
+            for (int i = 0; i < MSGfile.data[cbListMSG.SelectedIndex].Lines.Length; i++)
                 cbLineMSG.Items.Add(i);
 
             cbLineMSG.SelectedIndex = 0;
-            txtTextMSG.Text = file.data[cbListMSG.SelectedIndex].Lines[cbLineMSG.SelectedIndex];
+            txtTextMSG.Text = MSGfile.data[cbListMSG.SelectedIndex].Lines[cbLineMSG.SelectedIndex];
 
         }
 
         private void cbLine_SelectedIndexChanged(object sender, EventArgs e)
         {
-            txtTextMSG.Text = file.data[cbListMSG.SelectedIndex].Lines[cbLineMSG.SelectedIndex];
+            txtTextMSG.Text = MSGfile.data[cbListMSG.SelectedIndex].Lines[cbLineMSG.SelectedIndex];
 
         }
 
         private void txtName_TextChanged(object sender, EventArgs e)
         {
-            file.data[cbListMSG.SelectedIndex].NameID = txtNameMSG.Text;
-            cbListMSG.Items[cbListMSG.SelectedIndex] = file.data[cbListMSG.SelectedIndex].ID.ToString() + "-" + file.data[cbListMSG.SelectedIndex].NameID;
+            MSGfile.data[cbListMSG.SelectedIndex].NameID = txtNameMSG.Text;
+            cbListMSG.Items[cbListMSG.SelectedIndex] = MSGfile.data[cbListMSG.SelectedIndex].ID.ToString() + "-" + MSGfile.data[cbListMSG.SelectedIndex].NameID;
 
         }
 
         private void txtText_TextChanged(object sender, EventArgs e)
         {
-            file.data[cbListMSG.SelectedIndex].Lines[cbLineMSG.SelectedIndex] = txtTextMSG.Text;
+            MSGfile.data[cbListMSG.SelectedIndex].Lines[cbLineMSG.SelectedIndex] = txtTextMSG.Text;
         }
 
         // CMS
@@ -1423,22 +1485,22 @@ namespace XV2Reborn
         {
             CMSlck = false;
             CMScurrent = cms[CMSCombobox.SelectedIndex];
-            txtChar.Text = CMScurrent.id.ToString();
-            txtSN.Text = CMScurrent.shortname;
-            txt1.Text = CMScurrent.unk1.ToString();
-            txt2.Text = CMScurrent.unk2.ToString();
-            txt3.Text = CMScurrent.unk3.ToString();
-            txt4.Text = CMScurrent.unk4.ToString();
-            txt5.Text = CMScurrent.unk5.ToString();
-            txt6.Text = CMScurrent.Paths[0];
-            txt7.Text = CMScurrent.Paths[1];
-            txt8.Text = CMScurrent.Paths[2];
-            textBox1.Text = CMScurrent.Paths[3];
-            txt9.Text = CMScurrent.Paths[4];
-            txt10.Text = CMScurrent.Paths[5];
-            txt11.Text = CMScurrent.Paths[6];
-            txt12.Text = CMScurrent.Paths[7];
-            txt13.Text = CMScurrent.Paths[8];
+            txtCharCMS.Text = CMScurrent.id.ToString();
+            txtSNCMS.Text = CMScurrent.shortname;
+            txt1CMS.Text = CMScurrent.unk1.ToString();
+            txt2CMS.Text = CMScurrent.unk2.ToString();
+            txt3CMS.Text = CMScurrent.unk3.ToString();
+            txt4CMS.Text = CMScurrent.unk4.ToString();
+            txt5CMS.Text = CMScurrent.unk5.ToString();
+            txt6CMS.Text = CMScurrent.Paths[0];
+            txt7CMS.Text = CMScurrent.Paths[1];
+            txt8CMS.Text = CMScurrent.Paths[2];
+            textBox1CMS.Text = CMScurrent.Paths[3];
+            txt9CMS.Text = CMScurrent.Paths[4];
+            txt10CMS.Text = CMScurrent.Paths[5];
+            txt11CMS.Text = CMScurrent.Paths[6];
+            txt12CMS.Text = CMScurrent.Paths[7];
+            txt13CMS.Text = CMScurrent.Paths[8];
             checkBox1.Checked = CMSselective[CMSCombobox.SelectedIndex];
             CMSlck = true;
 
@@ -1446,7 +1508,7 @@ namespace XV2Reborn
         private void txtChar_TextChanged(object sender, EventArgs e)
         {
             int p;
-            if (CMSlck && int.TryParse(txtChar.Text, out p))
+            if (CMSlck && int.TryParse(txtCharCMS.Text, out p))
             {
                 CMSlck = false;
                 CMScurrent.id = p;
@@ -1467,7 +1529,7 @@ namespace XV2Reborn
             if (CMSlck)
             {
                 CMSlck = false;
-                CMScurrent.shortname = txtSN.Text;
+                CMScurrent.shortname = txtSNCMS.Text;
                 cms[CMSCombobox.SelectedIndex] = CMScurrent;
 
                 int temp = CMSCombobox.SelectedIndex;
@@ -1483,7 +1545,7 @@ namespace XV2Reborn
         private void txt1_TextChanged(object sender, EventArgs e)
         {
             int p;
-            if (int.TryParse(txt1.Text, out p))
+            if (int.TryParse(txt1CMS.Text, out p))
             {
                 CMScurrent.unk1 = p;
                 cms[CMSCombobox.SelectedIndex] = CMScurrent;
@@ -1493,7 +1555,7 @@ namespace XV2Reborn
         private void txt2_TextChanged(object sender, EventArgs e)
         {
             short p;
-            if (short.TryParse(txt2.Text, out p))
+            if (short.TryParse(txt2CMS.Text, out p))
             {
                 CMScurrent.unk2 = p;
                 cms[CMSCombobox.SelectedIndex] = CMScurrent;
@@ -1503,7 +1565,7 @@ namespace XV2Reborn
         private void txt3_TextChanged(object sender, EventArgs e)
         {
             short p;
-            if (short.TryParse(txt3.Text, out p))
+            if (short.TryParse(txt3CMS.Text, out p))
             {
                 CMScurrent.unk3 = p;
                 cms[CMSCombobox.SelectedIndex] = CMScurrent;
@@ -1513,7 +1575,7 @@ namespace XV2Reborn
         private void txt4_TextChanged(object sender, EventArgs e)
         {
             short p;
-            if (short.TryParse(txt4.Text, out p))
+            if (short.TryParse(txt4CMS.Text, out p))
             {
                 CMScurrent.unk4 = p;
                 cms[CMSCombobox.SelectedIndex] = CMScurrent;
@@ -1523,7 +1585,7 @@ namespace XV2Reborn
         private void txt5_TextChanged(object sender, EventArgs e)
         {
             short p;
-            if (short.TryParse(txt5.Text, out p))
+            if (short.TryParse(txt5CMS.Text, out p))
             {
                 CMScurrent.unk5 = p;
                 cms[CMSCombobox.SelectedIndex] = CMScurrent;
@@ -1532,61 +1594,61 @@ namespace XV2Reborn
 
         private void txt6_TextChanged(object sender, EventArgs e)
         {
-            CMScurrent.Paths[0] = txt6.Text;
+            CMScurrent.Paths[0] = txt6CMS.Text;
             cms[CMSCombobox.SelectedIndex] = CMScurrent;
         }
 
         private void txt7_TextChanged(object sender, EventArgs e)
         {
-            CMScurrent.Paths[1] = txt7.Text;
+            CMScurrent.Paths[1] = txt7CMS.Text;
             cms[CMSCombobox.SelectedIndex] = CMScurrent;
         }
 
         private void txt8_TextChanged(object sender, EventArgs e)
         {
-            CMScurrent.Paths[2] = txt8.Text;
+            CMScurrent.Paths[2] = txt8CMS.Text;
             cms[CMSCombobox.SelectedIndex] = CMScurrent;
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
-            CMScurrent.Paths[3] = textBox1.Text;
+            CMScurrent.Paths[3] = textBox1CMS.Text;
             cms[CMSCombobox.SelectedIndex] = CMScurrent;
         }
 
         private void txt9_TextChanged(object sender, EventArgs e)
         {
-            CMScurrent.Paths[4] = txt9.Text;
+            CMScurrent.Paths[4] = txt9CMS.Text;
             cms[CMSCombobox.SelectedIndex] = CMScurrent;
         }
 
         private void txt10_TextChanged(object sender, EventArgs e)
         {
-            CMScurrent.Paths[5] = txt10.Text;
+            CMScurrent.Paths[5] = txt10CMS.Text;
             cms[CMSCombobox.SelectedIndex] = CMScurrent;
         }
 
         private void txt11_TextChanged(object sender, EventArgs e)
         {
-            CMScurrent.Paths[6] = txt11.Text;
+            CMScurrent.Paths[6] = txt11CMS.Text;
             cms[CMSCombobox.SelectedIndex] = CMScurrent;
         }
 
         private void txt12_TextChanged(object sender, EventArgs e)
         {
-            CMScurrent.Paths[7] = txt12.Text;
+            CMScurrent.Paths[7] = txt12CMS.Text;
             cms[CMSCombobox.SelectedIndex] = CMScurrent;
         }
 
         private void txt13_TextChanged(object sender, EventArgs e)
         {
-            CMScurrent.Paths[8] = txt13.Text;
+            CMScurrent.Paths[8] = txt13CMS.Text;
             cms[CMSCombobox.SelectedIndex] = CMScurrent;
         }
 
         private void CMSSave_Click(object sender, EventArgs e)
         {
-
+            CMS.Write(CMSFileName, cms.ToArray());
         }
 
         private void CMSSelectiveSave_Click(object sender, EventArgs e)
@@ -1657,22 +1719,22 @@ namespace XV2Reborn
         {
             CMScurrent = CMSCopyCMS;
             cms[CMSCombobox.SelectedIndex] = CMScurrent;
-            txtChar.Text = CMScurrent.id.ToString();
-            txtSN.Text = CMScurrent.shortname;
-            txt1.Text = CMScurrent.unk1.ToString();
-            txt2.Text = CMScurrent.unk2.ToString();
-            txt3.Text = CMScurrent.unk3.ToString();
-            txt4.Text = CMScurrent.unk4.ToString();
-            txt5.Text = CMScurrent.unk5.ToString();
-            txt6.Text = CMScurrent.Paths[0];
-            txt7.Text = CMScurrent.Paths[1];
-            txt8.Text = CMScurrent.Paths[2];
-            textBox1.Text = CMScurrent.Paths[3];
-            txt9.Text = CMScurrent.Paths[4];
-            txt10.Text = CMScurrent.Paths[5];
-            txt11.Text = CMScurrent.Paths[6];
-            txt12.Text = CMScurrent.Paths[7];
-            txt13.Text = CMScurrent.Paths[8];
+            txtCharCMS.Text = CMScurrent.id.ToString();
+            txtSNCMS.Text = CMScurrent.shortname;
+            txt1CMS.Text = CMScurrent.unk1.ToString();
+            txt2CMS.Text = CMScurrent.unk2.ToString();
+            txt3CMS.Text = CMScurrent.unk3.ToString();
+            txt4CMS.Text = CMScurrent.unk4.ToString();
+            txt5CMS.Text = CMScurrent.unk5.ToString();
+            txt6CMS.Text = CMScurrent.Paths[0];
+            txt7CMS.Text = CMScurrent.Paths[1];
+            txt8CMS.Text = CMScurrent.Paths[2];
+            textBox1CMS.Text = CMScurrent.Paths[3];
+            txt9CMS.Text = CMScurrent.Paths[4];
+            txt10CMS.Text = CMScurrent.Paths[5];
+            txt11CMS.Text = CMScurrent.Paths[6];
+            txt12CMS.Text = CMScurrent.Paths[7];
+            txt13CMS.Text = CMScurrent.Paths[8];
             CMScurrent = cms[CMSCombobox.SelectedIndex];
 
             int temp = CMSCombobox.SelectedIndex;
@@ -1695,35 +1757,69 @@ namespace XV2Reborn
         //////////////////////////////////////////////////////////////////
 
         // CSO
-
-        private void CSOtoolStripMenuItem5_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void CSOsaveToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            CSO.Write(CSOData.ToArray(), CSOFileName);
         }
 
         private void CSOaddToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            CSO_Data c = new CSO_Data();
+            c.Paths = new string[4];
+            c.Paths[0] = "";
+            c.Paths[1] = "";
+            c.Paths[2] = "";
+            c.Paths[3] = "";
+            CSOData.Add(c);
+
+            cbListCSO.SelectedIndex = 0;
+            cbListCSO.Items.Clear();
+            for (int i = 0; i < CSOData.Count; i++)
+                cbListCSO.Items.Add("Character " + CSOData[i].Char_ID.ToString("000") + " - Costume " + CSOData[i].Costume_ID.ToString("00"));
 
         }
 
         private void CSOremoveToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            CSOData.RemoveAt(cbListCSO.SelectedIndex);
+            cbListCSO.SelectedIndex = 0;
+            cbListCSO.Items.Clear();
+            for (int i = 0; i < CSOData.Count; i++)
+                cbListCSO.Items.Add("Character " + CSOData[i].Char_ID.ToString("000") + " - Costume " + CSOData[i].Costume_ID.ToString("00"));
+
 
         }
 
         private void cbListCSO_SelectedIndexChanged(object sender, EventArgs e)
         {
-
+            CSOlck = false;
+            CSOcurrent = CSOData[cbListCSO.SelectedIndex];
+            txtCharCSO.Text = CSOcurrent.Char_ID.ToString();
+            txtCostumeCSO.Text = CSOcurrent.Costume_ID.ToString();
+            txt1CSO.Text = CSOcurrent.Paths[0];
+            txt2CSO.Text = CSOcurrent.Paths[1];
+            txt3CSO.Text = CSOcurrent.Paths[2];
+            txt4CSO.Text = CSOcurrent.Paths[3];
+            CSOlck = true;
         }
 
         private void textBox6CSO_TextChanged(object sender, EventArgs e)
         {
+            int p;
+            if (CSOlck && int.TryParse(txtCharCSO.Text, out p))
+            {
+                CSOlck = false;
+                CSOcurrent.Char_ID = p;
+                CSOData[cbListCSO.SelectedIndex] = CSOcurrent;
 
+                int temp = cbListCSO.SelectedIndex;
+                cbListCSO.SelectedIndex = 0;
+                cbListCSO.Items.Clear();
+                for (int i = 0; i < CSOData.Count; i++)
+                    cbListCSO.Items.Add("Character " + CSOData[i].Char_ID.ToString("000") + " - Costume " + CSOData[i].Costume_ID.ToString("00"));
+                cbListCSO.SelectedIndex = temp;
+                CSOlck = true;
+            }
         }
 
         private void txtCostumeCSO_TextChanged(object sender, EventArgs e)
@@ -1746,26 +1842,808 @@ namespace XV2Reborn
 
         private void textBox5CSO_TextChanged(object sender, EventArgs e)
         {
-            CSOcurrent.Paths[0] = textBox5CSO.Text;
+            CSOcurrent.Paths[0] = txt1CSO.Text;
             CSOData[cbListCSO.SelectedIndex] = CSOcurrent;
         }
 
         private void textBox4CSO_TextChanged(object sender, EventArgs e)
         {
-            CSOcurrent.Paths[1] = textBox4CSO.Text;
+            CSOcurrent.Paths[1] = txt2CSO.Text;
             CSOData[cbListCSO.SelectedIndex] = CSOcurrent;
         }
 
         private void textBox3CSO_TextChanged(object sender, EventArgs e)
         {
-            CSOcurrent.Paths[2] = textBox3CSO.Text;
+            CSOcurrent.Paths[2] = txt3CSO.Text;
             CSOData[cbListCSO.SelectedIndex] = CSOcurrent;
         }
 
         private void textBox2CSO_TextChanged(object sender, EventArgs e)
         {
-            CSOcurrent.Paths[3] = textBox2CSO.Text;
+            CSOcurrent.Paths[3] = txt4CSO.Text;
             CSOData[cbListCSO.SelectedIndex] = CSOcurrent;
         }
+
+        //////////////////////////////////////////////////////////////////
+
+
+        // CUS
+
+        private void UpdateCharlist()
+        {
+            int temp = CUScbChar.SelectedIndex;
+            CUScbChar.SelectedIndex = 0;
+            CUScbChar.Items.Clear();
+            //if (infoLoaded)
+            //{
+
+            //}
+            //else
+            //{
+            for (int i = 0; i < CUSfile.css.Count; i++)
+                CUScbChar.Items.Add("Character " + CUSfile.css[i].charID.ToString("000") + " - Costume " + CUSfile.css[i].costumeID.ToString("00"));
+            //}
+            CUScbChar.SelectedIndex = temp;
+        }
+
+        private void UpdateCurrentSkill()
+        {
+            switch (cbTypeCUS.SelectedIndex)
+            {
+                case 0:
+                    CUSfile.Super[cbSkillCUS.SelectedIndex] = CUScurrentSkill;
+                    break;
+                case 1:
+                    CUSfile.Ultimate[cbSkillCUS.SelectedIndex] = CUScurrentSkill;
+                    break;
+                case 2:
+                    CUSfile.Evasive[cbSkillCUS.SelectedIndex] = CUScurrentSkill;
+                    break;
+                case 3:
+                    CUSfile.blast[cbSkillCUS.SelectedIndex] = CUScurrentSkill;
+                    break;
+                case 4:
+                    CUSfile.Awaken[cbSkillCUS.SelectedIndex] = CUScurrentSkill;
+                    break;
+            }
+        }
+        private void UpdateSkillList()
+        {
+            this.CUSlck = false;
+            //int selectedIndex = this.cbSkill.SelectedIndex;
+            this.cbSkillCUS.SelectedIndex = -1;
+            switch (this.cbTypeCUS.SelectedIndex)
+            {
+                case 0:
+                    this.cbSkillCUS.Items.Clear();
+                    this.cbSkillCUS.Items.AddRange((object[])this.CUSfile.getSkillList(0));
+                    break;
+                case 1:
+                    this.cbSkillCUS.Items.Clear();
+                    this.cbSkillCUS.Items.AddRange((object[])this.CUSfile.getSkillList(1));
+                    break;
+                case 2:
+                    this.cbSkillCUS.Items.Clear();
+                    this.cbSkillCUS.Items.AddRange((object[])this.CUSfile.getSkillList(2));
+                    break;
+                case 3:
+                    this.cbSkillCUS.Items.Clear();
+                    this.cbSkillCUS.Items.AddRange((object[])this.CUSfile.getSkillList(4));
+                    break;
+                case 4:
+                    this.cbSkillCUS.Items.Clear();
+                    this.cbSkillCUS.Items.AddRange((object[])this.CUSfile.getSkillList(5));
+                    break;
+            }
+            //this.cbSkill.SelectedIndex = selectedIndex;
+            this.CUSlck = true;
+        }
+
+        private void CUSsaveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            CUSfile.readCUS(CUSFileName);
+        }
+
+        private void CUSaddToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (this.tabControl1.SelectedIndex == 0)
+            {
+                this.CUSfile.css.Add(new charSkillSet()
+                {
+                    skill = new short[10],
+                    charID = 999
+                });
+                this.CUSlck = false;
+                this.UpdateCharlist();
+                this.CUSlck = true;
+            }
+            else
+            {
+                skill skill = new skill();
+                skill.Paths = new string[7];
+                SkillReg skillReg = new SkillReg();
+                skillReg.name = "";
+                skillReg.shortName = "NEW";
+                switch (this.cbTypeCUS.SelectedIndex)
+                {
+                    case 0:
+                        this.CUSfile.Super.Add(skill);
+                        this.CUSfile.superReg.Add(skillReg);
+                        break;
+                    case 1:
+                        this.CUSfile.Ultimate.Add(skill);
+                        this.CUSfile.ultimateReg.Add(skillReg);
+                        break;
+                    case 2:
+                        this.CUSfile.Evasive.Add(skill);
+                        this.CUSfile.evasiveReg.Add(skillReg);
+                        break;
+                    case 3:
+                        this.CUSfile.blast.Add(skill);
+                        this.CUSfile.blastReg.Add(skillReg);
+                        break;
+                    case 4:
+                        this.CUSfile.Awaken.Add(skill);
+                        this.CUSfile.awakenReg.Add(skillReg);
+                        break;
+                }
+                this.cbSkillCUS.SelectedIndex = 0;
+                this.UpdateSkillList();
+            }
+
+        }
+
+        private void CUSremoveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (this.tabControl1.SelectedIndex == 0)
+            {
+                this.CUSfile.css.RemoveAt(this.CUScbChar.SelectedIndex);
+                this.CUSlck = false;
+                this.UpdateCharlist();
+                this.CUSlck = true;
+            }
+            else
+            {
+                switch (this.cbTypeCUS.SelectedIndex)
+                {
+                    case 0:
+                        this.CUSfile.Super.RemoveAt(this.cbSkillCUS.SelectedIndex);
+                        this.CUSfile.superReg.RemoveAt(this.cbSkillCUS.SelectedIndex);
+                        break;
+                    case 1:
+                        this.CUSfile.Ultimate.RemoveAt(this.cbSkillCUS.SelectedIndex);
+                        this.CUSfile.ultimateReg.RemoveAt(this.cbSkillCUS.SelectedIndex);
+                        break;
+                    case 2:
+                        this.CUSfile.Evasive.RemoveAt(this.cbSkillCUS.SelectedIndex);
+                        this.CUSfile.evasiveReg.RemoveAt(this.cbSkillCUS.SelectedIndex);
+                        break;
+                    case 3:
+                        this.CUSfile.blast.RemoveAt(this.cbSkillCUS.SelectedIndex);
+                        this.CUSfile.blastReg.RemoveAt(this.cbSkillCUS.SelectedIndex);
+                        break;
+                    case 4:
+                        this.CUSfile.Awaken.RemoveAt(this.cbSkillCUS.SelectedIndex);
+                        this.CUSfile.awakenReg.RemoveAt(this.cbSkillCUS.SelectedIndex);
+                        break;
+                }
+                this.cbSkillCUS.SelectedIndex = 0;
+                this.UpdateSkillList();
+            }
+        }
+
+        private void CUScopyToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (this.tabControl1.SelectedIndex == 0)
+                this.CUScopySet = this.CUScurrentSet;
+            else
+                this.CUScopySkill = this.CUScurrentSkill;
+        }
+
+        private void CUSpasteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (this.tabControl1.SelectedIndex == 0)
+            {
+                this.CUScurrentSet.skill = this.CUScopySet.skill;
+                this.CUSfile.css[this.CUScbChar.SelectedIndex] = this.CUScurrentSet;
+                this.CUSlck = false;
+                int selectedIndex = this.CUScbChar.SelectedIndex;
+                this.CUScbChar.SelectedIndex = 0;
+                this.CUScbChar.Items.Clear();
+                for (int index = 0; index < this.CUSfile.css.Count; ++index)
+                {
+                    ComboBox.ObjectCollection items = this.CUScbChar.Items;
+                    string str1 = "Character ";
+                    charSkillSet charSkillSet = this.CUSfile.css[index];
+                    string str2 = charSkillSet.charID.ToString("000");
+                    string str3 = " - Costume ";
+                    charSkillSet = this.CUSfile.css[index];
+                    string str4 = charSkillSet.costumeID.ToString("00");
+                    string str5 = str1 + str2 + str3 + str4;
+                    items.Add((object)str5);
+                }
+                this.CUScbChar.SelectedIndex = selectedIndex;
+                this.CUSlck = true;
+            }
+            else
+            {
+                this.CUScurrentSkill = this.CUScopySkill;
+                this.UpdateCurrentSkill();
+                this.UpdateSkillList();
+                this.CUSlck = false;
+                this.txtShortNameCUS.Text = this.CUScurrentSkill.shortName;
+                this.txtidCUS.Text = this.CUScurrentSkill.id.ToString();
+                this.txtid2CUS.Text = this.CUScurrentSkill.id2.ToString();
+                this.textBox1CUS.Text = this.CUScurrentSkill.racelock.ToString();
+                this.txt1CUS.Text = this.CUScurrentSkill.unk1.ToString();
+                this.txt2CUS.Text = this.CUScurrentSkill.unk2.ToString();
+                this.txtHairCUS.Text = this.CUScurrentSkill.hair.ToString();
+                this.txt3CUS.Text = this.CUScurrentSkill.unk3.ToString();
+                this.txt4CUS.Text = this.CUScurrentSkill.Paths[0];
+                this.txt5CUS.Text = this.CUScurrentSkill.Paths[1];
+                this.txt6CUS.Text = this.CUScurrentSkill.Paths[2];
+                this.txt7CUS.Text = this.CUScurrentSkill.Paths[3];
+                this.txt8CUS.Text = this.CUScurrentSkill.Paths[4];
+                this.txt9CUS.Text = this.CUScurrentSkill.Paths[5];
+                this.txt10CUS.Text = this.CUScurrentSkill.Paths[6];
+                this.txt11CUS.Text = this.CUScurrentSkill.unk4.ToString();
+                this.txt12CUS.Text = this.CUScurrentSkill.unk5.ToString();
+                this.txt13CUS.Text = this.CUScurrentSkill.unk6.ToString();
+                this.txt14CUS.Text = this.CUScurrentSkill.unk7.ToString();
+                this.txt15CUS.Text = this.CUScurrentSkill.unk8.ToString();
+                this.txt16CUS.Text = this.CUScurrentSkill.unk9.ToString();
+                this.txt17CUS.Text = this.CUScurrentSkill.unk10.ToString();
+                this.txt18CUS.Text = this.CUScurrentSkill.unk11.ToString();
+                this.CUSlck = true;
+            }
+            //.Text = "Data has been pasted in";
+
+        }
+
+        private void CUScbChar_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (!this.CUSlck)
+                return;
+            this.CUSlck = false;
+            this.CUScurrentSet = this.CUSfile.css[this.CUScbChar.SelectedIndex];
+            this.CUStxtCharID.Text = this.CUScurrentSet.charID.ToString();
+            this.CUStxtCostID.Text = this.CUScurrentSet.costumeID.ToString();
+            this.CUStxtVal.Text = this.CUScurrentSet.costumeID.ToString();
+            this.CUScbSuper1.SelectedIndex = this.CUSfile.FindSkillIndex(0, this.CUScurrentSet.skill[0]);
+            this.CUScbSuper2.SelectedIndex = this.CUSfile.FindSkillIndex(0, this.CUScurrentSet.skill[1]);
+            this.CUScbSuper3.SelectedIndex = this.CUSfile.FindSkillIndex(0, this.CUScurrentSet.skill[2]);
+            this.CUScbSuper4.SelectedIndex = this.CUSfile.FindSkillIndex(0, this.CUScurrentSet.skill[3]);
+            this.CUScbUltimate1.SelectedIndex = this.CUSfile.FindSkillIndex(1, this.CUScurrentSet.skill[4]);
+            this.CUScbUltimate2.SelectedIndex = this.CUSfile.FindSkillIndex(1, this.CUScurrentSet.skill[5]);
+            this.CUScbEvasive.SelectedIndex = this.CUSfile.FindSkillIndex(2, this.CUScurrentSet.skill[6]);
+            this.CUScbBlast.SelectedIndex = this.CUSfile.FindSkillIndex(4, this.CUScurrentSet.skill[7]);
+            this.CUScbAwaken.SelectedIndex = this.CUSfile.FindSkillIndex(5, this.CUScurrentSet.skill[8]);
+            this.CUSlck = true;
+        }
+
+        private void CUStxtCharID_TextChanged(object sender, EventArgs e)
+        {
+            int p;
+            if (CUSlck && int.TryParse(CUStxtCharID.Text, out p))
+            {
+                CUSlck = false;
+                CUScurrentSet.charID = p;
+                CUSfile.css[CUScbChar.SelectedIndex] = CUScurrentSet;
+
+                UpdateCharlist();
+                CUSlck = true;
+            }
+        }
+
+        private void CUStxtCostID_TextChanged(object sender, EventArgs e)
+        {
+            int p;
+            if (CUSlck && int.TryParse(CUStxtCostID.Text, out p))
+            {
+                CUSlck = false;
+                CUScurrentSet.costumeID = p;
+                CUSfile.css[CUScbChar.SelectedIndex] = CUScurrentSet;
+
+                UpdateCharlist();
+                CUSlck = true;
+            }
+        }
+
+        private void CUStxtVal_TextChanged(object sender, EventArgs e)
+        {
+            CUSfile.css[CUScbChar.SelectedIndex].skill[9] = short.Parse(CUStxtVal.Text);
+        }
+
+        private void CUScbSuper1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (!this.CUSlck)
+                return;
+            this.CUScurrentSet.skill[0] = this.CUSfile.superReg[this.CUScbSuper1.SelectedIndex].id;
+            this.CUSfile.css[this.CUScbChar.SelectedIndex] = this.CUScurrentSet;
+            //.Text = "";
+        }
+
+        private void CUScbSuper2_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (!this.CUSlck)
+                return;
+            this.CUScurrentSet.skill[1] = this.CUSfile.superReg[this.CUScbSuper2.SelectedIndex].id;
+            this.CUSfile.css[this.CUScbChar.SelectedIndex] = this.CUScurrentSet;
+            //.Text = "";
+        }
+
+        private void CUScbSuper3_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (!this.CUSlck)
+                return;
+            this.CUScurrentSet.skill[2] = this.CUSfile.superReg[this.CUScbSuper3.SelectedIndex].id;
+            this.CUSfile.css[this.CUScbChar.SelectedIndex] = this.CUScurrentSet;
+            //.Text = "";
+        }
+
+        private void CUScbSuper4_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (!this.CUSlck)
+                return;
+            this.CUScurrentSet.skill[3] = this.CUSfile.superReg[this.CUScbSuper4.SelectedIndex].id;
+            this.CUSfile.css[this.CUScbChar.SelectedIndex] = this.CUScurrentSet;
+            //.Text = "";
+        }
+
+        private void CUScbUltimate1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (!this.CUSlck)
+                return;
+            this.CUScurrentSet.skill[4] = this.CUSfile.ultimateReg[this.CUScbUltimate1.SelectedIndex].id;
+            this.CUSfile.css[this.CUScbChar.SelectedIndex] = this.CUScurrentSet;
+            //.Text = "";
+        }
+
+        private void CUScbUltimate2_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (!this.CUSlck)
+                return;
+            this.CUScurrentSet.skill[5] = this.CUSfile.ultimateReg[this.CUScbUltimate2.SelectedIndex].id;
+            this.CUSfile.css[this.CUScbChar.SelectedIndex] = this.CUScurrentSet;
+            //.Text = "";
+        }
+
+        private void CUScbEvasive_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (!this.CUSlck)
+                return;
+            this.CUScurrentSet.skill[6] = this.CUSfile.evasiveReg[this.CUScbEvasive.SelectedIndex].id;
+            this.CUSfile.css[this.CUScbChar.SelectedIndex] = this.CUScurrentSet;
+            //.Text = "";
+        }
+
+        private void CUScbBlast_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (!this.CUSlck)
+                return;
+            this.CUScurrentSet.skill[7] = this.CUSfile.blastReg[this.CUScbBlast.SelectedIndex].id;
+            this.CUSfile.css[this.CUScbChar.SelectedIndex] = this.CUScurrentSet;
+            //.Text = "";
+        }
+
+        private void CUScbAwaken_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (!this.CUSlck)
+                return;
+            this.CUScurrentSet.skill[8] = this.CUSfile.awakenReg[this.CUScbAwaken.SelectedIndex].id;
+            this.CUSfile.css[this.CUScbChar.SelectedIndex] = this.CUScurrentSet;
+            //.Text = "";
+        }
+
+        private void cbTypeCUS_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            this.UpdateSkillList();
+        }
+
+        private void cbSkillCUS_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            switch (cbTypeCUS.SelectedIndex)
+            {
+                case 0:
+                    CUScurrentSkill = CUSfile.Super[cbSkillCUS.SelectedIndex];
+                    break;
+                case 1:
+                    CUScurrentSkill = CUSfile.Ultimate[cbSkillCUS.SelectedIndex];
+                    break;
+                case 2:
+                    CUScurrentSkill = CUSfile.Evasive[cbSkillCUS.SelectedIndex];
+                    break;
+                case 3:
+                    CUScurrentSkill = CUSfile.blast[cbSkillCUS.SelectedIndex];
+                    break;
+                case 4:
+                    CUScurrentSkill = CUSfile.Awaken[cbSkillCUS.SelectedIndex];
+                    break;
+            }
+
+            CUSlck = false;
+            txtShortNameCUS.Text = CUScurrentSkill.shortName;
+            txtidCUS.Text = CUScurrentSkill.id.ToString();
+            txtid2CUS.Text = CUScurrentSkill.id2.ToString();
+            textBox1CUS.Text = CUScurrentSkill.racelock.ToString();
+            txt1CUS.Text = CUScurrentSkill.unk1.ToString();
+            txt2CUS.Text = CUScurrentSkill.unk2.ToString();
+            txtHairCUS.Text = CUScurrentSkill.hair.ToString();
+            txt3CUS.Text = CUScurrentSkill.unk3.ToString();
+            txt4CUS.Text = CUScurrentSkill.Paths[0];
+            txt5CUS.Text = CUScurrentSkill.Paths[1];
+            txt6CUS.Text = CUScurrentSkill.Paths[2];
+            txt7CUS.Text = CUScurrentSkill.Paths[3];
+            txt8CUS.Text = CUScurrentSkill.Paths[4];
+            txt9CUS.Text = CUScurrentSkill.Paths[5];
+            txt10CUS.Text = CUScurrentSkill.Paths[6];
+            txt11CUS.Text = CUScurrentSkill.unk4.ToString();
+            txt12CUS.Text = CUScurrentSkill.unk5.ToString();
+            txt13CUS.Text = CUScurrentSkill.unk6.ToString();
+            txt14CUS.Text = CUScurrentSkill.unk7.ToString();
+            txt15CUS.Text = CUScurrentSkill.unk8.ToString();
+            txt16CUS.Text = CUScurrentSkill.unk9.ToString();
+            txt17CUS.Text = CUScurrentSkill.unk10.ToString();
+            txt18CUS.Text = CUScurrentSkill.unk11.ToString();
+            CUSlck = true;
+
+        }
+
+        private void txtShortNameCUS_TextChanged(object sender, EventArgs e)
+        {
+            if (!this.CUSlck)
+                return;
+            this.CUScurrentSkill.shortName = this.txtShortNameCUS.Text;
+            this.UpdateCurrentSkill();
+            this.UpdateSkillList();
+            //.Text = "";
+        }
+
+        private void txtidCUS_TextChanged(object sender, EventArgs e)
+        {
+            short result;
+            if (!this.CUSlck || !short.TryParse(this.txtidCUS.Text, out result))
+                return;
+            this.CUScurrentSkill.id = result;
+            this.UpdateCurrentSkill();
+            this.UpdateSkillList();
+            //.Text = "";
+        }
+
+        private void txtid2CUS_TextChanged(object sender, EventArgs e)
+        {
+            short result;
+            if (!this.CUSlck || !short.TryParse(this.txtid2CUS.Text, out result))
+                return;
+            this.CUScurrentSkill.id2 = result;
+            this.UpdateCurrentSkill();
+            //.Text = "";
+        }
+
+        private void textBox1CUS_TextChanged(object sender, EventArgs e)
+        {
+            //race lock
+            byte result;
+            if (!this.CUSlck || !byte.TryParse(this.textBox1CUS.Text, out result))
+                return;
+            this.CUScurrentSkill.racelock = result;
+            this.UpdateCurrentSkill();
+            //.Text = "";
+        }
+
+        private void txt3CUS_TextChanged(object sender, EventArgs e)
+        {
+            short result;
+            if (!this.CUSlck || !short.TryParse(this.txt3CUS.Text, out result))
+                return;
+            this.CUScurrentSkill.unk3 = result;
+            this.UpdateCurrentSkill();
+            //.Text = "";
+        }
+
+        private void txtHairCUS_TextChanged(object sender, EventArgs e)
+        {
+            short result;
+            if (!this.CUSlck || !short.TryParse(this.txtHairCUS.Text, out result))
+                return;
+            this.CUScurrentSkill.hair = result;
+            this.UpdateCurrentSkill();
+            //.Text = "";
+        }
+
+        private void txt2CUS_TextChanged(object sender, EventArgs e)
+        {
+            short result;
+            if (!this.CUSlck || !short.TryParse(this.txt2CUS.Text, out result))
+                return;
+            this.CUScurrentSkill.unk2 = result;
+            this.UpdateCurrentSkill();
+            //.Text = "";
+        }
+
+        private void txt1CUS_TextChanged(object sender, EventArgs e)
+        {
+            byte result;
+            if (!this.CUSlck || !byte.TryParse(this.txtidCUS.Text, out result))
+                return;
+            this.CUScurrentSkill.unk1 = result;
+            this.UpdateCurrentSkill();
+            //.Text = "";
+        }
+
+        private void txt4CUS_TextChanged(object sender, EventArgs e)
+        {
+            if (!this.CUSlck)
+                return;
+            this.CUScurrentSkill.Paths[0] = this.txt4CUS.Text;
+            this.UpdateCurrentSkill();
+            //.Text = "";
+        }
+
+        private void txt5CUS_TextChanged(object sender, EventArgs e)
+        {
+            if (!this.CUSlck)
+                return;
+            this.CUScurrentSkill.Paths[1] = this.txt5CUS.Text;
+            this.UpdateCurrentSkill();
+            //.Text = "";
+        }
+
+        private void txt6CUS_TextChanged(object sender, EventArgs e)
+        {
+            if (!this.CUSlck)
+                return;
+            this.CUScurrentSkill.Paths[2] = this.txt6CUS.Text;
+            this.UpdateCurrentSkill();
+            //.Text = "";
+        }
+
+        private void txt7CUS_TextChanged(object sender, EventArgs e)
+        {
+            if (!this.CUSlck)
+                return;
+            this.CUScurrentSkill.Paths[3] = this.txt7CUS.Text;
+            this.UpdateCurrentSkill();
+            //.Text = "";
+        }
+
+        private void txt8CUS_TextChanged(object sender, EventArgs e)
+        {
+            if (!this.CUSlck)
+                return;
+            this.CUScurrentSkill.Paths[4] = this.txt8CUS.Text;
+            this.UpdateCurrentSkill();
+            //.Text = "";
+        }
+
+        private void txt9CUS_TextChanged(object sender, EventArgs e)
+        {
+            if (!this.CUSlck)
+                return;
+            this.CUScurrentSkill.Paths[5] = this.txt9CUS.Text;
+            this.UpdateCurrentSkill();
+            //.Text = "";
+        }
+
+        private void txt10CUS_TextChanged(object sender, EventArgs e)
+        {
+            if (!this.CUSlck)
+                return;
+            this.CUScurrentSkill.Paths[6] = this.txt10CUS.Text;
+            this.UpdateCurrentSkill();
+            //.Text = "";
+
+        }
+
+        private void txt11CUS_TextChanged(object sender, EventArgs e)
+        {
+            short result;
+            if (!this.CUSlck || !short.TryParse(this.txt11CUS.Text, out result))
+                return;
+            this.CUScurrentSkill.unk4 = result;
+            this.UpdateCurrentSkill();
+            //.Text = "";
+        }
+
+        private void txt12CUS_TextChanged(object sender, EventArgs e)
+        {
+            short result;
+            if (!this.CUSlck || !short.TryParse(this.txt12CUS.Text, out result))
+                return;
+            this.CUScurrentSkill.unk5 = result;
+            this.UpdateCurrentSkill();
+            //.Text = "";
+
+        }
+
+        private void txt13CUS_TextChanged(object sender, EventArgs e)
+        {
+            short result;
+            if (!this.CUSlck || !short.TryParse(this.txt13CUS.Text, out result))
+                return;
+            this.CUScurrentSkill.unk6 = result;
+            this.UpdateCurrentSkill();
+            //.Text = "";
+        }
+
+        private void txt14CUS_TextChanged(object sender, EventArgs e)
+        {
+            short result;
+            if (!this.CUSlck || !short.TryParse(this.txt14CUS.Text, out result))
+                return;
+            this.CUScurrentSkill.unk7 = result;
+            this.UpdateCurrentSkill();
+            //.Text = "";
+        }
+
+        private void txt15CUS_TextChanged(object sender, EventArgs e)
+        {
+            short result;
+            if (!this.CUSlck || !short.TryParse(this.txt15CUS.Text, out result))
+                return;
+            this.CUScurrentSkill.unk8 = result;
+            this.UpdateCurrentSkill();
+            //.Text = "";
+        }
+
+        private void txt16CUS_TextChanged(object sender, EventArgs e)
+        {
+            short result;
+            if (!this.CUSlck || !short.TryParse(this.txt16CUS.Text, out result))
+                return;
+            this.CUScurrentSkill.unk9 = result;
+            this.UpdateCurrentSkill();
+            //.Text = "";
+        }
+
+        private void txt17CUS_TextChanged(object sender, EventArgs e)
+        {
+            short result;
+            if (!this.CUSlck || !short.TryParse(this.txt17CUS.Text, out result))
+                return;
+            this.CUScurrentSkill.unk10 = result;
+            this.UpdateCurrentSkill();
+            //.Text = "";
+        }
+
+        private void txt18CUS_TextChanged(object sender, EventArgs e)
+        {
+            short result;
+            if (!this.CUSlck || !short.TryParse(this.txt18CUS.Text, out result))
+                return;
+            this.CUScurrentSkill.unk11 = (int)result;
+            this.UpdateCurrentSkill();
+            //.Text = "";
+        }
+
+        //////////////////////////////////////////////////////////////////////
+
+
+        // PSC
+        private void PSCcbChar_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            PSCcbCostume.Items.Clear();
+            for (int i = 0; i < PSCfile.list[PSCcbChar.SelectedIndex].Costume_Data.Length; i++)
+            {
+                PSCcbCostume.Items.Add(PSCfile.schema.getValueString(PSCkeys[0], ref PSCfile.list[PSCcbChar.SelectedIndex].Costume_Data[i].Data));
+            }
+            PSCtxtCharID.Text = PSCfile.list[PSCcbChar.SelectedIndex].id.ToString();
+
+        }
+
+        private void PSCtxtCharID_TextChanged(object sender, EventArgs e)
+        {
+            int p;
+            if (int.TryParse(PSCtxtCharID.Text, out p))
+            {
+                PSCfile.list[PSCcbChar.SelectedIndex].id = p;
+                PSCcbChar.Items[PSCcbChar.SelectedIndex] = PSCtxtCharID.Text;
+            }
+        }
+
+        private void PSCcbCostume_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            PSClstData.Items.Clear();
+            foreach (string s in PSCkeys)
+            {
+                var Item = new ListViewItem(new[] { s, PSCfile.schema.getValueString(s, ref PSCfile.list[PSCcbChar.SelectedIndex].Costume_Data[PSCcbCostume.SelectedIndex].Data) });
+                PSClstData.Items.Add(Item);
+            }
+
+        }
+
+        private void PSCtxtVal_TextChanged(object sender, EventArgs e)
+        {
+            if (PSClck)
+            {
+                PSClstData.SelectedItems[0].SubItems[1].Text = PSCtxtVal.Text;
+                PSCfile.schema.setValueString(PSCtxtName.Text, ref PSCfile.list[PSCcbChar.SelectedIndex].Costume_Data[PSCcbCostume.SelectedIndex].Data, PSCtxtVal.Text);
+            }
+        }
+
+        private void PSClstData_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            PSClck = false;
+            if (PSClstData.SelectedItems.Count != 0)
+            {
+                PSCtxtName.Text = PSClstData.SelectedItems[0].SubItems[0].Text;
+                PSCtxtVal.Text = PSClstData.SelectedItems[0].SubItems[1].Text;
+            }
+            PSClck = true;
+        }
+
+        private void PSCsaveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            PSCfile.Write(PSCFileName);
+        }
+
+        private void PSCcharacterToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            //add character
+            PSCcbChar.SelectedIndex = 0;
+            Array.Resize<PSC_Char>(ref PSCfile.list, PSCfile.list.Length + 1);
+            PSCfile.list[PSCfile.list.Length - 1].Costume_Data = new PSC_Costume[1];
+            PSCfile.list[PSCfile.list.Length - 1].Costume_Data[0].Data = new byte[196];
+            PSCcbChar.Items.Clear();
+            for (int i = 0; i < PSCfile.list.Length; i++)
+                PSCcbChar.Items.Add(PSCfile.list[i].id);
+        }
+
+        private void PSCcostumeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            //add costume
+            PSCcbCostume.SelectedIndex = 0;
+            Array.Resize<PSC_Costume>(ref PSCfile.list[PSCcbChar.SelectedIndex].Costume_Data, PSCfile.list[PSCcbChar.SelectedIndex].Costume_Data.Length + 1);
+            PSCfile.list[PSCcbChar.SelectedIndex].Costume_Data[PSCfile.list[PSCcbChar.SelectedIndex].Costume_Data.Length - 1].Data = new byte[196];
+            PSCcbCostume.Items.Clear();
+            for (int i = 0; i < PSCfile.list[PSCcbChar.SelectedIndex].Costume_Data.Length; i++)
+            {
+                PSCcbCostume.Items.Add(PSCfile.schema.getValueString(PSCkeys[0], ref PSCfile.list[PSCcbChar.SelectedIndex].Costume_Data[i].Data));
+            }
+        }
+
+        private void PSCcharacterToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            //remove character
+            PSCcbChar.SelectedIndex = 0;
+            Array.Resize<PSC_Char>(ref PSCfile.list, PSCfile.list.Length - 1);
+
+            PSCcbChar.Items.Clear();
+            for (int i = 0; i < PSCfile.list.Length; i++)
+                PSCcbChar.Items.Add(PSCfile.list[i].id);
+        }
+
+        private void PSCcostumeToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            //remove costume
+            PSCcbCostume.SelectedIndex = 0;
+            if (PSCfile.list[PSCcbChar.SelectedIndex].Costume_Data.Length != 1)
+                Array.Resize<PSC_Costume>(ref PSCfile.list[PSCcbChar.SelectedIndex].Costume_Data, PSCfile.list[PSCcbChar.SelectedIndex].Costume_Data.Length - 1);
+
+            PSCcbCostume.Items.Clear();
+            for (int i = 0; i < PSCfile.list[PSCcbChar.SelectedIndex].Costume_Data.Length; i++)
+            {
+                PSCcbCostume.Items.Add(PSCfile.schema.getValueString(PSCkeys[0], ref PSCfile.list[PSCcbChar.SelectedIndex].Costume_Data[i].Data));
+            }
+        }
+
+        private void PSCcopyToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void pasteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+        ////////////////////////////////////////////////////////////////////
+        
+
+
+        // AUR
+
+
+
+        ///////////////////////////////////////////////////////////////////
     }
 }
