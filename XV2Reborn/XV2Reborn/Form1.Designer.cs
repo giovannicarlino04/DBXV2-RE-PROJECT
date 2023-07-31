@@ -95,6 +95,8 @@
             this.CMSRemove = new System.Windows.Forms.ToolStripMenuItem();
             this.CMSCopy = new System.Windows.Forms.ToolStripMenuItem();
             this.CMSPaste = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
+            this.editCMSFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tabPage9 = new System.Windows.Forms.TabPage();
             this.label23 = new System.Windows.Forms.Label();
             this.txt4CSO = new System.Windows.Forms.TextBox();
@@ -115,6 +117,8 @@
             this.toolStripMenuItem6 = new System.Windows.Forms.ToolStripMenuItem();
             this.CSOaddToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.CSOremoveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
+            this.editCSOFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.tabControl2 = new System.Windows.Forms.TabControl();
             this.tabPage10 = new System.Windows.Forms.TabPage();
@@ -200,6 +204,8 @@
             this.CUSremoveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.CUScopyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.CUSpasteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
+            this.editCUSFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tabPage4 = new System.Windows.Forms.TabPage();
             this.label64 = new System.Windows.Forms.Label();
             this.label65 = new System.Windows.Forms.Label();
@@ -255,6 +261,8 @@
             this.toolStripMenuItem10 = new System.Windows.Forms.ToolStripMenuItem();
             this.addAuraToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.removeAuraToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+            this.editAURFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tabPage6 = new System.Windows.Forms.TabPage();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.cbListMSG = new System.Windows.Forms.ComboBox();
@@ -290,14 +298,6 @@
             this.tabPage8 = new System.Windows.Forms.TabPage();
             this.label2 = new System.Windows.Forms.Label();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
-            this.editAURFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
-            this.editCUSFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
-            this.editCSOFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
-            this.editCMSFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -394,19 +394,19 @@
             // compileScriptsToolStripMenuItem
             // 
             this.compileScriptsToolStripMenuItem.Name = "compileScriptsToolStripMenuItem";
-            this.compileScriptsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.compileScriptsToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
             this.compileScriptsToolStripMenuItem.Text = "Compile Scripts";
             this.compileScriptsToolStripMenuItem.Click += new System.EventHandler(this.compileScriptsToolStripMenuItem_Click);
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(177, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(159, 6);
             // 
             // clearInstallationToolStripMenuItem
             // 
             this.clearInstallationToolStripMenuItem.Name = "clearInstallationToolStripMenuItem";
-            this.clearInstallationToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.clearInstallationToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
             this.clearInstallationToolStripMenuItem.Text = "Clear Installation";
             this.clearInstallationToolStripMenuItem.Click += new System.EventHandler(this.clearInstallationToolStripMenuItem_Click);
             // 
@@ -900,30 +900,42 @@
             // CMSAdd
             // 
             this.CMSAdd.Name = "CMSAdd";
-            this.CMSAdd.Size = new System.Drawing.Size(180, 22);
+            this.CMSAdd.Size = new System.Drawing.Size(143, 22);
             this.CMSAdd.Text = "Add";
             this.CMSAdd.Click += new System.EventHandler(this.CMSAdd_Click);
             // 
             // CMSRemove
             // 
             this.CMSRemove.Name = "CMSRemove";
-            this.CMSRemove.Size = new System.Drawing.Size(180, 22);
+            this.CMSRemove.Size = new System.Drawing.Size(143, 22);
             this.CMSRemove.Text = "Remove";
             this.CMSRemove.Click += new System.EventHandler(this.CMSRemove_Click);
             // 
             // CMSCopy
             // 
             this.CMSCopy.Name = "CMSCopy";
-            this.CMSCopy.Size = new System.Drawing.Size(180, 22);
+            this.CMSCopy.Size = new System.Drawing.Size(143, 22);
             this.CMSCopy.Text = "Copy";
             this.CMSCopy.Click += new System.EventHandler(this.CMSCopy_Click);
             // 
             // CMSPaste
             // 
             this.CMSPaste.Name = "CMSPaste";
-            this.CMSPaste.Size = new System.Drawing.Size(180, 22);
+            this.CMSPaste.Size = new System.Drawing.Size(143, 22);
             this.CMSPaste.Text = "Paste";
             this.CMSPaste.Click += new System.EventHandler(this.CMSPaste_Click);
+            // 
+            // toolStripSeparator6
+            // 
+            this.toolStripSeparator6.Name = "toolStripSeparator6";
+            this.toolStripSeparator6.Size = new System.Drawing.Size(140, 6);
+            // 
+            // editCMSFileToolStripMenuItem
+            // 
+            this.editCMSFileToolStripMenuItem.Name = "editCMSFileToolStripMenuItem";
+            this.editCMSFileToolStripMenuItem.Size = new System.Drawing.Size(143, 22);
+            this.editCMSFileToolStripMenuItem.Text = "Edit CMS File";
+            this.editCMSFileToolStripMenuItem.Click += new System.EventHandler(this.editCMSFileToolStripMenuItem_Click);
             // 
             // tabPage9
             // 
@@ -1100,16 +1112,28 @@
             // CSOaddToolStripMenuItem
             // 
             this.CSOaddToolStripMenuItem.Name = "CSOaddToolStripMenuItem";
-            this.CSOaddToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.CSOaddToolStripMenuItem.Size = new System.Drawing.Size(141, 22);
             this.CSOaddToolStripMenuItem.Text = "Add";
             this.CSOaddToolStripMenuItem.Click += new System.EventHandler(this.CSOaddToolStripMenuItem_Click);
             // 
             // CSOremoveToolStripMenuItem
             // 
             this.CSOremoveToolStripMenuItem.Name = "CSOremoveToolStripMenuItem";
-            this.CSOremoveToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.CSOremoveToolStripMenuItem.Size = new System.Drawing.Size(141, 22);
             this.CSOremoveToolStripMenuItem.Text = "Remove";
             this.CSOremoveToolStripMenuItem.Click += new System.EventHandler(this.CSOremoveToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator5
+            // 
+            this.toolStripSeparator5.Name = "toolStripSeparator5";
+            this.toolStripSeparator5.Size = new System.Drawing.Size(138, 6);
+            // 
+            // editCSOFileToolStripMenuItem
+            // 
+            this.editCSOFileToolStripMenuItem.Name = "editCSOFileToolStripMenuItem";
+            this.editCSOFileToolStripMenuItem.Size = new System.Drawing.Size(141, 22);
+            this.editCSOFileToolStripMenuItem.Text = "Edit CSO File";
+            this.editCSOFileToolStripMenuItem.Click += new System.EventHandler(this.editCSOFileToolStripMenuItem_Click);
             // 
             // tabPage3
             // 
@@ -1906,30 +1930,42 @@
             // CUSaddToolStripMenuItem
             // 
             this.CUSaddToolStripMenuItem.Name = "CUSaddToolStripMenuItem";
-            this.CUSaddToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.CUSaddToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
             this.CUSaddToolStripMenuItem.Text = "Add";
             this.CUSaddToolStripMenuItem.Click += new System.EventHandler(this.CUSaddToolStripMenuItem_Click);
             // 
             // CUSremoveToolStripMenuItem
             // 
             this.CUSremoveToolStripMenuItem.Name = "CUSremoveToolStripMenuItem";
-            this.CUSremoveToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.CUSremoveToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
             this.CUSremoveToolStripMenuItem.Text = "Remove";
             this.CUSremoveToolStripMenuItem.Click += new System.EventHandler(this.CUSremoveToolStripMenuItem_Click);
             // 
             // CUScopyToolStripMenuItem
             // 
             this.CUScopyToolStripMenuItem.Name = "CUScopyToolStripMenuItem";
-            this.CUScopyToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.CUScopyToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
             this.CUScopyToolStripMenuItem.Text = "Copy";
             this.CUScopyToolStripMenuItem.Click += new System.EventHandler(this.CUScopyToolStripMenuItem_Click);
             // 
             // CUSpasteToolStripMenuItem
             // 
             this.CUSpasteToolStripMenuItem.Name = "CUSpasteToolStripMenuItem";
-            this.CUSpasteToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.CUSpasteToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
             this.CUSpasteToolStripMenuItem.Text = "Paste";
             this.CUSpasteToolStripMenuItem.Click += new System.EventHandler(this.CUSpasteToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator4
+            // 
+            this.toolStripSeparator4.Name = "toolStripSeparator4";
+            this.toolStripSeparator4.Size = new System.Drawing.Size(137, 6);
+            // 
+            // editCUSFileToolStripMenuItem
+            // 
+            this.editCUSFileToolStripMenuItem.Name = "editCUSFileToolStripMenuItem";
+            this.editCUSFileToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
+            this.editCUSFileToolStripMenuItem.Text = "Edit CUS File";
+            this.editCUSFileToolStripMenuItem.Click += new System.EventHandler(this.editCUSFileToolStripMenuItem_Click);
             // 
             // tabPage4
             // 
@@ -2407,7 +2443,7 @@
             // saveAURFileToolStripMenuItem
             // 
             this.saveAURFileToolStripMenuItem.Name = "saveAURFileToolStripMenuItem";
-            this.saveAURFileToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.saveAURFileToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
             this.saveAURFileToolStripMenuItem.Text = "Save AUR";
             this.saveAURFileToolStripMenuItem.Click += new System.EventHandler(this.saveAURFileToolStripMenuItem_Click);
             // 
@@ -2425,16 +2461,28 @@
             // addAuraToolStripMenuItem
             // 
             this.addAuraToolStripMenuItem.Name = "addAuraToolStripMenuItem";
-            this.addAuraToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.addAuraToolStripMenuItem.Size = new System.Drawing.Size(145, 22);
             this.addAuraToolStripMenuItem.Text = "Add Aura";
             this.addAuraToolStripMenuItem.Click += new System.EventHandler(this.addAuraToolStripMenuItem_Click);
             // 
             // removeAuraToolStripMenuItem
             // 
             this.removeAuraToolStripMenuItem.Name = "removeAuraToolStripMenuItem";
-            this.removeAuraToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.removeAuraToolStripMenuItem.Size = new System.Drawing.Size(145, 22);
             this.removeAuraToolStripMenuItem.Text = "Remove Aura";
             this.removeAuraToolStripMenuItem.Click += new System.EventHandler(this.removeAuraToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator3
+            // 
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(142, 6);
+            // 
+            // editAURFileToolStripMenuItem
+            // 
+            this.editAURFileToolStripMenuItem.Name = "editAURFileToolStripMenuItem";
+            this.editAURFileToolStripMenuItem.Size = new System.Drawing.Size(145, 22);
+            this.editAURFileToolStripMenuItem.Text = "Edit AUR File";
+            this.editAURFileToolStripMenuItem.Click += new System.EventHandler(this.editAURFileToolStripMenuItem_Click);
             // 
             // tabPage6
             // 
@@ -2713,7 +2761,7 @@
             // saveCSSToolStripMenuItem
             // 
             this.saveCSSToolStripMenuItem.Name = "saveCSSToolStripMenuItem";
-            this.saveCSSToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.saveCSSToolStripMenuItem.Size = new System.Drawing.Size(121, 22);
             this.saveCSSToolStripMenuItem.Text = "Save CSS";
             this.saveCSSToolStripMenuItem.Click += new System.EventHandler(this.saveCSSToolStripMenuItem_Click);
             // 
@@ -2756,54 +2804,6 @@
             this.comboBox1.Size = new System.Drawing.Size(75, 21);
             this.comboBox1.TabIndex = 0;
             this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
-            // 
-            // toolStripSeparator3
-            // 
-            this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(177, 6);
-            // 
-            // editAURFileToolStripMenuItem
-            // 
-            this.editAURFileToolStripMenuItem.Name = "editAURFileToolStripMenuItem";
-            this.editAURFileToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.editAURFileToolStripMenuItem.Text = "Edit AUR File";
-            this.editAURFileToolStripMenuItem.Click += new System.EventHandler(this.editAURFileToolStripMenuItem_Click);
-            // 
-            // toolStripSeparator4
-            // 
-            this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(177, 6);
-            // 
-            // editCUSFileToolStripMenuItem
-            // 
-            this.editCUSFileToolStripMenuItem.Name = "editCUSFileToolStripMenuItem";
-            this.editCUSFileToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.editCUSFileToolStripMenuItem.Text = "Edit CUS File";
-            this.editCUSFileToolStripMenuItem.Click += new System.EventHandler(this.editCUSFileToolStripMenuItem_Click);
-            // 
-            // toolStripSeparator5
-            // 
-            this.toolStripSeparator5.Name = "toolStripSeparator5";
-            this.toolStripSeparator5.Size = new System.Drawing.Size(177, 6);
-            // 
-            // editCSOFileToolStripMenuItem
-            // 
-            this.editCSOFileToolStripMenuItem.Name = "editCSOFileToolStripMenuItem";
-            this.editCSOFileToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.editCSOFileToolStripMenuItem.Text = "Edit CSO File";
-            this.editCSOFileToolStripMenuItem.Click += new System.EventHandler(this.editCSOFileToolStripMenuItem_Click);
-            // 
-            // toolStripSeparator6
-            // 
-            this.toolStripSeparator6.Name = "toolStripSeparator6";
-            this.toolStripSeparator6.Size = new System.Drawing.Size(177, 6);
-            // 
-            // editCMSFileToolStripMenuItem
-            // 
-            this.editCMSFileToolStripMenuItem.Name = "editCMSFileToolStripMenuItem";
-            this.editCMSFileToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.editCMSFileToolStripMenuItem.Text = "Edit CMS File";
-            this.editCMSFileToolStripMenuItem.Click += new System.EventHandler(this.editCMSFileToolStripMenuItem_Click);
             // 
             // Form1
             // 

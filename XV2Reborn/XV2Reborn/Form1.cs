@@ -481,8 +481,8 @@ namespace XV2Reborn
                         c.Paths = new string[9];
                         c.Paths[0] = id;
                         c.Paths[1] = "../GOK/GOK";
-                        c.Paths[2] = id;
-                        c.Paths[3] = "../GOK/GOK";
+                        c.Paths[2] = "../GOK/GOK";
+                        c.Paths[3] = id;
                         c.Paths[4] = "../GOK/GOK";
                         c.Paths[5] = "../GOK/GOK";
                         c.Paths[6] = "../GOK/GOK";
