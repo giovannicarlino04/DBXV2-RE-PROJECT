@@ -694,13 +694,20 @@ namespace XV2Reborn
                         {
                             if (File.Exists(line))
                             {
-                                MessageBox.Show("A mod containing file \n" + line + "\n is already installed", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                                if (File.Exists(Properties.Settings.Default.datafolder + @"\installed\" + modname + @".xml"))
-                                    File.Delete(Properties.Settings.Default.datafolder + @"\installed\" + modname + @".xml");
-                                Clean();
+                                if (MessageBox.Show("A mod containing file \"" + line + "\" is already installed, do you want to replace that file with the new one? \n\nWARNING: THIS COULD CORRUPT YOUR MODS INSTALLATION, ALWAYS KNOW WHAT YOU'RE DOING WHEN REPLACING STUFF", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
+                                {
+
+                                }
+                                else
+                                {
+                                    if (File.Exists(Properties.Settings.Default.datafolder + @"\installed\" + modname + @".xml"))
+                                        File.Delete(Properties.Settings.Default.datafolder + @"\installed\" + modname + @".xml");
+                                    Clean();
+                                    return;
+                                }
                             }
                         }
-
+                        
                         lvMods.Items.Add(lvi);
 
                         string text2 = File.ReadAllText(Properties.Settings.Default.datafolder + @"\installed\" + modname + @".xml");
@@ -763,9 +770,16 @@ namespace XV2Reborn
                         {
                             if (File.Exists(line))
                             {
-                                MessageBox.Show("A mod containing file \n" + line + "\n is already installed", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                                File.Delete(Properties.Settings.Default.datafolder + @"\installed\" + modname + @".xml");
-                                Clean();
+                                if(MessageBox.Show("A mod containing file \"" + line + "\" is already installed, do you want to replace that file with the new one? \n WARNING: THIS COULD CORRUPT YOUR MODS INSTALLATION, ALWAYS KNOW WHAT YOU'RE DOING WHEN REPLACING STUFF", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
+                                {
+
+                                }
+                                else
+                                {
+                                    File.Delete(Properties.Settings.Default.datafolder + @"\installed\" + modname + @".xml");
+                                    Clean();
+                                    return;
+                                }
                             }
                         }
 
@@ -3342,6 +3356,11 @@ namespace XV2Reborn
             int Num;
             if (int.TryParse(txtBLoop.Text, out Num) && !AuraLock)
                 Auras[cbAuraList.SelectedIndex].Color[1] = Num;
+        }
+
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Clean();
         }
 
         ///////////////////////////////////////////////////////////////////
