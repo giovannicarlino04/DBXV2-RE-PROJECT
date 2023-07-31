@@ -135,6 +135,14 @@ namespace XV2Reborn
             new CharName(107, "Majin Female")
             };
 
+        private IDB file = new IDB();
+        private string FileName;
+        private string[] keys;
+        private bool lck = true;
+        private IDB_Data currentItem;
+        private IDB_Data copyItem;
+        private int index;
+
         List<DraggableButton> buttonCharacters = new List<DraggableButton>();
         // Assuming you have a class-level variable to store the character codes and their corresponding images.
         Dictionary<string, Image> characterImages = new Dictionary<string, Image>();
@@ -395,6 +403,21 @@ namespace XV2Reborn
                 cbAURChar.Items.Add(FindCharName(Chars[C].Name) + " - Costume " + Chars[C].Costume.ToString());
             }
 
+            // Load the IDB File
+            FileName = datapath + @"/system/item/talisman_item.idb";
+            file.Read(FileName);
+            file.SetSchema("IDB_Schema.csv");
+            cbList.Items.Clear();
+            for (int i = 0; i < file.items.Count; i++)
+                cbList.Items.Add(file.items[i].id);
+
+            lstData.Items.Clear();
+            keys = file.schema.getKeys();
+            foreach (string s in keys)
+            {
+                var Item = new ListViewItem(new[] { s, "0" });
+                lstData.Items.Add(Item);
+            }
         }
 
         void InstallMod(string arg)
@@ -790,58 +813,6 @@ namespace XV2Reborn
                         File.WriteAllText(Properties.Settings.Default.datafolder + @"\installed\" + modname + @".xml", text2);
 
                         MoveDirectory(temp, Properties.Settings.Default.datafolder);
-
-                        MessageBox.Show("Skill Installed Successfully, you can now add it to the CUS file", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                        Process p = new Process();
-                        ProcessStartInfo info = new ProcessStartInfo();
-                        info.FileName = "cmd.exe";
-                        info.CreateNoWindow = true;
-                        info.WindowStyle = ProcessWindowStyle.Hidden;
-                        info.RedirectStandardInput = true;
-                        info.UseShellExecute = false;
-
-                        p.StartInfo = info;
-                        p.Start();
-                        using (StreamWriter sw = p.StandardInput)
-                        {
-                            if (sw.BaseStream.CanWrite)
-                            {
-                                sw.WriteLine("cd " + Properties.Settings.Default.datafolder + @"\system");
-                                sw.WriteLine(@"XMLSerializer.exe custom_skill.cus");
-                            }
-                        }
-
-                        p.WaitForExit();
-
-                        Process p2 = Process.Start(Properties.Settings.Default.datafolder + @"\system\custom_skill.cus.xml");
-
-                        p2.WaitForExit();
-
-                        p.Start();
-
-                        using (StreamWriter sw = p.StandardInput)
-                        {
-                            if (sw.BaseStream.CanWrite)
-                            {
-                                const string quote = "\"";
-
-                                sw.WriteLine("cd " + Properties.Settings.Default.datafolder + @"\system");
-                                sw.WriteLine(@"XMLSerializer.exe " + quote + Properties.Settings.Default.datafolder + @"\system\custom_skill.cus.xml" + quote);
-                            }
-                        }
-
-                        p.WaitForExit();
-
-                        MessageBox.Show("CUS File Compiled Successfully", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                        if (File.Exists(Properties.Settings.Default.datafolder + @"\system\custom_skill.cus.xml"))
-                        {
-                            File.Delete(Properties.Settings.Default.datafolder + @"\system\custom_skill.cus.xml");
-                        }
-
-                        Clean();
-                        MessageBox.Show("Installation Completed", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                     else
                     {
@@ -3363,6 +3334,525 @@ namespace XV2Reborn
             Clean();
         }
 
+
+
         ///////////////////////////////////////////////////////////////////
+
+        // IDB
+        private void comboBoxlist_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (!this.lck)
+                return;
+            this.lck = false;
+            this.currentItem = this.file.items[this.cbList.SelectedIndex];
+            this.txtID.Text = this.currentItem.id.ToString();
+            this.txtStar.Text = this.currentItem.star.ToString();
+            this.txtNa.Text = this.currentItem.name.ToString();
+            this.txtInfo.Text = this.currentItem.desc.ToString();
+            this.txtType.Text = this.currentItem.type.ToString();
+            this.txtUnk1.Text = this.currentItem.unk1.ToString();
+            this.txtUnk2.Text = this.currentItem.unk2.ToString();
+            this.txtUnk3.Text = this.currentItem.unk3.ToString();
+            this.txtBuy.Text = this.currentItem.buy.ToString();
+            this.txtSell.Text = this.currentItem.sell.ToString();
+            this.txtRace.Text = this.currentItem.racelock.ToString();
+            this.txtTP.Text = this.currentItem.tp.ToString();
+            this.txtExtra.Text = this.currentItem.extra.ToString();
+            switch (this.cbEffect.SelectedIndex)
+            {
+                case 0:
+                    this.lstData.Items.Clear();
+                    foreach (string key in this.keys)
+                        this.lstData.Items.Add(new ListViewItem(new string[2]
+                        {
+              key,
+              this.file.schema.getValueString(key, ref this.currentItem.E_set1)
+                        }));
+                    break;
+                case 1:
+                    this.lstData.Items.Clear();
+                    foreach (string key in this.keys)
+                        this.lstData.Items.Add(new ListViewItem(new string[2]
+                        {
+              key,
+              this.file.schema.getValueString(key, ref this.currentItem.E_set2)
+                        }));
+                    break;
+                case 2:
+                    this.lstData.Items.Clear();
+                    foreach (string key in this.keys)
+                        this.lstData.Items.Add(new ListViewItem(new string[2]
+                        {
+              key,
+              this.file.schema.getValueString(key, ref this.currentItem.E_set3)
+                        }));
+                    break;
+            }
+            this.index = this.cbList.SelectedIndex;
+            this.lck = true;
+        }
+
+        private void cbEffect_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            switch (this.cbEffect.SelectedIndex)
+            {
+                case 0:
+                    this.lstData.Items.Clear();
+                    foreach (string key in this.keys)
+                        this.lstData.Items.Add(new ListViewItem(new string[2]
+                        {
+              key,
+              this.file.schema.getValueString(key, ref this.currentItem.E_set1)
+                        }));
+                    break;
+                case 1:
+                    this.lstData.Items.Clear();
+                    foreach (string key in this.keys)
+                        this.lstData.Items.Add(new ListViewItem(new string[2]
+                        {
+              key,
+              this.file.schema.getValueString(key, ref this.currentItem.E_set2)
+                        }));
+                    break;
+                case 2:
+                    this.lstData.Items.Clear();
+                    foreach (string key in this.keys)
+                        this.lstData.Items.Add(new ListViewItem(new string[2]
+                        {
+              key,
+              this.file.schema.getValueString(key, ref this.currentItem.E_set3)
+                        }));
+                    break;
+            }
+        }
+
+        private void lstData_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (this.lstData.SelectedItems.Count == 0 || !this.lck)
+                return;
+            this.lck = false;
+            this.txtName.Text = this.lstData.SelectedItems[0].SubItems[0].Text;
+            this.txtVal.Text = this.lstData.SelectedItems[0].SubItems[1].Text;
+            this.lck = true;
+        }
+
+        private void txtVal_TextChanged(object sender, EventArgs e)
+        {
+            if (!this.lck)
+                return;
+            switch (this.cbEffect.SelectedIndex)
+            {
+                case 0:
+                    this.lstData.SelectedItems[0].SubItems[1].Text = this.txtVal.Text;
+                    this.file.schema.setValueString(this.txtName.Text, ref this.currentItem.E_set1, this.txtVal.Text);
+                    break;
+                case 1:
+                    this.lstData.SelectedItems[0].SubItems[1].Text = this.txtVal.Text;
+                    this.file.schema.setValueString(this.txtName.Text, ref this.currentItem.E_set2, this.txtVal.Text);
+                    break;
+                case 2:
+                    this.lstData.SelectedItems[0].SubItems[1].Text = this.txtVal.Text;
+                    this.file.schema.setValueString(this.txtName.Text, ref this.currentItem.E_set3, this.txtVal.Text);
+                    break;
+            }
+            this.file.items[this.index] = this.currentItem;
+        }
+
+        private void txtID_TextChanged(object sender, EventArgs e)
+        {
+            short result;
+            if (!short.TryParse(this.txtID.Text, out result) || !this.lck)
+                return;
+            this.currentItem.id = result;
+            if (this.index >= 0)
+                this.file.items[this.index] = this.currentItem;
+            this.cbList.Items.Clear();
+            for (int index = 0; index < this.file.items.Count; ++index)
+                this.cbList.Items.Add((object)this.file.items[index].id);
+        }
+
+        private void txtStar_TextChanged(object sender, EventArgs e)
+        {
+            short result;
+            if (!short.TryParse(this.txtStar.Text, out result) || !this.lck)
+                return;
+            this.currentItem.star = result;
+            this.file.items[this.index] = this.currentItem;
+        }
+
+        private void txtNa_TextChanged(object sender, EventArgs e)
+        {
+            short result;
+            if (!short.TryParse(this.txtNa.Text, out result) || !this.lck)
+                return;
+            this.currentItem.name = result;
+            this.file.items[this.index] = this.currentItem;
+        }
+
+        private void txtInfo_TextChanged(object sender, EventArgs e)
+        {
+            short result;
+            if (!short.TryParse(this.txtInfo.Text, out result) || !this.lck)
+                return;
+            this.currentItem.desc = result;
+            this.file.items[this.index] = this.currentItem;
+        }
+
+        private void txtType_TextChanged(object sender, EventArgs e)
+        {
+            short result;
+            if (!short.TryParse(this.txtType.Text, out result) || !this.lck)
+                return;
+            this.currentItem.type = result;
+            this.file.items[this.index] = this.currentItem;
+        }
+
+        private void txtUnk1_TextChanged(object sender, EventArgs e)
+        {
+            short result;
+            if (!short.TryParse(this.txtUnk1.Text, out result) || !this.lck)
+                return;
+            this.currentItem.unk1 = result;
+            this.file.items[this.index] = this.currentItem;
+        }
+
+        private void txtUnk2_TextChanged(object sender, EventArgs e)
+        {
+            short result;
+            if (!short.TryParse(this.txtUnk2.Text, out result) || !this.lck)
+                return;
+            this.currentItem.unk2 = result;
+            this.file.items[this.index] = this.currentItem;
+        }
+
+        private void txtUnk3_TextChanged(object sender, EventArgs e)
+        {
+            short result;
+            if (!short.TryParse(this.txtUnk3.Text, out result) || !this.lck)
+                return;
+            this.currentItem.unk3 = result;
+            this.file.items[this.index] = this.currentItem;
+        }
+
+        private void txtBuy_TextChanged(object sender, EventArgs e)
+        {
+            int result;
+            if (!int.TryParse(this.txtBuy.Text, out result) || !this.lck)
+                return;
+            this.currentItem.buy = result;
+            this.file.items[this.index] = this.currentItem;
+        }
+
+        private void txtSell_TextChanged(object sender, EventArgs e)
+        {
+            int result;
+            if (!int.TryParse(this.txtSell.Text, out result) || !this.lck)
+                return;
+            this.currentItem.sell = result;
+            this.file.items[this.index] = this.currentItem;
+        }
+
+        private void txtRace_TextChanged(object sender, EventArgs e)
+        {
+            int result;
+            if (!int.TryParse(this.txtRace.Text, out result) || !this.lck)
+                return;
+            this.currentItem.racelock = result;
+            this.file.items[this.index] = this.currentItem;
+        }
+
+        private void txtTP_TextChanged(object sender, EventArgs e)
+        {
+            int result;
+            if (!int.TryParse(this.txtTP.Text, out result) || !this.lck)
+                return;
+            this.currentItem.tp = result;
+            this.file.items[this.index] = this.currentItem;
+        }
+
+        private void txtExtra_TextChanged(object sender, EventArgs e)
+        {
+            int result;
+            if (!int.TryParse(this.txtExtra.Text, out result) || !this.lck)
+                return;
+            this.currentItem.extra = result;
+            this.file.items[this.index] = this.currentItem;
+        }
+        private void saveToolStripMenuItem_Click(object sender, EventArgs e) => this.file.Write(this.FileName);
+
+        private void copyToolStripMenuItem_Click(object sender, EventArgs e) => this.copyItem = this.currentItem;
+
+        private void pasteToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            short id = this.currentItem.id;
+            this.currentItem = this.copyItem;
+            this.currentItem.id = id;
+            if (!this.lck)
+                return;
+            this.lck = false;
+            this.txtID.Text = this.currentItem.id.ToString();
+            this.txtStar.Text = this.currentItem.star.ToString();
+            this.txtNa.Text = this.currentItem.name.ToString();
+            this.txtInfo.Text = this.currentItem.desc.ToString();
+            this.txtType.Text = this.currentItem.type.ToString();
+            this.txtUnk1.Text = this.currentItem.unk1.ToString();
+            this.txtUnk2.Text = this.currentItem.unk2.ToString();
+            this.txtUnk3.Text = this.currentItem.unk3.ToString();
+            this.txtBuy.Text = this.currentItem.buy.ToString();
+            this.txtSell.Text = this.currentItem.sell.ToString();
+            this.txtRace.Text = this.currentItem.racelock.ToString();
+            this.txtTP.Text = this.currentItem.tp.ToString();
+            this.txtExtra.Text = this.currentItem.extra.ToString();
+            switch (this.cbEffect.SelectedIndex)
+            {
+                case 0:
+                    this.lstData.Items.Clear();
+                    foreach (string key in this.keys)
+                        this.lstData.Items.Add(new ListViewItem(new string[2]
+                        {
+              key,
+              this.file.schema.getValueString(key, ref this.currentItem.E_set1)
+                        }));
+                    break;
+                case 1:
+                    this.lstData.Items.Clear();
+                    foreach (string key in this.keys)
+                        this.lstData.Items.Add(new ListViewItem(new string[2]
+                        {
+              key,
+              this.file.schema.getValueString(key, ref this.currentItem.E_set2)
+                        }));
+                    break;
+                case 2:
+                    this.lstData.Items.Clear();
+                    foreach (string key in this.keys)
+                        this.lstData.Items.Add(new ListViewItem(new string[2]
+                        {
+              key,
+              this.file.schema.getValueString(key, ref this.currentItem.E_set3)
+                        }));
+                    break;
+            }
+            this.file.items[this.cbList.SelectedIndex] = this.currentItem;
+            this.lck = true;
+            this.cbList.Items.Clear();
+            for (int index = 0; index < this.file.items.Count; ++index)
+                this.cbList.Items.Add((object)this.file.items[index].id);
+        }
+
+        private void talismanToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            // Load the IDB File
+            FileName = datapath + @"/system/item/talisman_item.idb";
+            file.Read(FileName);
+            file.SetSchema("IDB_Schema.csv");
+            cbList.Items.Clear();
+            for (int i = 0; i < file.items.Count; i++)
+                cbList.Items.Add(file.items[i].id);
+
+            lstData.Items.Clear();
+            keys = file.schema.getKeys();
+            foreach (string s in keys)
+            {
+                var Item = new ListViewItem(new[] { s, "0" });
+                lstData.Items.Add(Item);
+            }
+        }
+
+        private void accessoryToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            // Load the IDB File
+            FileName = datapath + @"/system/item/accessory_item.idb";
+            file.Read(FileName);
+            file.SetSchema("IDB_Schema.csv");
+            cbList.Items.Clear();
+            for (int i = 0; i < file.items.Count; i++)
+                cbList.Items.Add(file.items[i].id);
+
+            lstData.Items.Clear();
+            keys = file.schema.getKeys();
+            foreach (string s in keys)
+            {
+                var Item = new ListViewItem(new[] { s, "0" });
+                lstData.Items.Add(Item);
+            }
+        }
+
+        private void battleToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            // Load the IDB File
+            FileName = datapath + @"/system/item/battle_item.idb";
+            file.Read(FileName);
+            file.SetSchema("IDB_Schema.csv");
+            cbList.Items.Clear();
+            for (int i = 0; i < file.items.Count; i++)
+                cbList.Items.Add(file.items[i].id);
+
+            lstData.Items.Clear();
+            keys = file.schema.getKeys();
+            foreach (string s in keys)
+            {
+                var Item = new ListViewItem(new[] { s, "0" });
+                lstData.Items.Add(Item);
+            }
+        }
+
+        private void costumeTopToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            // Load the IDB File
+            FileName = datapath + @"/system/item/costume_top_item.idb";
+            file.Read(FileName);
+            file.SetSchema("IDB_Schema.csv");
+            cbList.Items.Clear();
+            for (int i = 0; i < file.items.Count; i++)
+                cbList.Items.Add(file.items[i].id);
+
+            lstData.Items.Clear();
+            keys = file.schema.getKeys();
+            foreach (string s in keys)
+            {
+                var Item = new ListViewItem(new[] { s, "0" });
+                lstData.Items.Add(Item);
+            }
+        }
+
+        private void costumeGlovesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            // Load the IDB File
+            FileName = datapath + @"/system/item/costume_gloves_item.idb";
+            file.Read(FileName);
+            file.SetSchema("IDB_Schema.csv");
+            cbList.Items.Clear();
+            for (int i = 0; i < file.items.Count; i++)
+                cbList.Items.Add(file.items[i].id);
+
+            lstData.Items.Clear();
+            keys = file.schema.getKeys();
+            foreach (string s in keys)
+            {
+                var Item = new ListViewItem(new[] { s, "0" });
+                lstData.Items.Add(Item);
+            }
+        }
+
+        private void costumeBottomToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            // Load the IDB File
+            FileName = datapath + @"/system/item/costume_bottom_item.idb";
+            file.Read(FileName);
+            file.SetSchema("IDB_Schema.csv");
+            cbList.Items.Clear();
+            for (int i = 0; i < file.items.Count; i++)
+                cbList.Items.Add(file.items[i].id);
+
+            lstData.Items.Clear();
+            keys = file.schema.getKeys();
+            foreach (string s in keys)
+            {
+                var Item = new ListViewItem(new[] { s, "0" });
+                lstData.Items.Add(Item);
+            }
+        }
+
+        private void costumeShoesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            // Load the IDB File
+            FileName = datapath + @"/system/item/costume_shoes_item.idb";
+            file.Read(FileName);
+            file.SetSchema("IDB_Schema.csv");
+            cbList.Items.Clear();
+            for (int i = 0; i < file.items.Count; i++)
+                cbList.Items.Add(file.items[i].id);
+
+            lstData.Items.Clear();
+            keys = file.schema.getKeys();
+            foreach (string s in keys)
+            {
+                var Item = new ListViewItem(new[] { s, "0" });
+                lstData.Items.Add(Item);
+            }
+        }
+
+        private void extraToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            // Load the IDB File
+            FileName = datapath + @"/system/item/extra_item.idb";
+            file.Read(FileName);
+            file.SetSchema("IDB_Schema.csv");
+            cbList.Items.Clear();
+            for (int i = 0; i < file.items.Count; i++)
+                cbList.Items.Add(file.items[i].id);
+
+            lstData.Items.Clear();
+            keys = file.schema.getKeys();
+            foreach (string s in keys)
+            {
+                var Item = new ListViewItem(new[] { s, "0" });
+                lstData.Items.Add(Item);
+            }
+        }
+
+        private void materialToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            // Load the IDB File
+            FileName = datapath + @"/system/item/material_item.idb";
+            file.Read(FileName);
+            file.SetSchema("IDB_Schema.csv");
+            cbList.Items.Clear();
+            for (int i = 0; i < file.items.Count; i++)
+                cbList.Items.Add(file.items[i].id);
+
+            lstData.Items.Clear();
+            keys = file.schema.getKeys();
+            foreach (string s in keys)
+            {
+                var Item = new ListViewItem(new[] { s, "0" });
+                lstData.Items.Add(Item);
+            }
+        }
+
+        private void skillToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            // Load the IDB File
+            FileName = datapath + @"/system/item/skill_item.idb";
+            file.Read(FileName);
+            file.SetSchema("IDB_Schema.csv");
+            cbList.Items.Clear();
+            for (int i = 0; i < file.items.Count; i++)
+                cbList.Items.Add(file.items[i].id);
+
+            lstData.Items.Clear();
+            keys = file.schema.getKeys();
+            foreach (string s in keys)
+            {
+                var Item = new ListViewItem(new[] { s, "0" });
+                lstData.Items.Add(Item);
+            }
+        }
+
+        private void toolStripMenuItem14_Click(object sender, EventArgs e)
+        {
+            this.file.items.RemoveAt(this.cbList.SelectedIndex);
+            this.cbList.SelectedIndex = 0;
+            this.cbList.Items.Clear();
+            for (int index = 0; index < this.file.items.Count; ++index)
+                this.cbList.Items.Add((object)this.file.items[index].id);
+        }
+
+        private void toolStripMenuItem13_Click(object sender, EventArgs e)
+        {
+            IDB_Data idbData = new IDB_Data();
+            idbData.id = this.file.items[this.file.items.Count - 1].id;
+            ++idbData.id;
+            idbData.E_set1 = new byte[224];
+            idbData.E_set2 = new byte[224];
+            idbData.E_set3 = new byte[224];
+            this.file.items.Add(idbData);
+            this.cbList.Items.Clear();
+            for (int index = 0; index < this.file.items.Count; ++index)
+                this.cbList.Items.Add((object)this.file.items[index].id);
+        }
+
+        //////////////////////////////////////////////////////////////////
     }
 }

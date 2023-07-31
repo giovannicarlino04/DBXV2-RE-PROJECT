@@ -16,3 +16,4 @@ C:\Games\DB Xenoverse 2\XV2Reborn\XV2Reborn.exe.config
 C:\Games\DB Xenoverse 2\XV2Reborn\XV2Reborn.exe
 C:\Games\DB Xenoverse 2\XV2Reborn\XV2Reborn.pdb
 C:\Games\DB Xenoverse 2\XV2Reborn\PSC_Schema.csv
+C:\Games\DB Xenoverse 2\XV2Reborn\IDB_Schema.csv

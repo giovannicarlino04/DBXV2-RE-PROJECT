@@ -43,6 +43,10 @@ namespace XV2SkillCreator
                 {
                     Directory.Delete(temp + @"\skill\ESC\" + txtSkillID.Text, true);
                 }
+                else if (Directory.Exists(temp + @"\skill\MET\" + txtSkillID.Text))
+                {
+                    Directory.Delete(temp + @"\skill\MET\" + txtSkillID.Text, true);
+                }
 
                 if (CBSkillType.SelectedIndex == 0)
                 {
@@ -59,6 +63,11 @@ namespace XV2SkillCreator
                 {
                     Directory.CreateDirectory(temp + @"\skill\ESC");
                     Directory.Move(txtSkillFolder.Text, temp + @"\skill\ESC\" + txtSkillID.Text);
+                }
+                else if (CBSkillType.SelectedIndex == 3)
+                {
+                    Directory.CreateDirectory(temp + @"\skill\MET");
+                    Directory.Move(txtSkillFolder.Text, temp + @"\skill\MET\" + txtSkillID.Text);
                 }
 
                 string xmlpath = temp + "\\modinfo.xml";

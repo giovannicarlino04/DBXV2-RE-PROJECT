@@ -263,6 +263,59 @@
             this.removeAuraToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.editAURFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.tabPage12 = new System.Windows.Forms.TabPage();
+            this.txtVal = new System.Windows.Forms.TextBox();
+            this.txtName = new System.Windows.Forms.TextBox();
+            this.label77 = new System.Windows.Forms.Label();
+            this.txtExtra = new System.Windows.Forms.TextBox();
+            this.label78 = new System.Windows.Forms.Label();
+            this.txtTP = new System.Windows.Forms.TextBox();
+            this.label79 = new System.Windows.Forms.Label();
+            this.txtRace = new System.Windows.Forms.TextBox();
+            this.label80 = new System.Windows.Forms.Label();
+            this.txtSell = new System.Windows.Forms.TextBox();
+            this.label81 = new System.Windows.Forms.Label();
+            this.txtBuy = new System.Windows.Forms.TextBox();
+            this.label82 = new System.Windows.Forms.Label();
+            this.txtUnk3 = new System.Windows.Forms.TextBox();
+            this.label83 = new System.Windows.Forms.Label();
+            this.txtUnk2 = new System.Windows.Forms.TextBox();
+            this.label84 = new System.Windows.Forms.Label();
+            this.txtUnk1 = new System.Windows.Forms.TextBox();
+            this.label85 = new System.Windows.Forms.Label();
+            this.txtType = new System.Windows.Forms.TextBox();
+            this.label86 = new System.Windows.Forms.Label();
+            this.txtInfo = new System.Windows.Forms.TextBox();
+            this.label87 = new System.Windows.Forms.Label();
+            this.txtNa = new System.Windows.Forms.TextBox();
+            this.label88 = new System.Windows.Forms.Label();
+            this.txtStar = new System.Windows.Forms.TextBox();
+            this.label89 = new System.Windows.Forms.Label();
+            this.txtID = new System.Windows.Forms.TextBox();
+            this.lstData = new System.Windows.Forms.ListView();
+            this.columnHeader7 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader8 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.cbEffect = new System.Windows.Forms.ComboBox();
+            this.cbList = new System.Windows.Forms.ComboBox();
+            this.menuStrip9 = new System.Windows.Forms.MenuStrip();
+            this.toolStripMenuItem9 = new System.Windows.Forms.ToolStripMenuItem();
+            this.openToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.talismanToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.accessoryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.battleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.costumeTopToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.costumeGlovesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.costumeBottomToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.costumeShoesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.extraToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.materialToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.skillToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem12 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem13 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem14 = new System.Windows.Forms.ToolStripMenuItem();
+            this.copyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.pasteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tabPage6 = new System.Windows.Forms.TabPage();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.cbListMSG = new System.Windows.Forms.ComboBox();
@@ -318,6 +371,8 @@
             this.groupBox8.SuspendLayout();
             this.groupBox7.SuspendLayout();
             this.menuStrip8.SuspendLayout();
+            this.tabPage12.SuspendLayout();
+            this.menuStrip9.SuspendLayout();
             this.tabPage6.SuspendLayout();
             this.groupBox5.SuspendLayout();
             this.menuStrip3.SuspendLayout();
@@ -418,6 +473,7 @@
             this.tabControl1.Controls.Add(this.tabPage3);
             this.tabControl1.Controls.Add(this.tabPage4);
             this.tabControl1.Controls.Add(this.tabPage5);
+            this.tabControl1.Controls.Add(this.tabPage12);
             this.tabControl1.Controls.Add(this.tabPage6);
             this.tabControl1.Controls.Add(this.tabPage7);
             this.tabControl1.Controls.Add(this.tabPage8);
@@ -2484,6 +2540,474 @@
             this.editAURFileToolStripMenuItem.Text = "Edit AUR File";
             this.editAURFileToolStripMenuItem.Click += new System.EventHandler(this.editAURFileToolStripMenuItem_Click);
             // 
+            // tabPage12
+            // 
+            this.tabPage12.BackColor = System.Drawing.SystemColors.Control;
+            this.tabPage12.Controls.Add(this.txtVal);
+            this.tabPage12.Controls.Add(this.txtName);
+            this.tabPage12.Controls.Add(this.label77);
+            this.tabPage12.Controls.Add(this.txtExtra);
+            this.tabPage12.Controls.Add(this.label78);
+            this.tabPage12.Controls.Add(this.txtTP);
+            this.tabPage12.Controls.Add(this.label79);
+            this.tabPage12.Controls.Add(this.txtRace);
+            this.tabPage12.Controls.Add(this.label80);
+            this.tabPage12.Controls.Add(this.txtSell);
+            this.tabPage12.Controls.Add(this.label81);
+            this.tabPage12.Controls.Add(this.txtBuy);
+            this.tabPage12.Controls.Add(this.label82);
+            this.tabPage12.Controls.Add(this.txtUnk3);
+            this.tabPage12.Controls.Add(this.label83);
+            this.tabPage12.Controls.Add(this.txtUnk2);
+            this.tabPage12.Controls.Add(this.label84);
+            this.tabPage12.Controls.Add(this.txtUnk1);
+            this.tabPage12.Controls.Add(this.label85);
+            this.tabPage12.Controls.Add(this.txtType);
+            this.tabPage12.Controls.Add(this.label86);
+            this.tabPage12.Controls.Add(this.txtInfo);
+            this.tabPage12.Controls.Add(this.label87);
+            this.tabPage12.Controls.Add(this.txtNa);
+            this.tabPage12.Controls.Add(this.label88);
+            this.tabPage12.Controls.Add(this.txtStar);
+            this.tabPage12.Controls.Add(this.label89);
+            this.tabPage12.Controls.Add(this.txtID);
+            this.tabPage12.Controls.Add(this.lstData);
+            this.tabPage12.Controls.Add(this.cbEffect);
+            this.tabPage12.Controls.Add(this.cbList);
+            this.tabPage12.Controls.Add(this.menuStrip9);
+            this.tabPage12.Location = new System.Drawing.Point(4, 22);
+            this.tabPage12.Name = "tabPage12";
+            this.tabPage12.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage12.Size = new System.Drawing.Size(1017, 484);
+            this.tabPage12.TabIndex = 9;
+            this.tabPage12.Text = "IDB";
+            // 
+            // txtVal
+            // 
+            this.txtVal.Location = new System.Drawing.Point(308, 234);
+            this.txtVal.Name = "txtVal";
+            this.txtVal.Size = new System.Drawing.Size(171, 20);
+            this.txtVal.TabIndex = 63;
+            this.txtVal.TextChanged += new System.EventHandler(this.txtVal_TextChanged);
+            // 
+            // txtName
+            // 
+            this.txtName.Location = new System.Drawing.Point(12, 234);
+            this.txtName.Name = "txtName";
+            this.txtName.ReadOnly = true;
+            this.txtName.Size = new System.Drawing.Size(290, 20);
+            this.txtName.TabIndex = 62;
+            // 
+            // label77
+            // 
+            this.label77.AutoSize = true;
+            this.label77.Location = new System.Drawing.Point(368, 178);
+            this.label77.Name = "label77";
+            this.label77.Size = new System.Drawing.Size(78, 13);
+            this.label77.TabIndex = 61;
+            this.label77.Text = "Blast/Model ID";
+            // 
+            // txtExtra
+            // 
+            this.txtExtra.Location = new System.Drawing.Point(367, 197);
+            this.txtExtra.Name = "txtExtra";
+            this.txtExtra.Size = new System.Drawing.Size(112, 20);
+            this.txtExtra.TabIndex = 60;
+            this.txtExtra.TextChanged += new System.EventHandler(this.txtExtra_TextChanged);
+            // 
+            // label78
+            // 
+            this.label78.AutoSize = true;
+            this.label78.Location = new System.Drawing.Point(368, 130);
+            this.label78.Name = "label78";
+            this.label78.Size = new System.Drawing.Size(72, 13);
+            this.label78.TabIndex = 59;
+            this.label78.Text = "TP Buy Value";
+            // 
+            // txtTP
+            // 
+            this.txtTP.Location = new System.Drawing.Point(367, 149);
+            this.txtTP.Name = "txtTP";
+            this.txtTP.Size = new System.Drawing.Size(112, 20);
+            this.txtTP.TabIndex = 58;
+            this.txtTP.TextChanged += new System.EventHandler(this.txtTP_TextChanged);
+            // 
+            // label79
+            // 
+            this.label79.AutoSize = true;
+            this.label79.Location = new System.Drawing.Point(250, 130);
+            this.label79.Name = "label79";
+            this.label79.Size = new System.Drawing.Size(60, 13);
+            this.label79.TabIndex = 57;
+            this.label79.Text = "Race Lock";
+            // 
+            // txtRace
+            // 
+            this.txtRace.Location = new System.Drawing.Point(249, 149);
+            this.txtRace.Name = "txtRace";
+            this.txtRace.Size = new System.Drawing.Size(112, 20);
+            this.txtRace.TabIndex = 56;
+            this.txtRace.TextChanged += new System.EventHandler(this.txtRace_TextChanged);
+            // 
+            // label80
+            // 
+            this.label80.AutoSize = true;
+            this.label80.Location = new System.Drawing.Point(131, 130);
+            this.label80.Name = "label80";
+            this.label80.Size = new System.Drawing.Size(78, 13);
+            this.label80.TabIndex = 55;
+            this.label80.Text = "Zeni Sell Value";
+            // 
+            // txtSell
+            // 
+            this.txtSell.Location = new System.Drawing.Point(130, 149);
+            this.txtSell.Name = "txtSell";
+            this.txtSell.Size = new System.Drawing.Size(112, 20);
+            this.txtSell.TabIndex = 54;
+            this.txtSell.TextChanged += new System.EventHandler(this.txtSell_TextChanged);
+            // 
+            // label81
+            // 
+            this.label81.AutoSize = true;
+            this.label81.Location = new System.Drawing.Point(13, 130);
+            this.label81.Name = "label81";
+            this.label81.Size = new System.Drawing.Size(79, 13);
+            this.label81.TabIndex = 53;
+            this.label81.Text = "Zeni Buy Value";
+            // 
+            // txtBuy
+            // 
+            this.txtBuy.Location = new System.Drawing.Point(12, 149);
+            this.txtBuy.Name = "txtBuy";
+            this.txtBuy.Size = new System.Drawing.Size(112, 20);
+            this.txtBuy.TabIndex = 52;
+            this.txtBuy.TextChanged += new System.EventHandler(this.txtBuy_TextChanged);
+            // 
+            // label82
+            // 
+            this.label82.AutoSize = true;
+            this.label82.Location = new System.Drawing.Point(427, 81);
+            this.label82.Name = "label82";
+            this.label82.Size = new System.Drawing.Size(19, 13);
+            this.label82.TabIndex = 51;
+            this.label82.Text = "3?";
+            // 
+            // txtUnk3
+            // 
+            this.txtUnk3.Location = new System.Drawing.Point(426, 100);
+            this.txtUnk3.Name = "txtUnk3";
+            this.txtUnk3.Size = new System.Drawing.Size(53, 20);
+            this.txtUnk3.TabIndex = 50;
+            this.txtUnk3.TextChanged += new System.EventHandler(this.txtUnk3_TextChanged);
+            // 
+            // label83
+            // 
+            this.label83.AutoSize = true;
+            this.label83.Location = new System.Drawing.Point(368, 81);
+            this.label83.Name = "label83";
+            this.label83.Size = new System.Drawing.Size(19, 13);
+            this.label83.TabIndex = 49;
+            this.label83.Text = "2?";
+            // 
+            // txtUnk2
+            // 
+            this.txtUnk2.Location = new System.Drawing.Point(367, 100);
+            this.txtUnk2.Name = "txtUnk2";
+            this.txtUnk2.Size = new System.Drawing.Size(53, 20);
+            this.txtUnk2.TabIndex = 48;
+            this.txtUnk2.TextChanged += new System.EventHandler(this.txtUnk2_TextChanged);
+            // 
+            // label84
+            // 
+            this.label84.AutoSize = true;
+            this.label84.Location = new System.Drawing.Point(309, 81);
+            this.label84.Name = "label84";
+            this.label84.Size = new System.Drawing.Size(19, 13);
+            this.label84.TabIndex = 47;
+            this.label84.Text = "1?";
+            // 
+            // txtUnk1
+            // 
+            this.txtUnk1.Location = new System.Drawing.Point(308, 100);
+            this.txtUnk1.Name = "txtUnk1";
+            this.txtUnk1.Size = new System.Drawing.Size(53, 20);
+            this.txtUnk1.TabIndex = 46;
+            this.txtUnk1.TextChanged += new System.EventHandler(this.txtUnk1_TextChanged);
+            // 
+            // label85
+            // 
+            this.label85.AutoSize = true;
+            this.label85.Location = new System.Drawing.Point(250, 81);
+            this.label85.Name = "label85";
+            this.label85.Size = new System.Drawing.Size(31, 13);
+            this.label85.TabIndex = 45;
+            this.label85.Text = "Type";
+            // 
+            // txtType
+            // 
+            this.txtType.Location = new System.Drawing.Point(249, 100);
+            this.txtType.Name = "txtType";
+            this.txtType.Size = new System.Drawing.Size(53, 20);
+            this.txtType.TabIndex = 44;
+            this.txtType.TextChanged += new System.EventHandler(this.txtType_TextChanged);
+            // 
+            // label86
+            // 
+            this.label86.AutoSize = true;
+            this.label86.Location = new System.Drawing.Point(190, 81);
+            this.label86.Name = "label86";
+            this.label86.Size = new System.Drawing.Size(39, 13);
+            this.label86.TabIndex = 43;
+            this.label86.Text = "Info ID";
+            // 
+            // txtInfo
+            // 
+            this.txtInfo.Location = new System.Drawing.Point(189, 100);
+            this.txtInfo.Name = "txtInfo";
+            this.txtInfo.Size = new System.Drawing.Size(53, 20);
+            this.txtInfo.TabIndex = 42;
+            this.txtInfo.TextChanged += new System.EventHandler(this.txtInfo_TextChanged);
+            // 
+            // label87
+            // 
+            this.label87.AutoSize = true;
+            this.label87.Location = new System.Drawing.Point(131, 81);
+            this.label87.Name = "label87";
+            this.label87.Size = new System.Drawing.Size(49, 13);
+            this.label87.TabIndex = 41;
+            this.label87.Text = "Name ID";
+            // 
+            // txtNa
+            // 
+            this.txtNa.Location = new System.Drawing.Point(130, 100);
+            this.txtNa.Name = "txtNa";
+            this.txtNa.Size = new System.Drawing.Size(53, 20);
+            this.txtNa.TabIndex = 40;
+            this.txtNa.TextChanged += new System.EventHandler(this.txtNa_TextChanged);
+            // 
+            // label88
+            // 
+            this.label88.AutoSize = true;
+            this.label88.Location = new System.Drawing.Point(72, 81);
+            this.label88.Name = "label88";
+            this.label88.Size = new System.Drawing.Size(26, 13);
+            this.label88.TabIndex = 39;
+            this.label88.Text = "Star";
+            // 
+            // txtStar
+            // 
+            this.txtStar.Location = new System.Drawing.Point(71, 100);
+            this.txtStar.Name = "txtStar";
+            this.txtStar.Size = new System.Drawing.Size(53, 20);
+            this.txtStar.TabIndex = 38;
+            this.txtStar.TextChanged += new System.EventHandler(this.txtStar_TextChanged);
+            // 
+            // label89
+            // 
+            this.label89.AutoSize = true;
+            this.label89.Location = new System.Drawing.Point(13, 81);
+            this.label89.Name = "label89";
+            this.label89.Size = new System.Drawing.Size(18, 13);
+            this.label89.TabIndex = 37;
+            this.label89.Text = "ID";
+            // 
+            // txtID
+            // 
+            this.txtID.Location = new System.Drawing.Point(12, 100);
+            this.txtID.Name = "txtID";
+            this.txtID.Size = new System.Drawing.Size(53, 20);
+            this.txtID.TabIndex = 36;
+            this.txtID.TextChanged += new System.EventHandler(this.txtID_TextChanged);
+            // 
+            // lstData
+            // 
+            this.lstData.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader7,
+            this.columnHeader8});
+            this.lstData.HideSelection = false;
+            this.lstData.Location = new System.Drawing.Point(12, 260);
+            this.lstData.Name = "lstData";
+            this.lstData.Size = new System.Drawing.Size(467, 212);
+            this.lstData.TabIndex = 35;
+            this.lstData.UseCompatibleStateImageBehavior = false;
+            this.lstData.View = System.Windows.Forms.View.Tile;
+            this.lstData.SelectedIndexChanged += new System.EventHandler(this.lstData_SelectedIndexChanged);
+            // 
+            // cbEffect
+            // 
+            this.cbEffect.FormattingEnabled = true;
+            this.cbEffect.Items.AddRange(new object[] {
+            "Effect 0",
+            "Effect 1",
+            "Effect 2"});
+            this.cbEffect.Location = new System.Drawing.Point(12, 197);
+            this.cbEffect.Name = "cbEffect";
+            this.cbEffect.Size = new System.Drawing.Size(140, 21);
+            this.cbEffect.TabIndex = 34;
+            this.cbEffect.SelectedIndexChanged += new System.EventHandler(this.cbEffect_SelectedIndexChanged);
+            // 
+            // cbList
+            // 
+            this.cbList.FormattingEnabled = true;
+            this.cbList.Location = new System.Drawing.Point(12, 46);
+            this.cbList.Name = "cbList";
+            this.cbList.Size = new System.Drawing.Size(202, 21);
+            this.cbList.TabIndex = 33;
+            this.cbList.SelectedIndexChanged += new System.EventHandler(this.comboBoxlist_SelectedIndexChanged);
+            // 
+            // menuStrip9
+            // 
+            this.menuStrip9.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripMenuItem9,
+            this.toolStripMenuItem12});
+            this.menuStrip9.Location = new System.Drawing.Point(3, 3);
+            this.menuStrip9.Name = "menuStrip9";
+            this.menuStrip9.Size = new System.Drawing.Size(1011, 24);
+            this.menuStrip9.TabIndex = 32;
+            this.menuStrip9.Text = "menuStrip9";
+            // 
+            // toolStripMenuItem9
+            // 
+            this.toolStripMenuItem9.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.openToolStripMenuItem1,
+            this.saveToolStripMenuItem});
+            this.toolStripMenuItem9.Name = "toolStripMenuItem9";
+            this.toolStripMenuItem9.Size = new System.Drawing.Size(37, 20);
+            this.toolStripMenuItem9.Text = "File";
+            // 
+            // openToolStripMenuItem1
+            // 
+            this.openToolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.talismanToolStripMenuItem,
+            this.accessoryToolStripMenuItem,
+            this.battleToolStripMenuItem,
+            this.costumeTopToolStripMenuItem,
+            this.costumeGlovesToolStripMenuItem,
+            this.costumeBottomToolStripMenuItem,
+            this.costumeShoesToolStripMenuItem,
+            this.extraToolStripMenuItem,
+            this.materialToolStripMenuItem,
+            this.skillToolStripMenuItem});
+            this.openToolStripMenuItem1.Name = "openToolStripMenuItem1";
+            this.openToolStripMenuItem1.Size = new System.Drawing.Size(103, 22);
+            this.openToolStripMenuItem1.Text = "Open";
+            // 
+            // talismanToolStripMenuItem
+            // 
+            this.talismanToolStripMenuItem.Name = "talismanToolStripMenuItem";
+            this.talismanToolStripMenuItem.Size = new System.Drawing.Size(165, 22);
+            this.talismanToolStripMenuItem.Text = "Talisman";
+            this.talismanToolStripMenuItem.Click += new System.EventHandler(this.talismanToolStripMenuItem_Click);
+            // 
+            // accessoryToolStripMenuItem
+            // 
+            this.accessoryToolStripMenuItem.Name = "accessoryToolStripMenuItem";
+            this.accessoryToolStripMenuItem.Size = new System.Drawing.Size(165, 22);
+            this.accessoryToolStripMenuItem.Text = "Accessory";
+            this.accessoryToolStripMenuItem.Click += new System.EventHandler(this.accessoryToolStripMenuItem_Click);
+            // 
+            // battleToolStripMenuItem
+            // 
+            this.battleToolStripMenuItem.Name = "battleToolStripMenuItem";
+            this.battleToolStripMenuItem.Size = new System.Drawing.Size(165, 22);
+            this.battleToolStripMenuItem.Text = "Battle";
+            this.battleToolStripMenuItem.Click += new System.EventHandler(this.battleToolStripMenuItem_Click);
+            // 
+            // costumeTopToolStripMenuItem
+            // 
+            this.costumeTopToolStripMenuItem.Name = "costumeTopToolStripMenuItem";
+            this.costumeTopToolStripMenuItem.Size = new System.Drawing.Size(165, 22);
+            this.costumeTopToolStripMenuItem.Text = "Costume top";
+            this.costumeTopToolStripMenuItem.Click += new System.EventHandler(this.costumeTopToolStripMenuItem_Click);
+            // 
+            // costumeGlovesToolStripMenuItem
+            // 
+            this.costumeGlovesToolStripMenuItem.Name = "costumeGlovesToolStripMenuItem";
+            this.costumeGlovesToolStripMenuItem.Size = new System.Drawing.Size(165, 22);
+            this.costumeGlovesToolStripMenuItem.Text = "Costume gloves";
+            this.costumeGlovesToolStripMenuItem.Click += new System.EventHandler(this.costumeGlovesToolStripMenuItem_Click);
+            // 
+            // costumeBottomToolStripMenuItem
+            // 
+            this.costumeBottomToolStripMenuItem.Name = "costumeBottomToolStripMenuItem";
+            this.costumeBottomToolStripMenuItem.Size = new System.Drawing.Size(165, 22);
+            this.costumeBottomToolStripMenuItem.Text = "Costume bottom";
+            this.costumeBottomToolStripMenuItem.Click += new System.EventHandler(this.costumeBottomToolStripMenuItem_Click);
+            // 
+            // costumeShoesToolStripMenuItem
+            // 
+            this.costumeShoesToolStripMenuItem.Name = "costumeShoesToolStripMenuItem";
+            this.costumeShoesToolStripMenuItem.Size = new System.Drawing.Size(165, 22);
+            this.costumeShoesToolStripMenuItem.Text = "Costume shoes";
+            this.costumeShoesToolStripMenuItem.Click += new System.EventHandler(this.costumeShoesToolStripMenuItem_Click);
+            // 
+            // extraToolStripMenuItem
+            // 
+            this.extraToolStripMenuItem.Name = "extraToolStripMenuItem";
+            this.extraToolStripMenuItem.Size = new System.Drawing.Size(165, 22);
+            this.extraToolStripMenuItem.Text = "Extra";
+            this.extraToolStripMenuItem.Click += new System.EventHandler(this.extraToolStripMenuItem_Click);
+            // 
+            // materialToolStripMenuItem
+            // 
+            this.materialToolStripMenuItem.Name = "materialToolStripMenuItem";
+            this.materialToolStripMenuItem.Size = new System.Drawing.Size(165, 22);
+            this.materialToolStripMenuItem.Text = "Material";
+            this.materialToolStripMenuItem.Click += new System.EventHandler(this.materialToolStripMenuItem_Click);
+            // 
+            // skillToolStripMenuItem
+            // 
+            this.skillToolStripMenuItem.Name = "skillToolStripMenuItem";
+            this.skillToolStripMenuItem.Size = new System.Drawing.Size(165, 22);
+            this.skillToolStripMenuItem.Text = "Skill";
+            this.skillToolStripMenuItem.Click += new System.EventHandler(this.skillToolStripMenuItem_Click);
+            // 
+            // saveToolStripMenuItem
+            // 
+            this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
+            this.saveToolStripMenuItem.Text = "Save";
+            this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
+            // 
+            // toolStripMenuItem12
+            // 
+            this.toolStripMenuItem12.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripMenuItem13,
+            this.toolStripMenuItem14,
+            this.copyToolStripMenuItem,
+            this.pasteToolStripMenuItem});
+            this.toolStripMenuItem12.Name = "toolStripMenuItem12";
+            this.toolStripMenuItem12.Size = new System.Drawing.Size(39, 20);
+            this.toolStripMenuItem12.Text = "Edit";
+            // 
+            // toolStripMenuItem13
+            // 
+            this.toolStripMenuItem13.Name = "toolStripMenuItem13";
+            this.toolStripMenuItem13.Size = new System.Drawing.Size(117, 22);
+            this.toolStripMenuItem13.Text = "Add";
+            this.toolStripMenuItem13.Click += new System.EventHandler(this.toolStripMenuItem13_Click);
+            // 
+            // toolStripMenuItem14
+            // 
+            this.toolStripMenuItem14.Name = "toolStripMenuItem14";
+            this.toolStripMenuItem14.Size = new System.Drawing.Size(117, 22);
+            this.toolStripMenuItem14.Text = "Remove";
+            this.toolStripMenuItem14.Click += new System.EventHandler(this.toolStripMenuItem14_Click);
+            // 
+            // copyToolStripMenuItem
+            // 
+            this.copyToolStripMenuItem.Name = "copyToolStripMenuItem";
+            this.copyToolStripMenuItem.Size = new System.Drawing.Size(117, 22);
+            this.copyToolStripMenuItem.Text = "Copy";
+            this.copyToolStripMenuItem.Click += new System.EventHandler(this.copyToolStripMenuItem_Click);
+            // 
+            // pasteToolStripMenuItem
+            // 
+            this.pasteToolStripMenuItem.Name = "pasteToolStripMenuItem";
+            this.pasteToolStripMenuItem.Size = new System.Drawing.Size(117, 22);
+            this.pasteToolStripMenuItem.Text = "Paste";
+            this.pasteToolStripMenuItem.Click += new System.EventHandler(this.pasteToolStripMenuItem1_Click);
+            // 
             // tabPage6
             // 
             this.tabPage6.BackColor = System.Drawing.SystemColors.Control;
@@ -2855,6 +3379,10 @@
             this.groupBox7.PerformLayout();
             this.menuStrip8.ResumeLayout(false);
             this.menuStrip8.PerformLayout();
+            this.tabPage12.ResumeLayout(false);
+            this.tabPage12.PerformLayout();
+            this.menuStrip9.ResumeLayout(false);
+            this.menuStrip9.PerformLayout();
             this.tabPage6.ResumeLayout(false);
             this.tabPage6.PerformLayout();
             this.groupBox5.ResumeLayout(false);
@@ -3143,6 +3671,59 @@
         private System.Windows.Forms.ToolStripMenuItem editCSOFileToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
         private System.Windows.Forms.ToolStripMenuItem editCUSFileToolStripMenuItem;
+        private System.Windows.Forms.TabPage tabPage12;
+        private System.Windows.Forms.TextBox txtVal;
+        private System.Windows.Forms.TextBox txtName;
+        private System.Windows.Forms.Label label77;
+        private System.Windows.Forms.TextBox txtExtra;
+        private System.Windows.Forms.Label label78;
+        private System.Windows.Forms.TextBox txtTP;
+        private System.Windows.Forms.Label label79;
+        private System.Windows.Forms.TextBox txtRace;
+        private System.Windows.Forms.Label label80;
+        private System.Windows.Forms.TextBox txtSell;
+        private System.Windows.Forms.Label label81;
+        private System.Windows.Forms.TextBox txtBuy;
+        private System.Windows.Forms.Label label82;
+        private System.Windows.Forms.TextBox txtUnk3;
+        private System.Windows.Forms.Label label83;
+        private System.Windows.Forms.TextBox txtUnk2;
+        private System.Windows.Forms.Label label84;
+        private System.Windows.Forms.TextBox txtUnk1;
+        private System.Windows.Forms.Label label85;
+        private System.Windows.Forms.TextBox txtType;
+        private System.Windows.Forms.Label label86;
+        private System.Windows.Forms.TextBox txtInfo;
+        private System.Windows.Forms.Label label87;
+        private System.Windows.Forms.TextBox txtNa;
+        private System.Windows.Forms.Label label88;
+        private System.Windows.Forms.TextBox txtStar;
+        private System.Windows.Forms.Label label89;
+        private System.Windows.Forms.TextBox txtID;
+        private System.Windows.Forms.ListView lstData;
+        private System.Windows.Forms.ColumnHeader columnHeader7;
+        private System.Windows.Forms.ColumnHeader columnHeader8;
+        private System.Windows.Forms.ComboBox cbEffect;
+        private System.Windows.Forms.ComboBox cbList;
+        private System.Windows.Forms.MenuStrip menuStrip9;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem9;
+        private System.Windows.Forms.ToolStripMenuItem saveToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem12;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem13;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem14;
+        private System.Windows.Forms.ToolStripMenuItem copyToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem pasteToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem openToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem talismanToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem accessoryToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem battleToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem costumeTopToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem costumeGlovesToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem costumeBottomToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem costumeShoesToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem extraToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem materialToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem skillToolStripMenuItem;
     }
 }
 

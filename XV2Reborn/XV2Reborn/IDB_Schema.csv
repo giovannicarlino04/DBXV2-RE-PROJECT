@@ -1,0 +1,50 @@
+Effect Type,0,int32
+Activation Type,4,int32
+Times can Activate,8,int32
+Timer,12,float
+Ability Value 1,16,float
+Ability Value 2,20,float
+Ability Value 3,24,float
+Ability Value 4,28,float
+Ability Value 5,32,float
+Ability Value 6,36,float
+2?,40,int32
+Activation Chance,44,int32
+Multiplier 1,48,float
+Multiplier 2,52,float
+Multiplier 3,56,float
+Multiplier 4,60,float
+Multiplier 5,64,float
+Multiplier 6,68,float
+3?,76,int32
+4?,80,int32
+5?,84,int32
+6?,88,int32
+7?,92,int32
+8?,96,int32
+Health,100,float
+Ki,104,float
+Ki Recovery,108,float
+Stamina,112,float
+Stamina Recovery,116,float
+Enemy Stamina Eraser,120,float
+9?,124,float
+Ground Speed,128.float
+Flight Speed,132,float
+Boost Speed,136,float
+Dash Speed,140,float
+Basic Attack,144,float
+Basic Ki Attack,148,float
+Strike Super Attack,152,float
+Blast Super Attack,156,float
+Physical Damage Received,160,float
+Ki Damage Received,160,float
+Physical Recharge Damage Received,164,float
+Ki Recharge Damage Received,168,float
+Transform Duration,172,float
+Reinforcement Skills Duration,176,float
+10?,180,float
+Revival HP Amount,184,float
+11?,188,float
+Ally Revival Speed,192,float
+

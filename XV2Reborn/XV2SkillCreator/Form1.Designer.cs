@@ -122,7 +122,8 @@
             this.CBSkillType.Items.AddRange(new object[] {
             "Super",
             "Ultimate",
-            "Evasive"});
+            "Evasive",
+            "Awoken"});
             this.CBSkillType.Location = new System.Drawing.Point(130, 170);
             this.CBSkillType.Name = "CBSkillType";
             this.CBSkillType.Size = new System.Drawing.Size(109, 21);
