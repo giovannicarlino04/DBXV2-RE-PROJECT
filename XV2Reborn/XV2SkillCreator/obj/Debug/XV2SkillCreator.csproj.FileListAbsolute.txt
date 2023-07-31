@@ -9,3 +9,6 @@ C:\Users\Giovanni Carlino\Desktop\Repos\DBXV2-RE-PROJECT\XV2Reborn\XV2SkillCreat
 C:\Users\Giovanni Carlino\Desktop\Repos\DBXV2-RE-PROJECT\XV2Reborn\XV2SkillCreator\obj\Debug\XV2SkillCreator.csproj.CoreCompileInputs.cache
 C:\Users\Giovanni Carlino\Desktop\Repos\DBXV2-RE-PROJECT\XV2Reborn\XV2SkillCreator\obj\Debug\XV2SkillCreator.exe
 C:\Users\Giovanni Carlino\Desktop\Repos\DBXV2-RE-PROJECT\XV2Reborn\XV2SkillCreator\obj\Debug\XV2SkillCreator.pdb
+C:\Games\DB Xenoverse 2\XV2Reborn\XV2SkillCreator.exe.config
+C:\Games\DB Xenoverse 2\XV2Reborn\XV2SkillCreator.exe
+C:\Games\DB Xenoverse 2\XV2Reborn\XV2SkillCreator.pdb

@@ -12,3 +12,6 @@ C:\Users\Giovanni Carlino\Desktop\Repos\DBXV2-RE-PROJECT\XV2Reborn\XV2Reborn\obj
 C:\Users\Giovanni Carlino\Desktop\Repos\DBXV2-RE-PROJECT\XV2Reborn\XV2Reborn\obj\Debug\XV2Reborn.csproj.CopyComplete
 C:\Users\Giovanni Carlino\Desktop\Repos\DBXV2-RE-PROJECT\XV2Reborn\XV2Reborn\obj\Debug\XV2Reborn.exe
 C:\Users\Giovanni Carlino\Desktop\Repos\DBXV2-RE-PROJECT\XV2Reborn\XV2Reborn\obj\Debug\XV2Reborn.pdb
+C:\Games\DB Xenoverse 2\XV2Reborn\XV2Reborn.exe.config
+C:\Games\DB Xenoverse 2\XV2Reborn\XV2Reborn.exe
+C:\Games\DB Xenoverse 2\XV2Reborn\XV2Reborn.pdb

@@ -476,13 +476,12 @@ namespace XV2Reborn
 
                         // ADD DATA TO THE CMS FILE HEREEEEE
 
-
                         Char_Model_Spec c = new Char_Model_Spec();
                         c.Paths = new string[9];
                         c.Paths[0] = id;
                         c.Paths[1] = "../GOK/GOK";
                         c.Paths[2] = "../GOK/GOK";
-                        c.Paths[3] = id;
+                        c.Paths[3] = "../GOK/GOK";
                         c.Paths[4] = "../GOK/GOK";
                         c.Paths[5] = "../GOK/GOK";
                         c.Paths[6] = "../GOK/GOK";

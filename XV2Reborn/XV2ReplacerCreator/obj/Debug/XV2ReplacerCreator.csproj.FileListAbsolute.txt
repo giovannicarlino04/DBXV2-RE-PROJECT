@@ -9,3 +9,6 @@ C:\Users\Giovanni Carlino\Desktop\Repos\DBXV2-RE-PROJECT\XV2Reborn\XV2ReplacerCr
 C:\Users\Giovanni Carlino\Desktop\Repos\DBXV2-RE-PROJECT\XV2Reborn\XV2ReplacerCreator\obj\Debug\XV2ReplacerCreator.csproj.CoreCompileInputs.cache
 C:\Users\Giovanni Carlino\Desktop\Repos\DBXV2-RE-PROJECT\XV2Reborn\XV2ReplacerCreator\obj\Debug\XV2ReplacerCreator.exe
 C:\Users\Giovanni Carlino\Desktop\Repos\DBXV2-RE-PROJECT\XV2Reborn\XV2ReplacerCreator\obj\Debug\XV2ReplacerCreator.pdb
+C:\Games\DB Xenoverse 2\XV2Reborn\XV2ReplacerCreator.exe.config
+C:\Games\DB Xenoverse 2\XV2Reborn\XV2ReplacerCreator.exe
+C:\Games\DB Xenoverse 2\XV2Reborn\XV2ReplacerCreator.pdb
