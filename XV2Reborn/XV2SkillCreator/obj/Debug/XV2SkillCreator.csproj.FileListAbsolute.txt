@@ -1,0 +1,11 @@
+C:\Users\Giovanni Carlino\Desktop\Repos\DBXV2-RE-PROJECT\XV2Reborn\XV2SkillCreator\bin\Debug\XV2SkillCreator.exe.config
+C:\Users\Giovanni Carlino\Desktop\Repos\DBXV2-RE-PROJECT\XV2Reborn\XV2SkillCreator\bin\Debug\XV2SkillCreator.exe
+C:\Users\Giovanni Carlino\Desktop\Repos\DBXV2-RE-PROJECT\XV2Reborn\XV2SkillCreator\bin\Debug\XV2SkillCreator.pdb
+C:\Users\Giovanni Carlino\Desktop\Repos\DBXV2-RE-PROJECT\XV2Reborn\XV2SkillCreator\obj\Debug\XV2SkillCreator.csproj.AssemblyReference.cache
+C:\Users\Giovanni Carlino\Desktop\Repos\DBXV2-RE-PROJECT\XV2Reborn\XV2SkillCreator\obj\Debug\XV2SkillCreator.csproj.SuggestedBindingRedirects.cache
+C:\Users\Giovanni Carlino\Desktop\Repos\DBXV2-RE-PROJECT\XV2Reborn\XV2SkillCreator\obj\Debug\XV2SkillCreator.Form1.resources
+C:\Users\Giovanni Carlino\Desktop\Repos\DBXV2-RE-PROJECT\XV2Reborn\XV2SkillCreator\obj\Debug\XV2SkillCreator.Properties.Resources.resources
+C:\Users\Giovanni Carlino\Desktop\Repos\DBXV2-RE-PROJECT\XV2Reborn\XV2SkillCreator\obj\Debug\XV2SkillCreator.csproj.GenerateResource.cache
+C:\Users\Giovanni Carlino\Desktop\Repos\DBXV2-RE-PROJECT\XV2Reborn\XV2SkillCreator\obj\Debug\XV2SkillCreator.csproj.CoreCompileInputs.cache
+C:\Users\Giovanni Carlino\Desktop\Repos\DBXV2-RE-PROJECT\XV2Reborn\XV2SkillCreator\obj\Debug\XV2SkillCreator.exe
+C:\Users\Giovanni Carlino\Desktop\Repos\DBXV2-RE-PROJECT\XV2Reborn\XV2SkillCreator\obj\Debug\XV2SkillCreator.pdb

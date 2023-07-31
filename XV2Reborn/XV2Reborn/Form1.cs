@@ -55,6 +55,86 @@ namespace XV2Reborn
         string[] PSCkeys;
         bool PSClck = true;
 
+        string AURFileName;
+        Aura[] Auras;
+        Charlisting[] Chars;
+        byte[] backup = new byte[104];
+        bool AuraLock = false;
+        bool CharLock = false;
+        CharName[] clist = new CharName[] {
+            new CharName(0, "Goku"),
+            new CharName(1, "Bardock"),
+            new CharName(2, "Goku SSJ4"),
+            new CharName(3, "Goku SSJGod"),
+            new CharName(4, "Goku GT"),
+            new CharName(5, "Goten"),
+            new CharName(6, "Gohan kid"),
+            new CharName(7, "Gohan Teen"),
+            new CharName(8, "Gohan Adult"),
+            new CharName(9, "Piccolo"),
+            new CharName(10, "Krillin"),
+            new CharName(11, "Yamcha"),
+            new CharName(12, "Tien"),
+            new CharName(13, "Raditz"),
+            new CharName(14, "Saibaman"),
+            new CharName(15, "Nappa"),
+            new CharName(16, "Vegeta"),
+            new CharName(17, "Vegeta SSJ4"),
+            new CharName(18, "Guldo"),
+            new CharName(19, "Burter"),
+            new CharName(20, "Recoome"),
+            new CharName(21, "Jeice"),
+            new CharName(22, "Ginyu"),
+            new CharName(23, "Frieza 1st Form"),
+            new CharName(24, "Frieza Final"),
+            new CharName(25, "Frieza Full Power"),
+            new CharName(26, "Trunks Future"),
+            new CharName(27, "Trunks Kid"),
+            new CharName(28, "Android 17"),
+            new CharName(29, "Super 17"),
+            new CharName(30, "Android 18"),
+            new CharName(31, "Cell Perfect"),
+            new CharName(32, "Cell Full Power"),
+            new CharName(33, "Cell Jr."),
+            new CharName(34, "Videl"),
+            new CharName(35, "Majin Buu"),
+            new CharName(36, "Super Buu"),
+            new CharName(37, "Kid Buu"),
+            new CharName(38, "Gotenks"),
+            new CharName(39, "Vegito"),
+            new CharName(40, "Broly"),
+            new CharName(41, "Beerus"),
+            new CharName(42, "Pan"),
+            new CharName(47, "Added Character 1"),
+            new CharName(48, "Eis Shenron"),
+            new CharName(49, "Nuova Shenron"),
+            new CharName(50, "Omega Shenron"),
+            new CharName(51, "Gogeta SSJ4"),
+            new CharName(52, "Hercule"),
+            new CharName(53, "Demigra"),
+            new CharName(55, "Added Character 2"),
+            new CharName(59, "Nabana"),
+            new CharName(60, "Raspberry"),
+            new CharName(61, "Gohan 4 years old"),
+            new CharName(62, "Mira"),
+            new CharName(63, "Towa"),
+            new CharName(64, "Added Character 3"),
+            new CharName(65, "Whis"),
+            new CharName(67, "Jaco"),
+            new CharName(73, "Villinous Hercule"),
+            new CharName(80, "Goku SSGSS"),
+            new CharName(81, "Vegeta SSGSS"),
+            new CharName(82, "Golden Frieza"),
+            new CharName(100, "Human Male"),
+            new CharName(101, "Human Female"),
+            new CharName(102, "Saiyan Male"),
+            new CharName(103, "Saiyan Female"),
+            new CharName(104, "Namekian"),
+            new CharName(105, "Frieza Race"),
+            new CharName(106, "Majin Male"),
+            new CharName(107, "Majin Female")
+            };
+
         List<DraggableButton> buttonCharacters = new List<DraggableButton>();
         // Assuming you have a class-level variable to store the character codes and their corresponding images.
         Dictionary<string, Image> characterImages = new Dictionary<string, Image>();
@@ -67,7 +147,6 @@ namespace XV2Reborn
 
         public msg MSGfile;
         string MSGFileName;
-
 
         string CUSFileName;
         CUSRegistry CUSfile = new CUSRegistry();
@@ -177,6 +256,45 @@ namespace XV2Reborn
             flowLayoutPanelCharacters.WrapContents = true;
             flowLayoutPanelCharacters.AutoScroll = true;
 
+            loadFiles();
+        }
+        public string FindCharName(int id)
+        {
+            for (int n = 0; n < clist.Length; n++)
+            {
+                if (clist[n].ID == id)
+                    return clist[n].Name;
+            }
+
+            return "Unknown Character";
+        }
+
+        private void saveLvItems()
+        {
+            Properties.Settings.Default.modlist = new StringCollection();
+            Properties.Settings.Default.modlist.AddRange((from i in this.lvMods.Items.Cast<ListViewItem>()
+                                                          select string.Join("|", from si in i.SubItems.Cast<ListViewItem.ListViewSubItem>()
+                                                                                  select si.Text)).ToArray());
+            Properties.Settings.Default.Save();
+            label1.Text = "Installed Mods: " + lvMods.Items.Count.ToString();
+        }
+
+        private void loadLvItems()
+        {
+            if (Properties.Settings.Default.modlist == null)
+            {
+                Properties.Settings.Default.modlist = new StringCollection();
+            }
+
+            lvMods.Items.Clear();
+            this.lvMods.Items.AddRange((from i in Properties.Settings.Default.modlist.Cast<string>()
+                                        select new ListViewItem(i.Split('|'))).ToArray());
+
+            label1.Text = "Installed Mods: " + lvMods.Items.Count.ToString();
+        }
+
+        private void loadFiles()
+        {
             // Call the function to load character images and add them to the FlowLayoutPanel.
             LoadCharacterImages();
             AddCharacterImagesToFlowLayoutPanel();
@@ -246,29 +364,37 @@ namespace XV2Reborn
                 PSClstData.Items.Add(Item);
             }
 
-        }
-
-        private void saveLvItems()
-        {
-            Properties.Settings.Default.modlist = new StringCollection();
-            Properties.Settings.Default.modlist.AddRange((from i in this.lvMods.Items.Cast<ListViewItem>()
-                                                          select string.Join("|", from si in i.SubItems.Cast<ListViewItem.ListViewSubItem>()
-                                                                                  select si.Text)).ToArray());
-            Properties.Settings.Default.Save();
-            label1.Text = "Installed Mods: " + lvMods.Items.Count.ToString();
-        }
-
-        private void loadLvItems()
-        {
-            if (Properties.Settings.Default.modlist == null)
+            // Load the AUR File
+            AURFileName = Properties.Settings.Default.datafolder + @"/system/aura_setting.aur";
+            byte[] AURfile = File.ReadAllBytes(AURFileName);
+            Auras = new Aura[BitConverter.ToInt32(AURfile, 8)];
+            int AuraAddress = BitConverter.ToInt32(AURfile, 12);
+            for (int A = 0; A < Auras.Length; A++)
             {
-                Properties.Settings.Default.modlist = new StringCollection();
+                int id = BitConverter.ToInt32(AURfile, AuraAddress + (16 * A));
+                Auras[id].Color = new int[BitConverter.ToInt32(AURfile, AuraAddress + (16 * A) + 8)];
+                int CAddress = BitConverter.ToInt32(AURfile, AuraAddress + (16 * A) + 12);
+                for (int C = 0; C < Auras[id].Color.Length; C++)
+                    Auras[id].Color[BitConverter.ToInt32(AURfile, CAddress + (C * 8))] = BitConverter.ToInt32(AURfile, CAddress + (C * 8) + 4);
             }
 
-            this.lvMods.Items.AddRange((from i in Properties.Settings.Default.modlist.Cast<string>()
-                                        select new ListViewItem(i.Split('|'))).ToArray());
+            for (int A = 0; A < Auras.Length; A++)
+                cbAuraList.Items.Add(A);
+            int WAddress = BitConverter.ToInt32(AURfile, 20);
+            Array.Copy(AURfile, WAddress, backup, 0, 104);
+            cbAURChar.Items.Clear();
+            Chars = new Charlisting[BitConverter.ToInt32(AURfile, 24)];
+            int ChAddress = BitConverter.ToInt32(AURfile, 28);
+            for (int C = 0; C < Chars.Length; C++)
+            {
+                Chars[C].Name = BitConverter.ToInt32(AURfile, ChAddress + (C * 16));
+                Chars[C].Costume = BitConverter.ToInt32(AURfile, ChAddress + (C * 16) + 4);
+                Chars[C].ID = BitConverter.ToInt32(AURfile, ChAddress + (C * 16) + 8);
+                Chars[C].inf = BitConverter.ToBoolean(AURfile, ChAddress + (C * 16) + 12);
 
-            label1.Text = "Installed Mods: " + lvMods.Items.Count.ToString();
+                cbAURChar.Items.Add(FindCharName(Chars[C].Name) + " - Costume " + Chars[C].Costume.ToString());
+            }
+
         }
 
         void InstallMod(string arg)
@@ -293,7 +419,6 @@ namespace XV2Reborn
                 string Modid = File.ReadAllLines(xmlfile).Last();
                 var files = Directory.EnumerateFiles(temp, "*.*", SearchOption.AllDirectories);
 
-
                 if (lineCount == 3)
                 {
                     // Added Character
@@ -309,7 +434,6 @@ namespace XV2Reborn
                             Directory.CreateDirectory(Properties.Settings.Default.datafolder + @"\installed");
                             File.WriteAllLines(Properties.Settings.Default.datafolder + @"\installed\" + modname + @".xml", files);
                             File.WriteAllText(Properties.Settings.Default.datafolder + @"\installed\" + modname + " 2.xml", Modid);
-
                         }
                         else
                         {
@@ -343,6 +467,123 @@ namespace XV2Reborn
                             }
                         }
 
+                        string id = File.ReadAllLines(Properties.Settings.Default.datafolder + "//modinfo.xml").Last();
+                        Properties.Settings.Default.addonmodlist = new StringCollection();
+                        Properties.Settings.Default.addonmodlist.Add(modname);
+                        Properties.Settings.Default.Save();
+
+                        int numberid = 160 + Properties.Settings.Default.addonmodlist.Count; //160 is a fixed number
+
+                        // ADD DATA TO THE CMS FILE HEREEEEE
+
+
+                        Char_Model_Spec c = new Char_Model_Spec();
+                        c.Paths = new string[9];
+                        c.Paths[0] = id;
+                        c.Paths[1] = "../GOK/GOK";
+                        c.Paths[2] = id;
+                        c.Paths[3] = "../GOK/GOK";
+                        c.Paths[4] = "../GOK/GOK";
+                        c.Paths[5] = "../GOK/GOK";
+                        c.Paths[6] = "../GOK/GOK";
+                        c.Paths[7] = "../GOK/GOK";
+                        c.Paths[8] = "../GOK/GOK";
+                        c.shortname = id;
+                        c.id = numberid;
+
+                        cms.Add(c);
+                        CMSCombobox.Items.Clear();
+                        for (int i = 0; i < cms.Count; i++)
+                            CMSCombobox.Items.Add(cms[i].id.ToString(numberid.ToString()) + " - " + id);
+
+                        Array.Resize<bool>(ref CMSselective, CMSselective.Length + 1);
+
+                        CMSselective[CMSselective.Length - 1] = false;
+                        CMS.Write(CMSFileName, cms.ToArray());
+
+
+                        ///////////////////////////////////
+
+
+                        // ADD DATA TO THE CSO FILE HEREEEEE
+
+                        CSO_Data c2 = new CSO_Data();
+                        c2.Paths = new string[4];
+                        c2.Paths[0] = "";
+                        c2.Paths[1] = "";
+                        c2.Paths[2] = "";
+                        c2.Paths[3] = "";
+                        c2.Char_ID = numberid;
+                        CSOData.Add(c2);
+
+                        cbListCSO.SelectedIndex = 0;
+                        cbListCSO.Items.Clear();
+                        for (int i = 0; i < CSOData.Count; i++)
+                            cbListCSO.Items.Add("Character " + CSOData[i].Char_ID.ToString(numberid.ToString()) + " - Costume " + CSOData[i].Costume_ID.ToString("00"));
+
+                        CSO.Write(CSOData.ToArray(), CSOFileName);
+
+                        ///////////////////////////////////
+
+                        // ADD DATA TO THE CUS FILE HEREEEEE
+
+                        if (this.tabControl1.SelectedIndex == 0)
+                        {
+                            this.CUSfile.css.Add(new charSkillSet()
+                            {
+                                skill = new short[10],
+                                charID = numberid
+                            });
+                            this.CUSlck = false;
+                            this.UpdateCharlist();
+                            this.CUSlck = true;
+                        }
+                        else
+                        {
+                            skill skill = new skill();
+                            skill.Paths = new string[7];
+                            SkillReg skillReg = new SkillReg();
+                            skillReg.name = "";
+                            skillReg.shortName = id;
+                            switch (this.cbTypeCUS.SelectedIndex)
+                            {
+                                case 0:
+                                    this.CUSfile.Super.Add(skill);
+                                    this.CUSfile.superReg.Add(skillReg);
+                                    break;
+                                case 1:
+                                    this.CUSfile.Ultimate.Add(skill);
+                                    this.CUSfile.ultimateReg.Add(skillReg);
+                                    break;
+                                case 2:
+                                    this.CUSfile.Evasive.Add(skill);
+                                    this.CUSfile.evasiveReg.Add(skillReg);
+                                    break;
+                                case 3:
+                                    this.CUSfile.blast.Add(skill);
+                                    this.CUSfile.blastReg.Add(skillReg);
+                                    break;
+                                case 4:
+                                    this.CUSfile.Awaken.Add(skill);
+                                    this.CUSfile.awakenReg.Add(skillReg);
+                                    break;
+                            }
+                            this.cbSkillCUS.SelectedIndex = 0;
+                            this.UpdateSkillList();
+                        }
+
+                        CUSfile.writeCUS(CUSFileName);
+
+                        ///////////////////////////////////
+
+                        // ADD DATA TO THE PSC FILE HEREEEEE
+
+                        // NOT YET IMPLEMENTED
+
+                        ///////////////////////////////////
+
+                        // ADD DATA TO THE AUR FILE HEREEEEE
+
                         info.FileName = "cmd.exe";
                         info.CreateNoWindow = true;
                         info.WindowStyle = ProcessWindowStyle.Hidden;
@@ -356,27 +597,17 @@ namespace XV2Reborn
                             if (sw.BaseStream.CanWrite)
                             {
                                 sw.WriteLine("cd " + Properties.Settings.Default.datafolder + @"\system");
-                                sw.WriteLine(@"XMLSerializer.exe char_model_spec.cms");
+                                sw.WriteLine(@"XMLSerializer.exe aura_setting.aur");
                             }
                         }
+
                         p.WaitForExit();
 
-                        string cmspath = Properties.Settings.Default.datafolder + @"\system\char_model_spec.cms.xml";
-                        string text2 = File.ReadAllText(cmspath);
-                        string id = File.ReadAllLines(Properties.Settings.Default.datafolder + "//modinfo.xml").Last();
+                        string aurtext = File.ReadAllText(datapath + @"/system/aura_setting.aur.xml");
+                        aurtext = aurtext.Replace("  </CharacterAuras>\r\n</AUR>", "    <CharacterAura Chara_ID=\"" + numberid + "\" Costume=\"0\" Aura_ID=\"0\" Glare=\"False\" />\r\n  </CharacterAuras>\r\n</AUR>");
+                        File.WriteAllText(datapath + @"/system/aura_setting.aur.xml", aurtext);
 
-                        Properties.Settings.Default.addonmodlist.Add(modname);
-                        Properties.Settings.Default.Save();
-
-                        int numberid = 160 + Properties.Settings.Default.addonmodlist.Count; //160 is a fixed number, I just liked it a lot ;D
-
-                        // ADD DATA TO THE CMS FILE HEREEEEE
-
-
-
-
-
-                        ///////////////////////////////////
+                        Thread.Sleep(1000);
 
                         p.Start();
 
@@ -387,11 +618,18 @@ namespace XV2Reborn
                                 const string quote = "\"";
 
                                 sw.WriteLine("cd " + Properties.Settings.Default.datafolder + @"\system");
-                                sw.WriteLine(@"XMLSerializer.exe " + quote + Properties.Settings.Default.datafolder + @"\system\char_model_spec.cms.xml" + quote);
+                                sw.WriteLine(@"XMLSerializer.exe " + quote + Properties.Settings.Default.datafolder + @"\system\aura_setting.aur.xml" + quote);
                             }
                         }
 
                         p.WaitForExit();
+
+                        if (File.Exists(Properties.Settings.Default.datafolder + @"\system\aura_setting.aur.xml"))
+                        {
+                            File.Delete(Properties.Settings.Default.datafolder + @"\system\aura_setting.aur.xml");
+                        }
+
+                        ///////////////////////////////////
 
                         string Charalist = Properties.Settings.Default.datafolder + @"\scripts\action_script\Charalist.as";
 
@@ -399,24 +637,22 @@ namespace XV2Reborn
 
                         foreach (string s in File.ReadAllLines(Charalist))
                         {
-                            text3.AppendLine(s.Replace("[[\"JCO\",0,0,0,[110,111]]]", "[[\"JCO\",0,0,0,[110,111]]],[[\"" + id + "\",0,0,0,[-1,-1]]]"));
+                            text3.AppendLine(s.Replace("[[\"GKB\",0,0,0,false,[160,161]]]", "[[\"GKB\",0,0,0,false,[160,161]]],[[\"" + id + "\",0,0,0,false,[-1,-1]]]"));
                         }
-
-                        CompileScripts();
 
                         using (var file = new StreamWriter(File.Create(Charalist)))
                         {
                             file.Write(text3.ToString());
                         }
 
+                        CompileScripts();
 
                         msgData[] expand = new msgData[MSGfile.data.Length + 1];
                         Array.Copy(MSGfile.data, expand, MSGfile.data.Length);
                         string nameid = MSGfile.data[MSGfile.data.Length - 1].NameID;
-                        int endid = int.Parse(nameid.Substring(nameid.Length - 3, 3));
                         expand[expand.Length - 1].ID = MSGfile.data.Length;
                         expand[expand.Length - 1].Lines = new string[] { modname };
-                        expand[expand.Length - 1].NameID = "chara_" + id + "_" + (endid).ToString("000");
+                        expand[expand.Length - 1].NameID = "chara_" + id + "_" + "000";
 
                         MSGfile.data = expand;
 
@@ -603,12 +839,61 @@ namespace XV2Reborn
             }
             Clean();
             saveLvItems();
+            loadFiles();
             MessageBox.Show("Installation Completed", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            Application.Restart();
         }
+        private void uninstallModToolStripMenuItem_Click(object sender, EventArgs e)
+        {
 
+            ListView.SelectedIndexCollection indices = lvMods.SelectedIndices;
+            if (indices.Count > 0)
+            {
+                Process p = new Process();
+                ProcessStartInfo info = new ProcessStartInfo();
+                info.FileName = "cmd.exe";
+                info.CreateNoWindow = true;
+                info.WindowStyle = ProcessWindowStyle.Hidden;
+                info.RedirectStandardInput = true;
+                info.UseShellExecute = false;
 
+                if (File.Exists(Properties.Settings.Default.datafolder + @"\installed\" + lvMods.SelectedItems[0].Text + @".xml"))
+                {
+                    string[] lines = File.ReadAllLines(Properties.Settings.Default.datafolder + @"\installed\" + lvMods.SelectedItems[0].Text + @".xml");
 
+                    foreach (string line in lines)
+                    {
+                        File.Delete(line);
+                    }
+
+                    //End
+                }
+
+                if (File.Exists(Properties.Settings.Default.datafolder + @"\installed\" + lvMods.SelectedItems[0].Text + @" 2.xml"))
+                {
+                    string id = File.ReadAllLines(Properties.Settings.Default.datafolder + @"\installed\" + lvMods.SelectedItems[0].Text + @" 2.xml").First();
+
+                    string Charalist = Properties.Settings.Default.datafolder + @"\scripts\action_script\Charalist.as";
+
+                    var text3 = new StringBuilder();
+
+                    foreach (string s in File.ReadAllLines(Charalist))
+                    {
+                        text3.AppendLine(s.Replace(",[[\"" + id + "\",0,0,0,false,[-1,-1]]]", ""));
+                    }
+
+                    using (var file = new StreamWriter(File.Create(Charalist)))
+                    {
+                        file.Write(text3.ToString());
+                    }
+                    CompileScripts();
+
+                    //string qxd = Properties.Settings.Default.datafolder + @"\quest\TMQ\tmq_data.qxd";
+                    //ReplaceTextInFile(qxd, id, "XXX");
+
+                }
+            }
+        }
+        
         private void Clean()
         {
             if (File.Exists(Properties.Settings.Default.datafolder + "//modinfo.xml"))
@@ -700,7 +985,8 @@ namespace XV2Reborn
                 }
             }
             Directory.Delete(source, true);
-        }
+        } 
+
         public class Folders
         {
             public string Source { get; private set; }
@@ -716,7 +1002,7 @@ namespace XV2Reborn
         private void installModToolStripMenuItem_Click(object sender, EventArgs e)
         {
             OpenFileDialog moddialog = new OpenFileDialog();
-            moddialog.Filter = ".xv2mods | *.xv2mod";
+            moddialog.Filter = "Xenoverse 2 mod files | *.xv2mod";
             moddialog.Multiselect = true;
             moddialog.RestoreDirectory = true;
             moddialog.Title = "Install Mod";
@@ -774,8 +1060,11 @@ namespace XV2Reborn
                 }
             }
             process.WaitForExit();
-
+            
             Thread.Sleep(1000);
+
+            if (File.Exists(datapath + "\\ui\\iggy\\CHARASELE.swf"))
+                File.Delete(datapath + "\\ui\\iggy\\CHARASELE.swf");
         }
 
         private void compileScriptsToolStripMenuItem_Click(object sender, EventArgs e)
@@ -801,6 +1090,8 @@ namespace XV2Reborn
                 return;
             }
         }
+
+        // CSS
 
         // Event handlers for drag-and-drop reordering.
         private void ButtonCharacter_MouseMove(object sender, MouseEventArgs e)
@@ -1311,13 +1602,11 @@ namespace XV2Reborn
             // Compile Scripts
             CompileScripts();
         }
+        ///////////////////////////////////////////////////////////////////
 
         private void msgSaveToolStripMenuItem_Click(object sender, EventArgs e)
         {
             msgStream.Save(MSGfile, MSGFileName);
-            MessageBox.Show("MSG MSGfile Saved Successfully", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-            Application.Restart();
         }
 
         private void msgAddToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1744,15 +2033,60 @@ namespace XV2Reborn
                 CMSCombobox.Items.Add(cms[i].id.ToString("000") + " - " + cms[i].shortname);
             CMSCombobox.SelectedIndex = temp;
         }
-
-        private void CMSInject_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
             CMSselective[CMSCombobox.SelectedIndex] = checkBox1.Checked;
+        }
+
+        private void editCMSFileToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Process p = new Process();
+            ProcessStartInfo info = new ProcessStartInfo();
+            info.FileName = "cmd.exe";
+            info.CreateNoWindow = true;
+            info.WindowStyle = ProcessWindowStyle.Hidden;
+            info.RedirectStandardInput = true;
+            info.UseShellExecute = false;
+
+            p.StartInfo = info;
+            p.Start();
+            using (StreamWriter sw = p.StandardInput)
+            {
+                if (sw.BaseStream.CanWrite)
+                {
+                    sw.WriteLine("cd " + Properties.Settings.Default.datafolder + @"\system");
+                    sw.WriteLine(@"XMLSerializer.exe char_model_spec.cms");
+                }
+            }
+
+            p.WaitForExit();
+
+            Process p2 = Process.Start(Properties.Settings.Default.datafolder + @"\system\char_model_spec.cms.xml");
+
+            p2.WaitForExit();
+
+            p.Start();
+
+            using (StreamWriter sw = p.StandardInput)
+            {
+                if (sw.BaseStream.CanWrite)
+                {
+                    const string quote = "\"";
+
+                    sw.WriteLine("cd " + Properties.Settings.Default.datafolder + @"\system");
+                    sw.WriteLine(@"XMLSerializer.exe " + quote + Properties.Settings.Default.datafolder + @"\system\char_model_spec.cms.xml" + quote);
+                }
+            }
+
+            p.WaitForExit();
+
+            MessageBox.Show("CMS File Compiled Successfully", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+            if (File.Exists(Properties.Settings.Default.datafolder + @"\system\char_model_spec.cms.xml"))
+            {
+                File.Delete(Properties.Settings.Default.datafolder + @"\system\char_model_spec.cms.xml");
+            }
+            loadFiles();
         }
         //////////////////////////////////////////////////////////////////
 
@@ -1864,6 +2198,58 @@ namespace XV2Reborn
             CSOData[cbListCSO.SelectedIndex] = CSOcurrent;
         }
 
+        private void editCSOFileToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Process p = new Process();
+            ProcessStartInfo info = new ProcessStartInfo();
+            info.FileName = "cmd.exe";
+            info.CreateNoWindow = true;
+            info.WindowStyle = ProcessWindowStyle.Hidden;
+            info.RedirectStandardInput = true;
+            info.UseShellExecute = false;
+
+            p.StartInfo = info;
+            p.Start();
+            using (StreamWriter sw = p.StandardInput)
+            {
+                if (sw.BaseStream.CanWrite)
+                {
+                    sw.WriteLine("cd " + Properties.Settings.Default.datafolder + @"\system");
+                    sw.WriteLine(@"XMLSerializer.exe chara_sound.cso");
+                }
+            }
+
+            p.WaitForExit();
+
+            Process p2 = Process.Start(Properties.Settings.Default.datafolder + @"\system\chara_sound.cso.xml");
+
+            p2.WaitForExit();
+
+            p.Start();
+
+            using (StreamWriter sw = p.StandardInput)
+            {
+                if (sw.BaseStream.CanWrite)
+                {
+                    const string quote = "\"";
+
+                    sw.WriteLine("cd " + Properties.Settings.Default.datafolder + @"\system");
+                    sw.WriteLine(@"XMLSerializer.exe " + quote + Properties.Settings.Default.datafolder + @"\system\chara_sound.cso.xml" + quote);
+                }
+            }
+
+            p.WaitForExit();
+
+            MessageBox.Show("CSO File Compiled Successfully", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+            if (File.Exists(Properties.Settings.Default.datafolder + @"\system\chara_sound.cso.xml"))
+            {
+                File.Delete(Properties.Settings.Default.datafolder + @"\system\chara_sound.cso.xml");
+            }
+            loadFiles();
+        }
+
+
         //////////////////////////////////////////////////////////////////
 
 
@@ -1941,7 +2327,7 @@ namespace XV2Reborn
 
         private void CUSsaveToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            CUSfile.readCUS(CUSFileName);
+            CUSfile.writeCUS(CUSFileName);
         }
 
         private void CUSaddToolStripMenuItem_Click(object sender, EventArgs e)
@@ -2516,6 +2902,56 @@ namespace XV2Reborn
             //.Text = "";
         }
 
+        private void editCUSFileToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Process p = new Process();
+            ProcessStartInfo info = new ProcessStartInfo();
+            info.FileName = "cmd.exe";
+            info.CreateNoWindow = true;
+            info.WindowStyle = ProcessWindowStyle.Hidden;
+            info.RedirectStandardInput = true;
+            info.UseShellExecute = false;
+
+            p.StartInfo = info;
+            p.Start();
+            using (StreamWriter sw = p.StandardInput)
+            {
+                if (sw.BaseStream.CanWrite)
+                {
+                    sw.WriteLine("cd " + Properties.Settings.Default.datafolder + @"\system");
+                    sw.WriteLine(@"XMLSerializer.exe custom_skill.cus");
+                }
+            }
+
+            p.WaitForExit();
+
+            Process p2 = Process.Start(Properties.Settings.Default.datafolder + @"\system\custom_skill.cus.xml");
+
+            p2.WaitForExit();
+
+            p.Start();
+
+            using (StreamWriter sw = p.StandardInput)
+            {
+                if (sw.BaseStream.CanWrite)
+                {
+                    const string quote = "\"";
+
+                    sw.WriteLine("cd " + Properties.Settings.Default.datafolder + @"\system");
+                    sw.WriteLine(@"XMLSerializer.exe " + quote + Properties.Settings.Default.datafolder + @"\system\custom_skill.cus.xml" + quote);
+                }
+            }
+
+            p.WaitForExit();
+
+            MessageBox.Show("CUS File Compiled Successfully", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+            if (File.Exists(Properties.Settings.Default.datafolder + @"\system\custom_skill.cus.xml"))
+            {
+                File.Delete(Properties.Settings.Default.datafolder + @"\system\custom_skill.cus.xml");
+            }
+            loadFiles();
+        }
         //////////////////////////////////////////////////////////////////////
 
 
@@ -2629,20 +3065,285 @@ namespace XV2Reborn
 
         private void PSCcopyToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            PSCCopy = PSCfile.list[PSCcbChar.SelectedIndex].Costume_Data[PSCcbCostume.SelectedIndex];
 
         }
 
         private void pasteToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            PSCfile.list[PSCcbChar.SelectedIndex].Costume_Data[PSCcbCostume.SelectedIndex] = PSCCopy;
+            PSCcbCostume.Items[PSCcbCostume.SelectedIndex] = PSCfile.schema.getValueString(PSCkeys[0], ref PSCfile.list[PSCcbChar.SelectedIndex].Costume_Data[PSCcbCostume.SelectedIndex].Data);
+            PSClstData.Items.Clear();
+            foreach (string s in PSCkeys)
+            {
+                var Item = new ListViewItem(new[] { s, PSCfile.schema.getValueString(s, ref PSCfile.list[PSCcbChar.SelectedIndex].Costume_Data[PSCcbCostume.SelectedIndex].Data) });
+                PSClstData.Items.Add(Item);
+            }
         }
-        ////////////////////////////////////////////////////////////////////
-        
 
+        ////////////////////////////////////////////////////////////////////
 
         // AUR
 
+        struct Aura
+        {
+            public int[] Color;
+        }
 
+        struct Charlisting
+        {
+            public int Name;
+            public int Costume;
+            public int ID;
+            public bool inf;
+        }
+
+        struct CharName
+        {
+            public int ID;
+            public string Name;
+
+            public CharName(int i, string n)
+            {
+                ID = i;
+                Name = n;
+            }
+        }
+
+        private void saveAURFileToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            List<byte> file = new List<byte>();
+            byte[] signature = new byte[] { 0x23, 0x41, 0x55, 0x52, 0xFE, 0xFF, 0x20, 0x00 };
+            byte[] Top = new byte[24];
+            byte[] Aura1 = new byte[16 * Auras.Length];
+            List<byte> Aura2 = new List<byte>();
+            Array.Copy(BitConverter.GetBytes(Auras.Length), 0, Top, 0, 4);
+            Array.Copy(BitConverter.GetBytes(32), 0, Top, 4, 4);
+            for (int A = 0; A < Auras.Length; A++)
+            {
+                Array.Copy(BitConverter.GetBytes(A), 0, Aura1, (A * 16), 4);
+                Array.Copy(BitConverter.GetBytes(Auras[A].Color.Length), 0, Aura1, (A * 16) + 8, 4);
+                Array.Copy(BitConverter.GetBytes(32 + Aura1.Length + Aura2.Count), 0, Aura1, (A * 16) + 12, 4);
+                for (int C = 0; C < Auras[A].Color.Length; C++)
+                {
+                    Aura2.AddRange(BitConverter.GetBytes(C));
+                    if (Auras[A].Color[C] < 0)
+                        Aura2.AddRange(new byte[] { 0xFF, 0xFF, 0xFF, 0xFF });
+                    else
+                        Aura2.AddRange(BitConverter.GetBytes(Auras[A].Color[C]));
+                }
+            }
+
+            int length = 32 + Aura1.Length + Aura2.Count;
+
+            Array.Copy(BitConverter.GetBytes(7), 0, Top, 8, 4);
+            Array.Copy(BitConverter.GetBytes(length), 0, Top, 12, 4);
+            //backup shift - 28,39,49,58,69,80,93
+            Array.Copy(BitConverter.GetBytes(length + 28), 0, backup, 0, 4);
+            Array.Copy(BitConverter.GetBytes(length + 39), 0, backup, 4, 4);
+            Array.Copy(BitConverter.GetBytes(length + 49), 0, backup, 8, 4);
+            Array.Copy(BitConverter.GetBytes(length + 58), 0, backup, 12, 4);
+            Array.Copy(BitConverter.GetBytes(length + 69), 0, backup, 16, 4);
+            Array.Copy(BitConverter.GetBytes(length + 80), 0, backup, 20, 4);
+            Array.Copy(BitConverter.GetBytes(length + 93), 0, backup, 24, 4);
+
+            length += backup.Length;
+
+            byte[] filler = new byte[16 - (length % 16)];
+
+            if (filler.Length != 16)
+                length += filler.Length;
+
+            Array.Copy(BitConverter.GetBytes(Chars.Length), 0, Top, 16, 4);
+            Array.Copy(BitConverter.GetBytes(length), 0, Top, 20, 4);
+
+            List<byte> Charbytes = new List<byte>();
+
+            for (int C = 0; C < Chars.Length; C++)
+            {
+                Charbytes.AddRange(BitConverter.GetBytes(Chars[C].Name));
+                Charbytes.AddRange(BitConverter.GetBytes(Chars[C].Costume));
+                Charbytes.AddRange(BitConverter.GetBytes(Chars[C].ID));
+                Charbytes.AddRange(BitConverter.GetBytes(Chars[C].inf));
+                Charbytes.AddRange(new byte[] { 0x00, 0x00, 0x00 });
+            }
+
+            file.AddRange(signature);
+            file.AddRange(Top);
+            file.AddRange(Aura1);
+            file.AddRange(Aura2);
+            file.AddRange(backup);
+            if (filler.Length != 16)
+                file.AddRange(filler);
+            file.AddRange(Charbytes);
+
+            FileStream newfile = new FileStream(AURFileName, FileMode.Create);
+            newfile.Write(file.ToArray(), 0, file.Count);
+            newfile.Close();
+        }
+
+        private void addAuraToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            // add aura
+
+            Aura[] Expand = new Aura[Auras.Length + 1];
+            Array.Copy(Auras, Expand, Auras.Length);
+            Auras = Expand;
+            Auras[Auras.Length - 1].Color = new int[] { 0, 0, 0, 0, 0, 0, 0 };
+
+            cbAuraList.Items.Clear();
+            for (int A = 0; A < Auras.Length; A++)
+                cbAuraList.Items.Add(A);
+        }
+
+        private void removeAuraToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            // remove aura
+
+            if (cbAuraList.Items.Count > 22)
+            {
+                Aura[] reduce = new Aura[Auras.Length - 1];
+                Array.Copy(Auras, reduce, Auras.Length - 1);
+            }
+
+            cbAuraList.Items.Clear();
+            for (int A = 0; A < Auras.Length; A++)
+                cbAuraList.Items.Add(A);
+        }
+
+        private void cbAURChar_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            CharLock = true;
+            txtAURID.Text = Chars[cbAURChar.SelectedIndex].ID.ToString();
+            chkInf.Checked = Chars[cbAURChar.SelectedIndex].inf;
+            CharLock = false;
+        }
+
+        private void cbAuraList_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            AuraLock = true;
+            txtBStart.Text = Auras[cbAuraList.SelectedIndex].Color[0].ToString();
+            txtBLoop.Text = Auras[cbAuraList.SelectedIndex].Color[1].ToString();
+            txtBEnd.Text = Auras[cbAuraList.SelectedIndex].Color[2].ToString();
+            txtKiCharge.Text = Auras[cbAuraList.SelectedIndex].Color[3].ToString();
+            txtkiMax.Text = Auras[cbAuraList.SelectedIndex].Color[4].ToString();
+            txtHenshinStart.Text = Auras[cbAuraList.SelectedIndex].Color[5].ToString();
+            txtHenshinEnd.Text = Auras[cbAuraList.SelectedIndex].Color[6].ToString();
+            AuraLock = false;
+        }
+
+        private void editAURFileToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Process p = new Process();
+            ProcessStartInfo info = new ProcessStartInfo();
+            info.FileName = "cmd.exe";
+            info.CreateNoWindow = true;
+            info.WindowStyle = ProcessWindowStyle.Hidden;
+            info.RedirectStandardInput = true;
+            info.UseShellExecute = false;
+
+            p.StartInfo = info;
+            p.Start();
+            using (StreamWriter sw = p.StandardInput)
+            {
+                if (sw.BaseStream.CanWrite)
+                {
+                    sw.WriteLine("cd " + Properties.Settings.Default.datafolder + @"\system");
+                    sw.WriteLine(@"XMLSerializer.exe aura_setting.aur");
+                }
+            }
+
+            p.WaitForExit();
+
+            Process p2 = Process.Start(Properties.Settings.Default.datafolder + @"\system\aura_setting.aur.xml");
+
+            p2.WaitForExit();
+
+            p.Start();
+
+            using (StreamWriter sw = p.StandardInput)
+            {
+                if (sw.BaseStream.CanWrite)
+                {
+                    const string quote = "\"";
+
+                    sw.WriteLine("cd " + Properties.Settings.Default.datafolder + @"\system");
+                    sw.WriteLine(@"XMLSerializer.exe " + quote + Properties.Settings.Default.datafolder + @"\system\aura_setting.aur.xml" + quote);
+                }
+            }
+
+            p.WaitForExit();
+
+            MessageBox.Show("AUR File Compiled Successfully", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+            if (File.Exists(Properties.Settings.Default.datafolder + @"\system\aura_setting.aur.xml"))
+            {
+                File.Delete(Properties.Settings.Default.datafolder + @"\system\aura_setting.aur.xml");
+            }
+            loadFiles();
+        }
+
+        private void txtAURID_TextChanged(object sender, EventArgs e)
+        {
+            int Num;
+            if (int.TryParse(txtAURID.Text, out Num) && !CharLock)
+                Chars[cbAURChar.SelectedIndex].ID = Num;
+        }
+
+        private void chkInf_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!CharLock)
+                Chars[cbAURChar.SelectedIndex].inf = chkInf.Checked;
+        }
+
+        private void txtBStart_TextChanged(object sender, EventArgs e)
+        {
+            int Num;
+            if (int.TryParse(txtBStart.Text, out Num) && !AuraLock)
+                Auras[cbAuraList.SelectedIndex].Color[0] = Num;
+        }
+
+        private void txtBEnd_TextChanged(object sender, EventArgs e)
+        {
+            int Num;
+            if (int.TryParse(txtBEnd.Text, out Num) && !AuraLock)
+                Auras[cbAuraList.SelectedIndex].Color[2] = Num;
+        }
+
+        private void txtkiMax_TextChanged(object sender, EventArgs e)
+        {
+            int Num;
+            if (int.TryParse(txtkiMax.Text, out Num) && !AuraLock)
+                Auras[cbAuraList.SelectedIndex].Color[4] = Num;
+        }
+
+        private void txtHenshinEnd_TextChanged(object sender, EventArgs e)
+        {
+            int Num;
+            if (int.TryParse(txtHenshinEnd.Text, out Num) && !AuraLock)
+                Auras[cbAuraList.SelectedIndex].Color[6] = Num;
+        }
+
+        private void txtHenshinStart_TextChanged(object sender, EventArgs e)
+        {
+            int Num;
+            if (int.TryParse(txtHenshinStart.Text, out Num) && !AuraLock)
+                Auras[cbAuraList.SelectedIndex].Color[5] = Num;
+        }
+
+        private void txtKiCharge_TextChanged(object sender, EventArgs e)
+        {
+            int Num;
+            if (int.TryParse(txtKiCharge.Text, out Num) && !AuraLock)
+                Auras[cbAuraList.SelectedIndex].Color[3] = Num;
+        }
+
+        private void txtBLoop_TextChanged(object sender, EventArgs e)
+        {
+            int Num;
+            if (int.TryParse(txtBLoop.Text, out Num) && !AuraLock)
+                Auras[cbAuraList.SelectedIndex].Color[1] = Num;
+        }
 
         ///////////////////////////////////////////////////////////////////
     }

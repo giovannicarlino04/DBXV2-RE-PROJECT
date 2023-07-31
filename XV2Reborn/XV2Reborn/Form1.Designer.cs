@@ -201,7 +201,60 @@
             this.CUScopyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.CUSpasteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.label64 = new System.Windows.Forms.Label();
+            this.label65 = new System.Windows.Forms.Label();
+            this.label66 = new System.Windows.Forms.Label();
+            this.PSCtxtCharID = new System.Windows.Forms.TextBox();
+            this.PSClstData = new System.Windows.Forms.ListView();
+            this.columnHeader5 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader6 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.PSCtxtVal = new System.Windows.Forms.TextBox();
+            this.PSCtxtName = new System.Windows.Forms.TextBox();
+            this.PSCcbCostume = new System.Windows.Forms.ComboBox();
+            this.PSCcbChar = new System.Windows.Forms.ComboBox();
+            this.menuStrip7 = new System.Windows.Forms.MenuStrip();
+            this.toolStripMenuItem7 = new System.Windows.Forms.ToolStripMenuItem();
+            this.PSCsaveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.PSCtoolStripMenuItem10 = new System.Windows.Forms.ToolStripMenuItem();
+            this.addToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.PSCcharacterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.PSCcostumeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.removeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.PSCcharacterToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.PSCcostumeToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.PSCcopyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.PSCpasteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tabPage5 = new System.Windows.Forms.TabPage();
+            this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.groupBox8 = new System.Windows.Forms.GroupBox();
+            this.txtBLoop = new System.Windows.Forms.TextBox();
+            this.txtBEnd = new System.Windows.Forms.TextBox();
+            this.label67 = new System.Windows.Forms.Label();
+            this.label68 = new System.Windows.Forms.Label();
+            this.txtHenshinEnd = new System.Windows.Forms.TextBox();
+            this.txtKiCharge = new System.Windows.Forms.TextBox();
+            this.txtBStart = new System.Windows.Forms.TextBox();
+            this.label69 = new System.Windows.Forms.Label();
+            this.label70 = new System.Windows.Forms.Label();
+            this.label71 = new System.Windows.Forms.Label();
+            this.cbAuraList = new System.Windows.Forms.ComboBox();
+            this.txtkiMax = new System.Windows.Forms.TextBox();
+            this.txtHenshinStart = new System.Windows.Forms.TextBox();
+            this.label72 = new System.Windows.Forms.Label();
+            this.label73 = new System.Windows.Forms.Label();
+            this.label74 = new System.Windows.Forms.Label();
+            this.groupBox7 = new System.Windows.Forms.GroupBox();
+            this.cbAURChar = new System.Windows.Forms.ComboBox();
+            this.chkInf = new System.Windows.Forms.CheckBox();
+            this.label75 = new System.Windows.Forms.Label();
+            this.label76 = new System.Windows.Forms.Label();
+            this.txtAURID = new System.Windows.Forms.TextBox();
+            this.menuStrip8 = new System.Windows.Forms.MenuStrip();
+            this.fileToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveAURFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem10 = new System.Windows.Forms.ToolStripMenuItem();
+            this.addAuraToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.removeAuraToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tabPage6 = new System.Windows.Forms.TabPage();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.cbListMSG = new System.Windows.Forms.ComboBox();
@@ -237,29 +290,14 @@
             this.tabPage8 = new System.Windows.Forms.TabPage();
             this.label2 = new System.Windows.Forms.Label();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.label64 = new System.Windows.Forms.Label();
-            this.label65 = new System.Windows.Forms.Label();
-            this.label66 = new System.Windows.Forms.Label();
-            this.PSCtxtCharID = new System.Windows.Forms.TextBox();
-            this.PSClstData = new System.Windows.Forms.ListView();
-            this.columnHeader5 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader6 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.PSCtxtVal = new System.Windows.Forms.TextBox();
-            this.PSCtxtName = new System.Windows.Forms.TextBox();
-            this.PSCcbCostume = new System.Windows.Forms.ComboBox();
-            this.PSCcbChar = new System.Windows.Forms.ComboBox();
-            this.menuStrip7 = new System.Windows.Forms.MenuStrip();
-            this.toolStripMenuItem7 = new System.Windows.Forms.ToolStripMenuItem();
-            this.PSCsaveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.PSCtoolStripMenuItem10 = new System.Windows.Forms.ToolStripMenuItem();
-            this.addToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.PSCcharacterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.PSCcostumeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.removeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.PSCcharacterToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.PSCcostumeToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.PSCcopyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.pasteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+            this.editAURFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
+            this.editCUSFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
+            this.editCSOFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
+            this.editCMSFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -274,13 +312,18 @@
             this.tabPage11.SuspendLayout();
             this.menuStrip5.SuspendLayout();
             this.tabPage4.SuspendLayout();
+            this.menuStrip7.SuspendLayout();
+            this.tabPage5.SuspendLayout();
+            this.groupBox6.SuspendLayout();
+            this.groupBox8.SuspendLayout();
+            this.groupBox7.SuspendLayout();
+            this.menuStrip8.SuspendLayout();
             this.tabPage6.SuspendLayout();
             this.groupBox5.SuspendLayout();
             this.menuStrip3.SuspendLayout();
             this.tabPage7.SuspendLayout();
             this.menuStrip6.SuspendLayout();
             this.tabPage8.SuspendLayout();
-            this.menuStrip7.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -308,19 +351,19 @@
             // installModToolStripMenuItem
             // 
             this.installModToolStripMenuItem.Name = "installModToolStripMenuItem";
-            this.installModToolStripMenuItem.Size = new System.Drawing.Size(133, 22);
+            this.installModToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.installModToolStripMenuItem.Text = "Install Mod";
             this.installModToolStripMenuItem.Click += new System.EventHandler(this.installModToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(130, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(177, 6);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(133, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             // 
             // toolsToolStripMenuItem
@@ -336,6 +379,7 @@
             this.uninstallModToolStripMenuItem.Name = "uninstallModToolStripMenuItem";
             this.uninstallModToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
             this.uninstallModToolStripMenuItem.Text = "Uninstall Mod";
+            this.uninstallModToolStripMenuItem.Click += new System.EventHandler(this.uninstallModToolStripMenuItem_Click);
             // 
             // toolsToolStripMenuItem1
             // 
@@ -350,19 +394,19 @@
             // compileScriptsToolStripMenuItem
             // 
             this.compileScriptsToolStripMenuItem.Name = "compileScriptsToolStripMenuItem";
-            this.compileScriptsToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
+            this.compileScriptsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.compileScriptsToolStripMenuItem.Text = "Compile Scripts";
             this.compileScriptsToolStripMenuItem.Click += new System.EventHandler(this.compileScriptsToolStripMenuItem_Click);
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(159, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(177, 6);
             // 
             // clearInstallationToolStripMenuItem
             // 
             this.clearInstallationToolStripMenuItem.Name = "clearInstallationToolStripMenuItem";
-            this.clearInstallationToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
+            this.clearInstallationToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.clearInstallationToolStripMenuItem.Text = "Clear Installation";
             this.clearInstallationToolStripMenuItem.Click += new System.EventHandler(this.clearInstallationToolStripMenuItem_Click);
             // 
@@ -846,7 +890,9 @@
             this.CMSAdd,
             this.CMSRemove,
             this.CMSCopy,
-            this.CMSPaste});
+            this.CMSPaste,
+            this.toolStripSeparator6,
+            this.editCMSFileToolStripMenuItem});
             this.editToolStripMenuItem.Name = "editToolStripMenuItem";
             this.editToolStripMenuItem.Size = new System.Drawing.Size(39, 20);
             this.editToolStripMenuItem.Text = "Edit";
@@ -854,28 +900,28 @@
             // CMSAdd
             // 
             this.CMSAdd.Name = "CMSAdd";
-            this.CMSAdd.Size = new System.Drawing.Size(117, 22);
+            this.CMSAdd.Size = new System.Drawing.Size(180, 22);
             this.CMSAdd.Text = "Add";
             this.CMSAdd.Click += new System.EventHandler(this.CMSAdd_Click);
             // 
             // CMSRemove
             // 
             this.CMSRemove.Name = "CMSRemove";
-            this.CMSRemove.Size = new System.Drawing.Size(117, 22);
+            this.CMSRemove.Size = new System.Drawing.Size(180, 22);
             this.CMSRemove.Text = "Remove";
             this.CMSRemove.Click += new System.EventHandler(this.CMSRemove_Click);
             // 
             // CMSCopy
             // 
             this.CMSCopy.Name = "CMSCopy";
-            this.CMSCopy.Size = new System.Drawing.Size(117, 22);
+            this.CMSCopy.Size = new System.Drawing.Size(180, 22);
             this.CMSCopy.Text = "Copy";
             this.CMSCopy.Click += new System.EventHandler(this.CMSCopy_Click);
             // 
             // CMSPaste
             // 
             this.CMSPaste.Name = "CMSPaste";
-            this.CMSPaste.Size = new System.Drawing.Size(117, 22);
+            this.CMSPaste.Size = new System.Drawing.Size(180, 22);
             this.CMSPaste.Text = "Paste";
             this.CMSPaste.Click += new System.EventHandler(this.CMSPaste_Click);
             // 
@@ -1044,7 +1090,9 @@
             // 
             this.toolStripMenuItem6.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.CSOaddToolStripMenuItem,
-            this.CSOremoveToolStripMenuItem});
+            this.CSOremoveToolStripMenuItem,
+            this.toolStripSeparator5,
+            this.editCSOFileToolStripMenuItem});
             this.toolStripMenuItem6.Name = "toolStripMenuItem6";
             this.toolStripMenuItem6.Size = new System.Drawing.Size(39, 20);
             this.toolStripMenuItem6.Text = "Edit";
@@ -1052,14 +1100,14 @@
             // CSOaddToolStripMenuItem
             // 
             this.CSOaddToolStripMenuItem.Name = "CSOaddToolStripMenuItem";
-            this.CSOaddToolStripMenuItem.Size = new System.Drawing.Size(117, 22);
+            this.CSOaddToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.CSOaddToolStripMenuItem.Text = "Add";
             this.CSOaddToolStripMenuItem.Click += new System.EventHandler(this.CSOaddToolStripMenuItem_Click);
             // 
             // CSOremoveToolStripMenuItem
             // 
             this.CSOremoveToolStripMenuItem.Name = "CSOremoveToolStripMenuItem";
-            this.CSOremoveToolStripMenuItem.Size = new System.Drawing.Size(117, 22);
+            this.CSOremoveToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.CSOremoveToolStripMenuItem.Text = "Remove";
             this.CSOremoveToolStripMenuItem.Click += new System.EventHandler(this.CSOremoveToolStripMenuItem_Click);
             // 
@@ -1838,7 +1886,7 @@
             // CUSsaveToolStripMenuItem
             // 
             this.CUSsaveToolStripMenuItem.Name = "CUSsaveToolStripMenuItem";
-            this.CUSsaveToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.CUSsaveToolStripMenuItem.Size = new System.Drawing.Size(98, 22);
             this.CUSsaveToolStripMenuItem.Text = "Save";
             this.CUSsaveToolStripMenuItem.Click += new System.EventHandler(this.CUSsaveToolStripMenuItem_Click);
             // 
@@ -1848,7 +1896,9 @@
             this.CUSaddToolStripMenuItem,
             this.CUSremoveToolStripMenuItem,
             this.CUScopyToolStripMenuItem,
-            this.CUSpasteToolStripMenuItem});
+            this.CUSpasteToolStripMenuItem,
+            this.toolStripSeparator4,
+            this.editCUSFileToolStripMenuItem});
             this.toolStripMenuItem8.Name = "toolStripMenuItem8";
             this.toolStripMenuItem8.Size = new System.Drawing.Size(39, 20);
             this.toolStripMenuItem8.Text = "Edit";
@@ -1900,14 +1950,491 @@
             this.tabPage4.TabIndex = 3;
             this.tabPage4.Text = "PSC";
             // 
+            // label64
+            // 
+            this.label64.AutoSize = true;
+            this.label64.Location = new System.Drawing.Point(214, 100);
+            this.label64.Name = "label64";
+            this.label64.Size = new System.Drawing.Size(48, 13);
+            this.label64.TabIndex = 19;
+            this.label64.Text = "Costume";
+            // 
+            // label65
+            // 
+            this.label65.AutoSize = true;
+            this.label65.Location = new System.Drawing.Point(126, 100);
+            this.label65.Name = "label65";
+            this.label65.Size = new System.Drawing.Size(67, 13);
+            this.label65.TabIndex = 18;
+            this.label65.Text = "Character ID";
+            // 
+            // label66
+            // 
+            this.label66.AutoSize = true;
+            this.label66.Location = new System.Drawing.Point(13, 100);
+            this.label66.Name = "label66";
+            this.label66.Size = new System.Drawing.Size(53, 13);
+            this.label66.TabIndex = 17;
+            this.label66.Text = "Character";
+            // 
+            // PSCtxtCharID
+            // 
+            this.PSCtxtCharID.Location = new System.Drawing.Point(120, 120);
+            this.PSCtxtCharID.Name = "PSCtxtCharID";
+            this.PSCtxtCharID.Size = new System.Drawing.Size(91, 20);
+            this.PSCtxtCharID.TabIndex = 16;
+            this.PSCtxtCharID.TextChanged += new System.EventHandler(this.PSCtxtCharID_TextChanged);
+            // 
+            // PSClstData
+            // 
+            this.PSClstData.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader5,
+            this.columnHeader6});
+            this.PSClstData.HideSelection = false;
+            this.PSClstData.Location = new System.Drawing.Point(12, 185);
+            this.PSClstData.MultiSelect = false;
+            this.PSClstData.Name = "PSClstData";
+            this.PSClstData.Size = new System.Drawing.Size(316, 231);
+            this.PSClstData.TabIndex = 15;
+            this.PSClstData.TileSize = new System.Drawing.Size(200, 30);
+            this.PSClstData.UseCompatibleStateImageBehavior = false;
+            this.PSClstData.View = System.Windows.Forms.View.Tile;
+            this.PSClstData.SelectedIndexChanged += new System.EventHandler(this.PSClstData_SelectedIndexChanged);
+            // 
+            // PSCtxtVal
+            // 
+            this.PSCtxtVal.Location = new System.Drawing.Point(232, 159);
+            this.PSCtxtVal.Name = "PSCtxtVal";
+            this.PSCtxtVal.Size = new System.Drawing.Size(96, 20);
+            this.PSCtxtVal.TabIndex = 14;
+            this.PSCtxtVal.TextChanged += new System.EventHandler(this.PSCtxtVal_TextChanged);
+            // 
+            // PSCtxtName
+            // 
+            this.PSCtxtName.Location = new System.Drawing.Point(12, 159);
+            this.PSCtxtName.Name = "PSCtxtName";
+            this.PSCtxtName.ReadOnly = true;
+            this.PSCtxtName.Size = new System.Drawing.Size(214, 20);
+            this.PSCtxtName.TabIndex = 13;
+            // 
+            // PSCcbCostume
+            // 
+            this.PSCcbCostume.FormattingEnabled = true;
+            this.PSCcbCostume.Location = new System.Drawing.Point(217, 119);
+            this.PSCcbCostume.Name = "PSCcbCostume";
+            this.PSCcbCostume.Size = new System.Drawing.Size(111, 21);
+            this.PSCcbCostume.TabIndex = 12;
+            this.PSCcbCostume.SelectedIndexChanged += new System.EventHandler(this.PSCcbCostume_SelectedIndexChanged);
+            // 
+            // PSCcbChar
+            // 
+            this.PSCcbChar.FormattingEnabled = true;
+            this.PSCcbChar.Location = new System.Drawing.Point(12, 119);
+            this.PSCcbChar.Name = "PSCcbChar";
+            this.PSCcbChar.Size = new System.Drawing.Size(102, 21);
+            this.PSCcbChar.TabIndex = 10;
+            this.PSCcbChar.SelectedIndexChanged += new System.EventHandler(this.PSCcbChar_SelectedIndexChanged);
+            // 
+            // menuStrip7
+            // 
+            this.menuStrip7.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripMenuItem7,
+            this.PSCtoolStripMenuItem10});
+            this.menuStrip7.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip7.Name = "menuStrip7";
+            this.menuStrip7.Size = new System.Drawing.Size(1017, 24);
+            this.menuStrip7.TabIndex = 11;
+            this.menuStrip7.Text = "menuStrip7";
+            // 
+            // toolStripMenuItem7
+            // 
+            this.toolStripMenuItem7.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.PSCsaveToolStripMenuItem});
+            this.toolStripMenuItem7.Name = "toolStripMenuItem7";
+            this.toolStripMenuItem7.Size = new System.Drawing.Size(37, 20);
+            this.toolStripMenuItem7.Text = "File";
+            // 
+            // PSCsaveToolStripMenuItem
+            // 
+            this.PSCsaveToolStripMenuItem.Name = "PSCsaveToolStripMenuItem";
+            this.PSCsaveToolStripMenuItem.Size = new System.Drawing.Size(98, 22);
+            this.PSCsaveToolStripMenuItem.Text = "Save";
+            this.PSCsaveToolStripMenuItem.Click += new System.EventHandler(this.PSCsaveToolStripMenuItem_Click);
+            // 
+            // PSCtoolStripMenuItem10
+            // 
+            this.PSCtoolStripMenuItem10.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.addToolStripMenuItem,
+            this.removeToolStripMenuItem,
+            this.PSCcopyToolStripMenuItem,
+            this.PSCpasteToolStripMenuItem});
+            this.PSCtoolStripMenuItem10.Name = "PSCtoolStripMenuItem10";
+            this.PSCtoolStripMenuItem10.Size = new System.Drawing.Size(39, 20);
+            this.PSCtoolStripMenuItem10.Text = "Edit";
+            // 
+            // addToolStripMenuItem
+            // 
+            this.addToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.PSCcharacterToolStripMenuItem,
+            this.PSCcostumeToolStripMenuItem});
+            this.addToolStripMenuItem.Name = "addToolStripMenuItem";
+            this.addToolStripMenuItem.Size = new System.Drawing.Size(117, 22);
+            this.addToolStripMenuItem.Text = "Add";
+            // 
+            // PSCcharacterToolStripMenuItem
+            // 
+            this.PSCcharacterToolStripMenuItem.Name = "PSCcharacterToolStripMenuItem";
+            this.PSCcharacterToolStripMenuItem.Size = new System.Drawing.Size(125, 22);
+            this.PSCcharacterToolStripMenuItem.Text = "Character";
+            this.PSCcharacterToolStripMenuItem.Click += new System.EventHandler(this.PSCcharacterToolStripMenuItem_Click);
+            // 
+            // PSCcostumeToolStripMenuItem
+            // 
+            this.PSCcostumeToolStripMenuItem.Name = "PSCcostumeToolStripMenuItem";
+            this.PSCcostumeToolStripMenuItem.Size = new System.Drawing.Size(125, 22);
+            this.PSCcostumeToolStripMenuItem.Text = "Costume";
+            this.PSCcostumeToolStripMenuItem.Click += new System.EventHandler(this.PSCcostumeToolStripMenuItem_Click);
+            // 
+            // removeToolStripMenuItem
+            // 
+            this.removeToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.PSCcharacterToolStripMenuItem1,
+            this.PSCcostumeToolStripMenuItem1});
+            this.removeToolStripMenuItem.Name = "removeToolStripMenuItem";
+            this.removeToolStripMenuItem.Size = new System.Drawing.Size(117, 22);
+            this.removeToolStripMenuItem.Text = "Remove";
+            // 
+            // PSCcharacterToolStripMenuItem1
+            // 
+            this.PSCcharacterToolStripMenuItem1.Name = "PSCcharacterToolStripMenuItem1";
+            this.PSCcharacterToolStripMenuItem1.Size = new System.Drawing.Size(125, 22);
+            this.PSCcharacterToolStripMenuItem1.Text = "Character";
+            this.PSCcharacterToolStripMenuItem1.Click += new System.EventHandler(this.PSCcharacterToolStripMenuItem1_Click);
+            // 
+            // PSCcostumeToolStripMenuItem1
+            // 
+            this.PSCcostumeToolStripMenuItem1.Name = "PSCcostumeToolStripMenuItem1";
+            this.PSCcostumeToolStripMenuItem1.Size = new System.Drawing.Size(125, 22);
+            this.PSCcostumeToolStripMenuItem1.Text = "Costume";
+            this.PSCcostumeToolStripMenuItem1.Click += new System.EventHandler(this.PSCcostumeToolStripMenuItem1_Click);
+            // 
+            // PSCcopyToolStripMenuItem
+            // 
+            this.PSCcopyToolStripMenuItem.Name = "PSCcopyToolStripMenuItem";
+            this.PSCcopyToolStripMenuItem.Size = new System.Drawing.Size(117, 22);
+            this.PSCcopyToolStripMenuItem.Text = "Copy";
+            this.PSCcopyToolStripMenuItem.Click += new System.EventHandler(this.PSCcopyToolStripMenuItem_Click);
+            // 
+            // PSCpasteToolStripMenuItem
+            // 
+            this.PSCpasteToolStripMenuItem.Name = "PSCpasteToolStripMenuItem";
+            this.PSCpasteToolStripMenuItem.Size = new System.Drawing.Size(117, 22);
+            this.PSCpasteToolStripMenuItem.Text = "Paste";
+            this.PSCpasteToolStripMenuItem.Click += new System.EventHandler(this.pasteToolStripMenuItem_Click);
+            // 
             // tabPage5
             // 
             this.tabPage5.BackColor = System.Drawing.SystemColors.Control;
+            this.tabPage5.Controls.Add(this.groupBox6);
+            this.tabPage5.Controls.Add(this.menuStrip8);
             this.tabPage5.Location = new System.Drawing.Point(4, 22);
             this.tabPage5.Name = "tabPage5";
             this.tabPage5.Size = new System.Drawing.Size(1017, 484);
             this.tabPage5.TabIndex = 4;
             this.tabPage5.Text = "AUR";
+            // 
+            // groupBox6
+            // 
+            this.groupBox6.Controls.Add(this.groupBox8);
+            this.groupBox6.Controls.Add(this.groupBox7);
+            this.groupBox6.Location = new System.Drawing.Point(7, 71);
+            this.groupBox6.Name = "groupBox6";
+            this.groupBox6.Size = new System.Drawing.Size(827, 369);
+            this.groupBox6.TabIndex = 10;
+            this.groupBox6.TabStop = false;
+            this.groupBox6.Text = "AUR";
+            // 
+            // groupBox8
+            // 
+            this.groupBox8.Controls.Add(this.txtBLoop);
+            this.groupBox8.Controls.Add(this.txtBEnd);
+            this.groupBox8.Controls.Add(this.label67);
+            this.groupBox8.Controls.Add(this.label68);
+            this.groupBox8.Controls.Add(this.txtHenshinEnd);
+            this.groupBox8.Controls.Add(this.txtKiCharge);
+            this.groupBox8.Controls.Add(this.txtBStart);
+            this.groupBox8.Controls.Add(this.label69);
+            this.groupBox8.Controls.Add(this.label70);
+            this.groupBox8.Controls.Add(this.label71);
+            this.groupBox8.Controls.Add(this.cbAuraList);
+            this.groupBox8.Controls.Add(this.txtkiMax);
+            this.groupBox8.Controls.Add(this.txtHenshinStart);
+            this.groupBox8.Controls.Add(this.label72);
+            this.groupBox8.Controls.Add(this.label73);
+            this.groupBox8.Controls.Add(this.label74);
+            this.groupBox8.Location = new System.Drawing.Point(420, 21);
+            this.groupBox8.Name = "groupBox8";
+            this.groupBox8.Size = new System.Drawing.Size(398, 334);
+            this.groupBox8.TabIndex = 10;
+            this.groupBox8.TabStop = false;
+            this.groupBox8.Text = "Aura Editor";
+            // 
+            // txtBLoop
+            // 
+            this.txtBLoop.Location = new System.Drawing.Point(244, 91);
+            this.txtBLoop.Name = "txtBLoop";
+            this.txtBLoop.Size = new System.Drawing.Size(126, 20);
+            this.txtBLoop.TabIndex = 23;
+            this.txtBLoop.TextChanged += new System.EventHandler(this.txtBLoop_TextChanged);
+            // 
+            // txtBEnd
+            // 
+            this.txtBEnd.Location = new System.Drawing.Point(28, 137);
+            this.txtBEnd.Name = "txtBEnd";
+            this.txtBEnd.Size = new System.Drawing.Size(126, 20);
+            this.txtBEnd.TabIndex = 25;
+            this.txtBEnd.TextChanged += new System.EventHandler(this.txtBEnd_TextChanged);
+            // 
+            // label67
+            // 
+            this.label67.AutoSize = true;
+            this.label67.BackColor = System.Drawing.Color.Transparent;
+            this.label67.Location = new System.Drawing.Point(270, 119);
+            this.label67.Name = "label67";
+            this.label67.Size = new System.Drawing.Size(53, 13);
+            this.label67.TabIndex = 26;
+            this.label67.Text = "Ki Charge";
+            // 
+            // label68
+            // 
+            this.label68.AutoSize = true;
+            this.label68.BackColor = System.Drawing.Color.Transparent;
+            this.label68.Location = new System.Drawing.Point(52, 119);
+            this.label68.Name = "label68";
+            this.label68.Size = new System.Drawing.Size(56, 13);
+            this.label68.TabIndex = 24;
+            this.label68.Text = "Boost End";
+            // 
+            // txtHenshinEnd
+            // 
+            this.txtHenshinEnd.Location = new System.Drawing.Point(141, 236);
+            this.txtHenshinEnd.Name = "txtHenshinEnd";
+            this.txtHenshinEnd.Size = new System.Drawing.Size(126, 20);
+            this.txtHenshinEnd.TabIndex = 33;
+            this.txtHenshinEnd.TextChanged += new System.EventHandler(this.txtHenshinEnd_TextChanged);
+            // 
+            // txtKiCharge
+            // 
+            this.txtKiCharge.Location = new System.Drawing.Point(244, 137);
+            this.txtKiCharge.Name = "txtKiCharge";
+            this.txtKiCharge.Size = new System.Drawing.Size(126, 20);
+            this.txtKiCharge.TabIndex = 27;
+            this.txtKiCharge.TextChanged += new System.EventHandler(this.txtKiCharge_TextChanged);
+            // 
+            // txtBStart
+            // 
+            this.txtBStart.Location = new System.Drawing.Point(28, 91);
+            this.txtBStart.Name = "txtBStart";
+            this.txtBStart.Size = new System.Drawing.Size(126, 20);
+            this.txtBStart.TabIndex = 21;
+            this.txtBStart.TextChanged += new System.EventHandler(this.txtBStart_TextChanged);
+            // 
+            // label69
+            // 
+            this.label69.AutoSize = true;
+            this.label69.BackColor = System.Drawing.Color.Transparent;
+            this.label69.Location = new System.Drawing.Point(64, 168);
+            this.label69.Name = "label69";
+            this.label69.Size = new System.Drawing.Size(39, 13);
+            this.label69.TabIndex = 28;
+            this.label69.Text = "Ki Max";
+            // 
+            // label70
+            // 
+            this.label70.AutoSize = true;
+            this.label70.BackColor = System.Drawing.Color.Transparent;
+            this.label70.Location = new System.Drawing.Point(158, 219);
+            this.label70.Name = "label70";
+            this.label70.Size = new System.Drawing.Size(76, 13);
+            this.label70.TabIndex = 32;
+            this.label70.Text = "Transform End";
+            // 
+            // label71
+            // 
+            this.label71.AutoSize = true;
+            this.label71.BackColor = System.Drawing.Color.Transparent;
+            this.label71.Location = new System.Drawing.Point(270, 73);
+            this.label71.Name = "label71";
+            this.label71.Size = new System.Drawing.Size(61, 13);
+            this.label71.TabIndex = 22;
+            this.label71.Text = "Boost Loop";
+            // 
+            // cbAuraList
+            // 
+            this.cbAuraList.FormattingEnabled = true;
+            this.cbAuraList.Location = new System.Drawing.Point(28, 47);
+            this.cbAuraList.Name = "cbAuraList";
+            this.cbAuraList.Size = new System.Drawing.Size(126, 21);
+            this.cbAuraList.TabIndex = 18;
+            this.cbAuraList.SelectedIndexChanged += new System.EventHandler(this.cbAuraList_SelectedIndexChanged);
+            // 
+            // txtkiMax
+            // 
+            this.txtkiMax.Location = new System.Drawing.Point(28, 185);
+            this.txtkiMax.Name = "txtkiMax";
+            this.txtkiMax.Size = new System.Drawing.Size(126, 20);
+            this.txtkiMax.TabIndex = 29;
+            this.txtkiMax.TextChanged += new System.EventHandler(this.txtkiMax_TextChanged);
+            // 
+            // txtHenshinStart
+            // 
+            this.txtHenshinStart.Location = new System.Drawing.Point(244, 185);
+            this.txtHenshinStart.Name = "txtHenshinStart";
+            this.txtHenshinStart.Size = new System.Drawing.Size(126, 20);
+            this.txtHenshinStart.TabIndex = 31;
+            this.txtHenshinStart.TextChanged += new System.EventHandler(this.txtHenshinStart_TextChanged);
+            // 
+            // label72
+            // 
+            this.label72.AutoSize = true;
+            this.label72.BackColor = System.Drawing.Color.Transparent;
+            this.label72.Location = new System.Drawing.Point(52, 73);
+            this.label72.Name = "label72";
+            this.label72.Size = new System.Drawing.Size(59, 13);
+            this.label72.TabIndex = 20;
+            this.label72.Text = "Boost Start";
+            // 
+            // label73
+            // 
+            this.label73.AutoSize = true;
+            this.label73.BackColor = System.Drawing.Color.Transparent;
+            this.label73.Location = new System.Drawing.Point(25, 29);
+            this.label73.Name = "label73";
+            this.label73.Size = new System.Drawing.Size(29, 13);
+            this.label73.TabIndex = 19;
+            this.label73.Text = "Aura";
+            // 
+            // label74
+            // 
+            this.label74.AutoSize = true;
+            this.label74.BackColor = System.Drawing.Color.Transparent;
+            this.label74.Location = new System.Drawing.Point(258, 168);
+            this.label74.Name = "label74";
+            this.label74.Size = new System.Drawing.Size(79, 13);
+            this.label74.TabIndex = 30;
+            this.label74.Text = "Transform Start";
+            // 
+            // groupBox7
+            // 
+            this.groupBox7.Controls.Add(this.cbAURChar);
+            this.groupBox7.Controls.Add(this.chkInf);
+            this.groupBox7.Controls.Add(this.label75);
+            this.groupBox7.Controls.Add(this.label76);
+            this.groupBox7.Controls.Add(this.txtAURID);
+            this.groupBox7.Location = new System.Drawing.Point(15, 21);
+            this.groupBox7.Name = "groupBox7";
+            this.groupBox7.Size = new System.Drawing.Size(399, 334);
+            this.groupBox7.TabIndex = 9;
+            this.groupBox7.TabStop = false;
+            this.groupBox7.Text = "Character Auras";
+            // 
+            // cbAURChar
+            // 
+            this.cbAURChar.FormattingEnabled = true;
+            this.cbAURChar.Location = new System.Drawing.Point(97, 44);
+            this.cbAURChar.Name = "cbAURChar";
+            this.cbAURChar.Size = new System.Drawing.Size(256, 21);
+            this.cbAURChar.TabIndex = 6;
+            this.cbAURChar.SelectedIndexChanged += new System.EventHandler(this.cbAURChar_SelectedIndexChanged);
+            // 
+            // chkInf
+            // 
+            this.chkInf.AutoSize = true;
+            this.chkInf.Location = new System.Drawing.Point(238, 91);
+            this.chkInf.Name = "chkInf";
+            this.chkInf.Size = new System.Drawing.Size(80, 17);
+            this.chkInf.TabIndex = 5;
+            this.chkInf.Text = "Infinite Flag";
+            this.chkInf.UseVisualStyleBackColor = true;
+            this.chkInf.CheckedChanged += new System.EventHandler(this.chkInf_CheckedChanged);
+            // 
+            // label75
+            // 
+            this.label75.AutoSize = true;
+            this.label75.Location = new System.Drawing.Point(24, 47);
+            this.label75.Name = "label75";
+            this.label75.Size = new System.Drawing.Size(56, 13);
+            this.label75.TabIndex = 7;
+            this.label75.Text = "Character:";
+            // 
+            // label76
+            // 
+            this.label76.AutoSize = true;
+            this.label76.Location = new System.Drawing.Point(39, 91);
+            this.label76.Name = "label76";
+            this.label76.Size = new System.Drawing.Size(46, 13);
+            this.label76.TabIndex = 4;
+            this.label76.Text = "Aura ID:";
+            // 
+            // txtAURID
+            // 
+            this.txtAURID.Location = new System.Drawing.Point(97, 88);
+            this.txtAURID.Name = "txtAURID";
+            this.txtAURID.Size = new System.Drawing.Size(126, 20);
+            this.txtAURID.TabIndex = 3;
+            this.txtAURID.TextChanged += new System.EventHandler(this.txtAURID_TextChanged);
+            // 
+            // menuStrip8
+            // 
+            this.menuStrip8.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.fileToolStripMenuItem1,
+            this.toolStripMenuItem10});
+            this.menuStrip8.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip8.Name = "menuStrip8";
+            this.menuStrip8.Padding = new System.Windows.Forms.Padding(7, 3, 0, 3);
+            this.menuStrip8.Size = new System.Drawing.Size(1017, 25);
+            this.menuStrip8.TabIndex = 9;
+            this.menuStrip8.Text = "menuStrip8";
+            // 
+            // fileToolStripMenuItem1
+            // 
+            this.fileToolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.saveAURFileToolStripMenuItem});
+            this.fileToolStripMenuItem1.Name = "fileToolStripMenuItem1";
+            this.fileToolStripMenuItem1.Size = new System.Drawing.Size(37, 19);
+            this.fileToolStripMenuItem1.Text = "File";
+            // 
+            // saveAURFileToolStripMenuItem
+            // 
+            this.saveAURFileToolStripMenuItem.Name = "saveAURFileToolStripMenuItem";
+            this.saveAURFileToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.saveAURFileToolStripMenuItem.Text = "Save AUR";
+            this.saveAURFileToolStripMenuItem.Click += new System.EventHandler(this.saveAURFileToolStripMenuItem_Click);
+            // 
+            // toolStripMenuItem10
+            // 
+            this.toolStripMenuItem10.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.addAuraToolStripMenuItem,
+            this.removeAuraToolStripMenuItem,
+            this.toolStripSeparator3,
+            this.editAURFileToolStripMenuItem});
+            this.toolStripMenuItem10.Name = "toolStripMenuItem10";
+            this.toolStripMenuItem10.Size = new System.Drawing.Size(39, 19);
+            this.toolStripMenuItem10.Text = "Edit";
+            // 
+            // addAuraToolStripMenuItem
+            // 
+            this.addAuraToolStripMenuItem.Name = "addAuraToolStripMenuItem";
+            this.addAuraToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.addAuraToolStripMenuItem.Text = "Add Aura";
+            this.addAuraToolStripMenuItem.Click += new System.EventHandler(this.addAuraToolStripMenuItem_Click);
+            // 
+            // removeAuraToolStripMenuItem
+            // 
+            this.removeAuraToolStripMenuItem.Name = "removeAuraToolStripMenuItem";
+            this.removeAuraToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.removeAuraToolStripMenuItem.Text = "Remove Aura";
+            this.removeAuraToolStripMenuItem.Click += new System.EventHandler(this.removeAuraToolStripMenuItem_Click);
             // 
             // tabPage6
             // 
@@ -2186,7 +2713,7 @@
             // saveCSSToolStripMenuItem
             // 
             this.saveCSSToolStripMenuItem.Name = "saveCSSToolStripMenuItem";
-            this.saveCSSToolStripMenuItem.Size = new System.Drawing.Size(121, 22);
+            this.saveCSSToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.saveCSSToolStripMenuItem.Text = "Save CSS";
             this.saveCSSToolStripMenuItem.Click += new System.EventHandler(this.saveCSSToolStripMenuItem_Click);
             // 
@@ -2230,187 +2757,53 @@
             this.comboBox1.TabIndex = 0;
             this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
             // 
-            // label64
+            // toolStripSeparator3
             // 
-            this.label64.AutoSize = true;
-            this.label64.Location = new System.Drawing.Point(214, 100);
-            this.label64.Name = "label64";
-            this.label64.Size = new System.Drawing.Size(48, 13);
-            this.label64.TabIndex = 19;
-            this.label64.Text = "Costume";
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(177, 6);
             // 
-            // label65
+            // editAURFileToolStripMenuItem
             // 
-            this.label65.AutoSize = true;
-            this.label65.Location = new System.Drawing.Point(126, 100);
-            this.label65.Name = "label65";
-            this.label65.Size = new System.Drawing.Size(67, 13);
-            this.label65.TabIndex = 18;
-            this.label65.Text = "Character ID";
+            this.editAURFileToolStripMenuItem.Name = "editAURFileToolStripMenuItem";
+            this.editAURFileToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.editAURFileToolStripMenuItem.Text = "Edit AUR File";
+            this.editAURFileToolStripMenuItem.Click += new System.EventHandler(this.editAURFileToolStripMenuItem_Click);
             // 
-            // label66
+            // toolStripSeparator4
             // 
-            this.label66.AutoSize = true;
-            this.label66.Location = new System.Drawing.Point(13, 100);
-            this.label66.Name = "label66";
-            this.label66.Size = new System.Drawing.Size(53, 13);
-            this.label66.TabIndex = 17;
-            this.label66.Text = "Character";
+            this.toolStripSeparator4.Name = "toolStripSeparator4";
+            this.toolStripSeparator4.Size = new System.Drawing.Size(177, 6);
             // 
-            // PSCtxtCharID
+            // editCUSFileToolStripMenuItem
             // 
-            this.PSCtxtCharID.Location = new System.Drawing.Point(120, 120);
-            this.PSCtxtCharID.Name = "PSCtxtCharID";
-            this.PSCtxtCharID.Size = new System.Drawing.Size(91, 20);
-            this.PSCtxtCharID.TabIndex = 16;
-            this.PSCtxtCharID.TextChanged += new System.EventHandler(this.PSCtxtCharID_TextChanged);
+            this.editCUSFileToolStripMenuItem.Name = "editCUSFileToolStripMenuItem";
+            this.editCUSFileToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.editCUSFileToolStripMenuItem.Text = "Edit CUS File";
+            this.editCUSFileToolStripMenuItem.Click += new System.EventHandler(this.editCUSFileToolStripMenuItem_Click);
             // 
-            // PSClstData
+            // toolStripSeparator5
             // 
-            this.PSClstData.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader5,
-            this.columnHeader6});
-            this.PSClstData.HideSelection = false;
-            this.PSClstData.Location = new System.Drawing.Point(12, 185);
-            this.PSClstData.MultiSelect = false;
-            this.PSClstData.Name = "PSClstData";
-            this.PSClstData.Size = new System.Drawing.Size(316, 231);
-            this.PSClstData.TabIndex = 15;
-            this.PSClstData.TileSize = new System.Drawing.Size(200, 30);
-            this.PSClstData.UseCompatibleStateImageBehavior = false;
-            this.PSClstData.View = System.Windows.Forms.View.Tile;
-            this.PSClstData.SelectedIndexChanged += new System.EventHandler(this.PSClstData_SelectedIndexChanged);
+            this.toolStripSeparator5.Name = "toolStripSeparator5";
+            this.toolStripSeparator5.Size = new System.Drawing.Size(177, 6);
             // 
-            // PSCtxtVal
+            // editCSOFileToolStripMenuItem
             // 
-            this.PSCtxtVal.Location = new System.Drawing.Point(232, 159);
-            this.PSCtxtVal.Name = "PSCtxtVal";
-            this.PSCtxtVal.Size = new System.Drawing.Size(96, 20);
-            this.PSCtxtVal.TabIndex = 14;
-            this.PSCtxtVal.TextChanged += new System.EventHandler(this.PSCtxtVal_TextChanged);
+            this.editCSOFileToolStripMenuItem.Name = "editCSOFileToolStripMenuItem";
+            this.editCSOFileToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.editCSOFileToolStripMenuItem.Text = "Edit CSO File";
+            this.editCSOFileToolStripMenuItem.Click += new System.EventHandler(this.editCSOFileToolStripMenuItem_Click);
             // 
-            // PSCtxtName
+            // toolStripSeparator6
             // 
-            this.PSCtxtName.Location = new System.Drawing.Point(12, 159);
-            this.PSCtxtName.Name = "PSCtxtName";
-            this.PSCtxtName.ReadOnly = true;
-            this.PSCtxtName.Size = new System.Drawing.Size(214, 20);
-            this.PSCtxtName.TabIndex = 13;
+            this.toolStripSeparator6.Name = "toolStripSeparator6";
+            this.toolStripSeparator6.Size = new System.Drawing.Size(177, 6);
             // 
-            // PSCcbCostume
+            // editCMSFileToolStripMenuItem
             // 
-            this.PSCcbCostume.FormattingEnabled = true;
-            this.PSCcbCostume.Location = new System.Drawing.Point(217, 119);
-            this.PSCcbCostume.Name = "PSCcbCostume";
-            this.PSCcbCostume.Size = new System.Drawing.Size(111, 21);
-            this.PSCcbCostume.TabIndex = 12;
-            this.PSCcbCostume.SelectedIndexChanged += new System.EventHandler(this.PSCcbCostume_SelectedIndexChanged);
-            // 
-            // PSCcbChar
-            // 
-            this.PSCcbChar.FormattingEnabled = true;
-            this.PSCcbChar.Location = new System.Drawing.Point(12, 119);
-            this.PSCcbChar.Name = "PSCcbChar";
-            this.PSCcbChar.Size = new System.Drawing.Size(102, 21);
-            this.PSCcbChar.TabIndex = 10;
-            this.PSCcbChar.SelectedIndexChanged += new System.EventHandler(this.PSCcbChar_SelectedIndexChanged);
-            // 
-            // menuStrip7
-            // 
-            this.menuStrip7.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripMenuItem7,
-            this.PSCtoolStripMenuItem10});
-            this.menuStrip7.Location = new System.Drawing.Point(0, 0);
-            this.menuStrip7.Name = "menuStrip7";
-            this.menuStrip7.Size = new System.Drawing.Size(1017, 24);
-            this.menuStrip7.TabIndex = 11;
-            this.menuStrip7.Text = "menuStrip7";
-            // 
-            // toolStripMenuItem7
-            // 
-            this.toolStripMenuItem7.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.PSCsaveToolStripMenuItem});
-            this.toolStripMenuItem7.Name = "toolStripMenuItem7";
-            this.toolStripMenuItem7.Size = new System.Drawing.Size(37, 20);
-            this.toolStripMenuItem7.Text = "File";
-            // 
-            // PSCsaveToolStripMenuItem
-            // 
-            this.PSCsaveToolStripMenuItem.Name = "PSCsaveToolStripMenuItem";
-            this.PSCsaveToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.PSCsaveToolStripMenuItem.Text = "Save";
-            this.PSCsaveToolStripMenuItem.Click += new System.EventHandler(this.PSCsaveToolStripMenuItem_Click);
-            // 
-            // PSCtoolStripMenuItem10
-            // 
-            this.PSCtoolStripMenuItem10.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.addToolStripMenuItem,
-            this.removeToolStripMenuItem,
-            this.PSCcopyToolStripMenuItem,
-            this.pasteToolStripMenuItem});
-            this.PSCtoolStripMenuItem10.Name = "PSCtoolStripMenuItem10";
-            this.PSCtoolStripMenuItem10.Size = new System.Drawing.Size(39, 20);
-            this.PSCtoolStripMenuItem10.Text = "Edit";
-            // 
-            // addToolStripMenuItem
-            // 
-            this.addToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.PSCcharacterToolStripMenuItem,
-            this.PSCcostumeToolStripMenuItem});
-            this.addToolStripMenuItem.Name = "addToolStripMenuItem";
-            this.addToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.addToolStripMenuItem.Text = "Add";
-            // 
-            // PSCcharacterToolStripMenuItem
-            // 
-            this.PSCcharacterToolStripMenuItem.Name = "PSCcharacterToolStripMenuItem";
-            this.PSCcharacterToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.PSCcharacterToolStripMenuItem.Text = "Character";
-            this.PSCcharacterToolStripMenuItem.Click += new System.EventHandler(this.PSCcharacterToolStripMenuItem_Click);
-            // 
-            // PSCcostumeToolStripMenuItem
-            // 
-            this.PSCcostumeToolStripMenuItem.Name = "PSCcostumeToolStripMenuItem";
-            this.PSCcostumeToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.PSCcostumeToolStripMenuItem.Text = "Costume";
-            this.PSCcostumeToolStripMenuItem.Click += new System.EventHandler(this.PSCcostumeToolStripMenuItem_Click);
-            // 
-            // removeToolStripMenuItem
-            // 
-            this.removeToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.PSCcharacterToolStripMenuItem1,
-            this.PSCcostumeToolStripMenuItem1});
-            this.removeToolStripMenuItem.Name = "removeToolStripMenuItem";
-            this.removeToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.removeToolStripMenuItem.Text = "Remove";
-            // 
-            // PSCcharacterToolStripMenuItem1
-            // 
-            this.PSCcharacterToolStripMenuItem1.Name = "PSCcharacterToolStripMenuItem1";
-            this.PSCcharacterToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
-            this.PSCcharacterToolStripMenuItem1.Text = "Character";
-            this.PSCcharacterToolStripMenuItem1.Click += new System.EventHandler(this.PSCcharacterToolStripMenuItem1_Click);
-            // 
-            // PSCcostumeToolStripMenuItem1
-            // 
-            this.PSCcostumeToolStripMenuItem1.Name = "PSCcostumeToolStripMenuItem1";
-            this.PSCcostumeToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
-            this.PSCcostumeToolStripMenuItem1.Text = "Costume";
-            this.PSCcostumeToolStripMenuItem1.Click += new System.EventHandler(this.PSCcostumeToolStripMenuItem1_Click);
-            // 
-            // PSCcopyToolStripMenuItem
-            // 
-            this.PSCcopyToolStripMenuItem.Name = "PSCcopyToolStripMenuItem";
-            this.PSCcopyToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.PSCcopyToolStripMenuItem.Text = "Copy";
-            this.PSCcopyToolStripMenuItem.Click += new System.EventHandler(this.PSCcopyToolStripMenuItem_Click);
-            // 
-            // pasteToolStripMenuItem
-            // 
-            this.pasteToolStripMenuItem.Name = "pasteToolStripMenuItem";
-            this.pasteToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.pasteToolStripMenuItem.Text = "Paste";
-            this.pasteToolStripMenuItem.Click += new System.EventHandler(this.pasteToolStripMenuItem_Click);
+            this.editCMSFileToolStripMenuItem.Name = "editCMSFileToolStripMenuItem";
+            this.editCMSFileToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.editCMSFileToolStripMenuItem.Text = "Edit CMS File";
+            this.editCMSFileToolStripMenuItem.Click += new System.EventHandler(this.editCMSFileToolStripMenuItem_Click);
             // 
             // Form1
             // 
@@ -2450,6 +2843,17 @@
             this.menuStrip5.PerformLayout();
             this.tabPage4.ResumeLayout(false);
             this.tabPage4.PerformLayout();
+            this.menuStrip7.ResumeLayout(false);
+            this.menuStrip7.PerformLayout();
+            this.tabPage5.ResumeLayout(false);
+            this.tabPage5.PerformLayout();
+            this.groupBox6.ResumeLayout(false);
+            this.groupBox8.ResumeLayout(false);
+            this.groupBox8.PerformLayout();
+            this.groupBox7.ResumeLayout(false);
+            this.groupBox7.PerformLayout();
+            this.menuStrip8.ResumeLayout(false);
+            this.menuStrip8.PerformLayout();
             this.tabPage6.ResumeLayout(false);
             this.tabPage6.PerformLayout();
             this.groupBox5.ResumeLayout(false);
@@ -2462,8 +2866,6 @@
             this.menuStrip6.PerformLayout();
             this.tabPage8.ResumeLayout(false);
             this.tabPage8.PerformLayout();
-            this.menuStrip7.ResumeLayout(false);
-            this.menuStrip7.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -2701,7 +3103,45 @@
         private System.Windows.Forms.ToolStripMenuItem PSCcharacterToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem PSCcostumeToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem PSCcopyToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem pasteToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem PSCpasteToolStripMenuItem;
+        private System.Windows.Forms.GroupBox groupBox6;
+        private System.Windows.Forms.GroupBox groupBox8;
+        private System.Windows.Forms.TextBox txtBLoop;
+        private System.Windows.Forms.TextBox txtBEnd;
+        private System.Windows.Forms.Label label67;
+        private System.Windows.Forms.Label label68;
+        private System.Windows.Forms.TextBox txtHenshinEnd;
+        private System.Windows.Forms.TextBox txtKiCharge;
+        private System.Windows.Forms.TextBox txtBStart;
+        private System.Windows.Forms.Label label69;
+        private System.Windows.Forms.Label label70;
+        private System.Windows.Forms.Label label71;
+        private System.Windows.Forms.ComboBox cbAuraList;
+        private System.Windows.Forms.TextBox txtkiMax;
+        private System.Windows.Forms.TextBox txtHenshinStart;
+        private System.Windows.Forms.Label label72;
+        private System.Windows.Forms.Label label73;
+        private System.Windows.Forms.Label label74;
+        private System.Windows.Forms.GroupBox groupBox7;
+        private System.Windows.Forms.ComboBox cbAURChar;
+        private System.Windows.Forms.CheckBox chkInf;
+        private System.Windows.Forms.Label label75;
+        private System.Windows.Forms.Label label76;
+        private System.Windows.Forms.TextBox txtAURID;
+        private System.Windows.Forms.MenuStrip menuStrip8;
+        private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem saveAURFileToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem10;
+        private System.Windows.Forms.ToolStripMenuItem addAuraToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem removeAuraToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
+        private System.Windows.Forms.ToolStripMenuItem editAURFileToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
+        private System.Windows.Forms.ToolStripMenuItem editCMSFileToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
+        private System.Windows.Forms.ToolStripMenuItem editCSOFileToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
+        private System.Windows.Forms.ToolStripMenuItem editCUSFileToolStripMenuItem;
     }
 }
 
