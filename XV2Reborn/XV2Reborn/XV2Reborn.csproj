@@ -107,6 +107,9 @@
     </Compile>
     <EmbeddedResource Include="ZipFile_Blobs\data.zip" />
     <EmbeddedResource Include="ZipFile_Blobs\XV2Patcher.zip" />
+    <None Include="PSC_Schema.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

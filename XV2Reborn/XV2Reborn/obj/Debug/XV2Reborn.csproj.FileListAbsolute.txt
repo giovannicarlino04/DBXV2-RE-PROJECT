@@ -15,3 +15,4 @@ C:\Users\Giovanni Carlino\Desktop\Repos\DBXV2-RE-PROJECT\XV2Reborn\XV2Reborn\obj
 C:\Games\DB Xenoverse 2\XV2Reborn\XV2Reborn.exe.config
 C:\Games\DB Xenoverse 2\XV2Reborn\XV2Reborn.exe
 C:\Games\DB Xenoverse 2\XV2Reborn\XV2Reborn.pdb
+C:\Games\DB Xenoverse 2\XV2Reborn\PSC_Schema.csv
