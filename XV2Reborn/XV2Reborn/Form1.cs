@@ -16,6 +16,7 @@ using System.Reflection.Emit;
 using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.ComTypes;
 using System.Security.AccessControl;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -265,6 +266,7 @@ namespace XV2Reborn
             flowLayoutPanelCharacters.AutoScroll = true;
 
             loadFiles();
+            processDirectory(datapath);
         }
         public string FindCharName(int id)
         {
@@ -874,6 +876,23 @@ namespace XV2Reborn
                     //string qxd = Properties.Settings.Default.datafolder + @"\quest\TMQ\tmq_data.qxd";
                     //ReplaceTextInFile(qxd, id, "XXX");
 
+                }
+
+                lvMods.Items.Remove(lvMods.SelectedItems[0]);
+                MessageBox.Show("Mod uninstalled successfully", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                saveLvItems();
+            }
+        }
+
+        private void processDirectory(string startLocation)
+        {
+            foreach (var directory in Directory.GetDirectories(startLocation))
+            {
+                processDirectory(directory);
+                if (Directory.GetFiles(directory).Length == 0 &&
+                    Directory.GetDirectories(directory).Length == 0)
+                {
+                    Directory.Delete(directory, false);
                 }
             }
         }
@@ -3332,6 +3351,8 @@ namespace XV2Reborn
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
             Clean();
+            if(Directory.Exists(datapath))
+                processDirectory(datapath);
         }
 
 

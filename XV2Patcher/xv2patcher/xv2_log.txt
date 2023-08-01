@@ -1,0 +1,38 @@
+XV2PATCHER VERSION 1.2. Exe base = 00007ff7b9ac0000. My Dll base = 00007ff80f340000. My dll name: xinput1_3.dll
+Running on game version 1.00
+Patch "bac_bcm_check_remove" located at address 00007ff7b9d89c09. Relative: 0x2c9c09.
+Patch "LoadTocHook" located at address 00007ff7b9b32564. Relative: 0x72564.
+Patch "DisableSort" located at address 00007ff7b9b30fa4. Relative: 0x70fa4.
+Patch "CpkGetFileInfoHook" located at address 00007ff7b9d89d79. Relative: 0x2c9d79.
+Patch "CpkGetFileInfoHook2" located at address 00007ff7b9d89752. Relative: 0x2c9752.
+Patch "PatchReceiveTypeKey" located at address 00007ff7b9f98474. Relative: 0x4d8474.
+Patch "PatchReceiveTypeKey2" located at address 00007ff7b9f9869d. Relative: 0x4d869d.
+Patch "PatchReceiveTypeCharaSelected" located at address 00007ff7b9f995ac. Relative: 0x4d95ac.
+Patch "PatchReceiveTypeCharaVariation" located at address 00007ff7b9f995e3. Relative: 0x4d95e3.
+Patch "PatchReceiveTypeSkillName" located at address 00007ff7b9f99b4c. Relative: 0x4d9b4c.
+Patch "PatchReceiveTypeCharaVariation2" located at address 00007ff7b9f99ba1. Relative: 0x4d9ba1.
+Patch "PatchReceiveTypeImageStr" located at address 00007ff7b9f99cfc. Relative: 0x4d9cfc.
+Patch "PatchReceiveTypeCharaSelected2" located at address 00007ff7b9f99d2d. Relative: 0x4d9d2d.
+Patch "PatchReceiveTypeKey3" located at address 00007ff7b9f9a048. Relative: 0x4da048.
+Patch "PatchReceiveTypeUnlockVar" located at address 00007ff7b9f9a1c4. Relative: 0x4da1c4.
+Patch "PatchReceiveTypeCharaVariation3" located at address 00007ff7b9f9a221. Relative: 0x4da221.
+Patch "IncreaseChaselMemory" located at address 00007ff7b9e47bee. Relative: 0x387bee.
+Chasel object memory succesfully changed from 0x1200 to 0x7d00
+Patch "IncreaseChaselSlotsArray" located at address 00007ff7b9f97abd. Relative: 0x4d7abd.
+Patch "IncreaseChaselSlotsArray2" located at address 00007ff7b9f980f7. Relative: 0x4d80f7.
+Patch "ModifyArrayOffset1" located at address 00007ff7b9f97aa4. Relative: 0x4d7aa4.
+Patch "ModifyArrayOffset2" located at address 00007ff7b9f980e3. Relative: 0x4d80e3.
+Patch "ModifyArrayOffset3_Multi" located at address 00007ff7b9f99cad. Relative: 0x4d9cad.
+Patch "IsOzaruHook" located at address 00007ff7b9c77970. Relative: 0x1b7970.
+Patch "SetBodyShape" located at address 00007ff7b9d3e0f0. Relative: 0x27e0f0.
+Patch "AutoBtlPortrait" located at address 00007ff7b9cc1326. Relative: 0x201326.
+Patch "ResultPortraitHook" located at address 00007ff7b9cbc3b0. Relative: 0x1fc3b0.
+Patch "PscInitHook" located at address 00007ff7b9d736a0. Relative: 0x2b36a0.
+Patch "UnlockStagesAll" located at address 00007ff7b9f9d26a. Relative: 0x4dd26a.
+15 files were removed in ram for cpk with toc_size=0x25f230
+259 files were removed in ram for cpk with toc_size=0x43468
+244 files were removed in ram for cpk with toc_size=0x26da0
+0 files were removed in ram for cpk with toc_size=0x110
+0 files were removed in ram for cpk with toc_size=0x198
+0 files were removed in ram for cpk with toc_size=0x600a8
+0 files were removed in ram for cpk with toc_size=0x310

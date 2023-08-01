@@ -46,7 +46,6 @@
             this.lvMods = new System.Windows.Forms.ListView();
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.label16 = new System.Windows.Forms.Label();
@@ -406,19 +405,19 @@
             // installModToolStripMenuItem
             // 
             this.installModToolStripMenuItem.Name = "installModToolStripMenuItem";
-            this.installModToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.installModToolStripMenuItem.Size = new System.Drawing.Size(133, 22);
             this.installModToolStripMenuItem.Text = "Install Mod";
             this.installModToolStripMenuItem.Click += new System.EventHandler(this.installModToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(177, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(130, 6);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(133, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             // 
             // toolsToolStripMenuItem
@@ -511,7 +510,6 @@
             this.lvMods.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeader1,
             this.columnHeader2,
-            this.columnHeader3,
             this.columnHeader4});
             this.lvMods.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lvMods.HideSelection = false;
@@ -525,21 +523,17 @@
             // columnHeader1
             // 
             this.columnHeader1.Text = "Name";
-            this.columnHeader1.Width = 200;
+            this.columnHeader1.Width = 348;
             // 
             // columnHeader2
             // 
             this.columnHeader2.Text = "Author";
             this.columnHeader2.Width = 200;
             // 
-            // columnHeader3
-            // 
-            this.columnHeader3.Text = "Version";
-            // 
             // columnHeader4
             // 
             this.columnHeader4.Text = "Type";
-            this.columnHeader4.Width = 200;
+            this.columnHeader4.Width = 455;
             // 
             // tabPage2
             // 
@@ -3418,7 +3412,6 @@
         private System.Windows.Forms.ListView lvMods;
         private System.Windows.Forms.ColumnHeader columnHeader1;
         private System.Windows.Forms.ColumnHeader columnHeader2;
-        private System.Windows.Forms.ColumnHeader columnHeader3;
         private System.Windows.Forms.ColumnHeader columnHeader4;
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.TabPage tabPage3;
