@@ -1,0 +1,373 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<EternityPatchFile name="NewChara" enabled="new_chara" comment="This file enables the new characters patch">
+
+<!-- The group of patches to make new slots are divided into two main parts. -->
+
+<!-- Part1: patching the comunication with the ActionScript3 
+
+The native and AS3 communicate with each other using a documented standard way (ActionScript external interface)
+There are communications in both ways, native->as3 and as3->native
+
+The native->as3 communication is done through a buffer (in the AS3 side) which has a default size of 4201 bytes (0x1069)
+The native part passes the index of the buffer, and the value to set (more or less).
+Each part of the buffer fulfills a role, which can be seen in the ReceiveType_* variables in CharaSele.as
+
+The first part of the patch takes place mostly in the .dll, as things need to be computed at run time. The xml role here
+will be to just find the patches.
+
+These patches consist in patching several calls to the most high level routines that communicate the data to the as3 side 
+(thsese routine are methods of some parent class of the native "chasel" object). In the very first exe version, these routines 
+has an address of +0x2B4A10 and +0x2B4950
+The patches consist in fixing the indexes to match the new layout after CharacterMax change. 
+Also, the "0xD67" size must be patched.
+
+-->
+	<Patch name="PatchReceiveTypeKey" type="hook" search_start="0x4D8468" comment="Takes place in chasel_func14" >
+		<Instruction code="4C 8B C3" comment="mov r8, rbx" />
+		<Instruction code="8D 97 D1 0C 00 00" comment="lea edx, [rdi+0CD1h]" />
+		<Instruction code="49 8B CE" comment="mov rcx, r14" />
+		<Instruction code="E8 XXXXXXXX" comment="call send_method" />
+		<Instruction code="E9 07020000" comment="jmp +0x207" />
+		
+		<Hook type="call" inst_index="3" value="PatchReceiveTypeKey" setup="CharaSetup" />
+	</Patch>
+	
+	<Patch name="PatchReceiveTypeKey2" type="hook" search_start="0x4D8691" comment="Takes place in chasel_func14" >
+		<Instruction code="4C 8B C3" comment="mov r8, rbx" />
+		<Instruction code="8D 97 D1 0C 00 00" comment="lea edx, [rdi+0CD1h]" />
+		<Instruction code="49 8B CE" comment="mov rcx, r14" />
+		<Instruction code="E8 XXXXXXXX" comment="call send_method" />
+		<Instruction code="FF C7" comment="inc edi" />
+		<Instruction code="49 83 C7 04" comment="add r15, 4" />
+		<Instruction code="48 83 C3 20" comment="add rbx, 20h" />
+		
+		<Hook type="call" inst_index="3" value="PatchReceiveTypeKey" />
+	</Patch>	
+	
+	<Patch name="PatchReceiveTypeCharaSelected" type="hook" search_start="0x4D95A0" comment="Takes place in chasel_func7" >
+		<Instruction code="44 8B C0" comment="mov r8d, eax" />
+		<Instruction code="8D 96 E3 0C 00 00" comment="lea edx, [rsi+0CE3h]" />
+		<Instruction code="48 8B CD" comment="mov rcx, rbp" />
+		<Instruction code="E8 XXXXXXXX" comment="call send_method2" />
+		<Instruction code="48 8B 0D XXXXXXXX" comment="mov rcx, cs:XXXXXXXX" />
+		<Instruction code="E8 XXXXXXXX" comment="call XXXXXXXX" />
+		
+		<Hook type="call" inst_index="3" value="PatchReceiveTypeCharaSelected" setup="AS3Send2Setup"/>
+	</Patch>
+	
+	<Patch name="PatchReceiveTypeCharaVariation" type="hook" search_start="0x4D95D7" comment="Takes place in chasel_func7" >
+		<Instruction code="44 8B C0" comment="mov r8d, eax" />
+		<Instruction code="8D 93 46 0D 00 00" comment="lea edx, [rbx+0D46h]" />
+		<Instruction code="48 8B CD" comment="mov rcx, rbp" />
+		<Instruction code="E8 XXXXXXXX" comment="call send_method2" />
+		<Instruction code="FF C3" comment="inc ebx" />
+		<Instruction code="83 FB 20" comment="cmp ebx, 20h" />
+		<Instruction code="7C D3" comment="jmp -0x2D" />
+		
+		<Hook type="call" inst_index="3" value="PatchReceiveTypeVariation" />
+	</Patch>
+	
+	<Patch name="PatchReceiveTypeSkillName" type="hook" search_start="0x4D9B3F" comment="Takes place in chasel_func4" >
+		<Instruction code="4C 8B C3" comment="mov r8, rbx" />
+		<Instruction code="41 8D 96 D9 0C 00 00" comment="lea edx, [r14+0CD9h]" />
+		<Instruction code="48 8B CE" comment="mov rcx, rsi" />
+		<Instruction code="E8 XXXXXXXX" comment="call send_method" />
+		<Instruction code="41 FF C6" comment="inc r14d" />
+		<Instruction code="49 83 C5 20" comment="add r13, 20h" />
+		<Instruction code="49 83 C4 04" comment="add r12, 4" />
+		
+		<Hook type="call" inst_index="3" value="PatchReceiveTypeSkillName" />
+	</Patch>
+	
+	<Patch name="PatchReceiveTypeCharaVariation2" type="hook" search_start="0x4D9B95" comment="Takes place in chasel_func4" >
+		<Instruction code="44 8B C0" comment="mov r8d, eax" />
+		<Instruction code="8D 97 46 0D 00 00" comment="lea edx, [rdi+0D46h]" />
+		<Instruction code="48 8B CE" comment="mov rcx, rsi" />
+		<Instruction code="E8 XXXXXXXX" comment="call send_method2" />
+		<Instruction code="FF C7" comment="inc edi" />
+		<Instruction code="83 FF 20" comment="cmp edi, 20h" />
+		<Instruction code="7C D3" comment="jmp -0x2D" />
+		
+		<Hook type="call" inst_index="3" value="PatchReceiveTypeVariation" />
+	</Patch>
+	
+	<Patch name="PatchReceiveTypeImageStr" type="hook" search_start="0x4FAC12" comment="Takes place in chasel_func5. Signature is 1.07" >
+		<Instruction code="41 8D 56 0E" comment="lea edx, [r14+0Eh]" />
+		<Instruction code="4C 8B C7" comment="mov r8, rdi" />
+		<Instruction code="48 8B CE" comment="mov rcx, rsi" />
+		<Instruction code="E8 XXXXXXXX" comment="call send_method" />
+		<Instruction code="48 8B 5C 24 40" comment="mov rbx, [rsp+40h]" />
+		<Instruction code="48 8B 6C 24 48" comment="mov rbp, [rsp+48h]" />
+		<Instruction code="48 8B 74 24 50" comment="mov rsi, [rsp+50h]" />
+		<Instruction code="48 8B 7C 24 58" comment="mov rdi, [rsp+58h]" />
+		<Instruction code="48 83 C4 30" comment="add rsp, 30h" />
+		
+		<Hook type="call" inst_index="3" value="PatchReceiveTypeImageStr" />
+	</Patch>
+	
+	<Patch name="PatchReceiveTypeCharaSelected2" type="hook" search_start="0x4FB24D" comment="Takes place in chasel_func_N1. Signature is 1.07" >
+		<Instruction code="44 8B C0" comment="mov r8d, eax" />
+		<Instruction code="8D 93 E3 0C 00 00" comment="lea edx, [rbx+0CE3h]" />
+		<Instruction code="48 8B CF" comment="mov rcx, rdi" />
+		<Instruction code="48 8B 5C 24 30" comment="mov rbx, [rsp+30h]" />
+		<Instruction code="48 83 C4 20" comment="mov rsp, 20h" />
+		<Instruction code="5F" comment="pop rdi" />
+		<Instruction code="E9 XXXXXXXX" comment="jmp send_method2" />
+		
+		<Hook type="call" inst_index="6" value="PatchReceiveTypeCharaSelected" />
+	</Patch>
+	
+	<!-- This patch is new in 1.04.1 -->
+	<Patch name="PatchReceiveTypeDLCUnlockFlag" type="hook" search_start="0x4EEF0B" comment="Takes place in chasel_func13. Signature is 1.05" >
+		<Instruction code="44 8B C7" comment="mov r8d, edi" />
+		<Instruction code="BA 66 0D 00 00" comment="mov edx, 0D66h" />
+		<Instruction code="48 8B CB" comment="mov rcx, rbx" />
+		<Instruction code="E8 XXXXXXXX" comment="call send_method2" />
+		<Instruction code="48 8B CB" comment="mov rcx, rbx" />
+		<Instruction code="E8 XXXXXXXX" comment="call chasel_func14" />
+		<Instruction code="41 BF D1 0C 00 00" comment="mov r15d, 0CD1h" />
+		
+		<Hook type="call" inst_index="3" value="PatchReceiveTypeDLCUnlockFlag" />
+	</Patch>
+	
+	<Patch name="PatchReceiveTypeKey3" type="hook" search_start="0x4EF08E" comment="Takes place in chasel_func13. r15d initial value is 0xCD1. Signature is 1.05" >
+		<Instruction code="4C 8B C7" comment="mov r8, rdi" />
+		<Instruction code="41 8B D7" comment="mov edx, r15d" />
+		<Instruction code="48 8B CB" comment="mov rcx, rbx" />
+		<Instruction code="E8 XXXXXXXX" comment="call send_method" />
+		<Instruction code="41 FF C7" comment="inc r15d" />
+		<Instruction code="49 83 C6 04" comment="add r14, 4" />
+		<Instruction code="48 83 C7 20" comment="add rdi, 20h" />
+		
+		<Hook type="call" inst_index="3" value="PatchReceiveTypeKey" />
+	</Patch>
+	
+	<Patch name="PatchReceiveTypeImageStrNpc" type="hook" search_start="0x4EF169" comment="Takes place in chasel_func13. Signature is 1.05" >
+		<Instruction code="41 8D 96 E1 0C 00 00" comment="lea edx, [r14+0CE1h]" />
+		<Instruction code="4C 8B C7" comment="mov r8, rdi" />
+		<Instruction code="48 8B CB" comment="mov rcx, rbx" />
+		<Instruction code="E8 XXXXXXXX" comment="call send_method" />
+		<Instruction code="41 FF C6" comment="inc r14d" />
+		<Instruction code="41 83 FE 02" comment="cmp r14d, 2" />
+		<Instruction code="0F 8C 78FFFFFF" comment="jl -XXX" />
+		
+		<Hook type="call" inst_index="3" value="PatchReceiveTypeImageStrNpc" />
+	</Patch>
+	
+	<!-- This patch added in 1.05 -->
+	<Patch name="PatchReceiveTypeUseCustomList" type="hook" search_start="0x4EF1C0" comment="Takes place in chasel_func13" >
+		<Instruction code="BA 67 0D 00 00" comment="mov edx, 0D67h" />
+		<Instruction code="41 B8 01 00 00 00" comment="mov r8d, 1" />
+		<Instruction code="48 8B CB" comment="mov rcx, rbx" />
+		<Instruction code="E8 XXXXXXXX" comment="call send_method2" />
+		<Instruction code="44 8B C7" comment="mov r8d, edi" />
+		<Instruction code="BA 68 0D 00 00" comment="mov edx, 0D68h" />
+		
+		<Hook type="call" inst_index="3" value="PatchReceiveTypeUseCustomList" />
+	</Patch>
+	
+	<!-- This patch added in 1.05 -->
+	<Patch name="PatchReceiveTypeCustomListNum" type="hook" search_start="0x4EF1D3" comment="Takes place in chasel_func13" >
+		<Instruction code="44 8B C7" comment="mov r8d, edi" />
+		<Instruction code="BA 68 0D 00 00" comment="mov edx, 0D68" />
+		<Instruction code="48 8B CB" comment="mov rcx, rbx" />
+		<Instruction code="E8 XXXXXXXX" comment="call send_method2" />
+		<Instruction code="4C 63 F7" comment="movsxd  r14, edi" />
+		<Instruction code="85 FF" comment="test edi, edi" />
+		
+		<Hook type="call" inst_index="3" value="PatchReceiveTypeCustomListNum" />
+	</Patch>
+	
+	<!-- This patch added in 1.05. Signature updated in 1.06 -->
+	<Patch name="PatchReceiveType_CustomList_CID_Start" type="hook" search_start="0x4F380E" comment="Takes place in chasel_func13. initial ebp=0xE69. initial ebp-0x100=0xD69" >
+		<Instruction code="8D 95 00 FF FF FF" comment="lea edx, [rbp-100h]" />
+		<Instruction code="4C 8B C0" comment="mov r8, rax" />
+		<Instruction code="48 8B CB" comment="mov rcx, rbx" />
+		<Instruction code="E8 XXXXXXXX" comment="call send_method3" />
+		<Instruction code="48 8B 83 08 12 00 00" comment="mov rax, [rbx+1208h]" />
+		
+		<Hook type="call" inst_index="3" value="PatchReceiveType_CustomList_CID_Start" setup="AS3Send3Setup" />
+	</Patch>
+	
+	<!-- This patch added in 1.05. Signature updated in 1.06 -->
+	<Patch name="PatchReceiveType_CustomList_MID_Start" type="hook" search_start="0x4F381F" comment="Takes place in chasel_func13. initial ebp=0xE69" >
+		<Instruction code="48 8B 83 08 12 00 00" comment="mov rax, [rbx+1208h]" />
+		<Instruction code="44 8B 44 07 04" comment="mov r8d, [rdi+rax+4]" />
+		<Instruction code="8B D5" comment="mov edx, ebp" />
+		<Instruction code="48 8B CB" comment="mov rcx, rbx" />
+		<Instruction code="E8 XXXXXXXX" comment="call send_method2" />
+		<Instruction code="48 8B 83 08 12 00 00" comment="mov rax, [rbx+1208h]" />
+		
+		<Hook type="call" inst_index="4" value="PatchReceiveType_CustomList_MID_Start" />
+	</Patch>
+	
+	<!-- This patch added in 1.05. Signature updated in 1.06 -->
+	<Patch name="PatchReceiveType_CustomList_PID_Start" type="hook" search_start="0x4F3835" comment="Takes place in chasel_func13. initial ebp=0xE69. initial ebp+0x100=0xF69" >
+		<Instruction code="48 8B 83 08 12 00 00" comment="mov rax, [rbx+1208h]" />
+		<Instruction code="8D 95 00 01 00 00" comment="lea edx, [rbp+100h]" />
+		<Instruction code="44 8B 44 07 08" comment="mov r8d, [rdi+rax+8]" />
+		<Instruction code="48 8B CB" comment="mov rcx, rbx" />
+		<Instruction code="E8 XXXXXXXX" comment="call send_method2" />
+		<Instruction code="FF C5" comment="inc ebp" />
+		
+		<Hook type="call" inst_index="4" value="PatchReceiveType_CustomList_PID_Start" />
+	</Patch>
+	
+	<!-- This patch added in 1.05 -->
+	<Patch name="PatchReceiveTypeUseCustomList2" type="hook" search_start="0x4EF25F" comment="Takes place in chasel_func13" >
+		<Instruction code="45 33 C0" comment="xor r8d, r8d" />
+		<Instruction code="BA 67 0D 00 00" comment="mov edx, 0D67h" />
+		<Instruction code="48 8B CB" comment="mov rcx, rbx" />
+		<Instruction code="E8 XXXXXXXX" comment="call send_method2" />
+		<Instruction code="48 8B 4C 24 78" comment="mov rcx, [rsp78h]" />
+		<Instruction code="48 33 CC" comment="xor rcx, rsp" />
+		
+		<Hook type="call" inst_index="3" value="PatchReceiveTypeUseCustomList" />
+	</Patch>
+	
+	<Patch name="PatchReceiveTypeUnlockVar" type="hook" search_start="0x4DA1B1" comment="Takes place in chasel_func6" >
+		<Instruction code="44 8B C0" comment="mov r8d, eax" />
+		<Instruction code="8D 53 71" comment="lea edx, [rbx+71h]" />
+		<Instruction code="48 8B CF" comment="mov rcx, rdi" />
+		<Instruction code="48 8B 5C 24 30" comment="mov rbx, [rsp+30h]" />
+		<Instruction code="48 83 C4 20" comment="add rsp, 20h" />
+		<Instruction code="5F" comment="pop rdi" />
+		<Instruction code="E9 XXXXXXXX" comment="jmp send_method2" />
+		
+		<Hook type="call" inst_index="6" value="PatchReceiveTypeUnlockVar" />
+	</Patch>
+	
+	<Patch name="PatchReceiveTypeCharaVariation3" type="hook" search_start="0x4DA215" comment="Takes place in chasel_func10" >
+		<Instruction code="44 8B C0" comment="mov r8d, eax" />
+		<Instruction code="8D 93 46 0D 00 00" comment="lea edx, [rbx+0D46h]" />
+		<Instruction code="48 8B CE" comment="mov rcx, rsi" />
+		<Instruction code="E8 XXXXXXXX" comment="call send_method2" />
+		<Instruction code="FF C3" comment="inc ebx" />
+		<Instruction code="83 FB 20" comment="cmp ebx, 20h" />
+		<Instruction code="7C D3" comment="jmp -0x2D" />
+		
+		<Hook type="call" inst_index="3" value="PatchReceiveTypeVariation" />
+	</Patch>
+	
+	<Patch name="PatchReceiveTypeNum" type="notify" search_start="0x4EBF6E" comment="Takes place in chasel_ctor. Signature is 1.06" >
+		<Instruction code="41 B8 69 10 00 00" comment="mov r8d, 1069h; r8d = ReceiveType_Num" />
+		<Instruction code="E8 XXXXXXXX" comment="call base::ctor" />
+		<Instruction code="90" comment="nop" />
+		<Instruction code="48 8D 05 XX XX XX XX" comment="lea rax, chasel_vtable" />
+		<Instruction code="48 89 07" comment="mov [rdi], rax; this->vtable = chasel_vtable" />
+		<Instruction code="B9 06 00 00 00" comment="mov  ecx, 6" />
+		<Instruction code="48 8D 87 B0 01 00 00" comment="lea rax, [rdi+1B0h]" />
+		
+		<Notify inst_index="0" inst_offset="2" value="PatchReceiveTypeNum" />		
+	</Patch>
+	
+<!-- Part 2: modifying the C++ object layout 
+
+The object that takes care about Character Selection in the native side is a C++ object with an allocation size of 0x1240 bytes.
+The object has 29 methods (4 of them virtual), including the constructor and the virtual destructor.
+The count doesn't include the methods of base classes (virtual methods or not), which are numerous (the object is estimated to be 
+***at least*** the third one in the hierarchy)
+
+Object layout:
+Offset 0 -> vtable pointer
+4-1AF -> base classes properties
+1B0-123F -> this class properties
+
+(there are some discrepancies about the start of this class specific properties, 1A0 may be part of base object, but accesed by this class)
+
+The most important field for our purposes is the one located at offset 0x398. 
+The field there is a fixed array of ***99*** structures/objects, each one being 32 bytes (so the field takes the range 0x398-0xFF7).
+
+Because the array size is the default number of max slots (99), we need to increase this field somehow to match our new number of slots.
+There are two ways to solve this:
+
+- Method 1: increase the space for the fixed array, by displacing all other fields offsets (and also increasing the C++ object memory)
+Pros: it will only use the memory needed, not a single byte wasted.
+Cons: this would require an insane amount of patches, as all fields offset accesses >= FE8 would have to be modified. It would be difficult 
+to maintain, and too prone to errors.
+
+- Method 2: After increasing the C++ object memory, reallocate the fixed array to the old end (to offset 0x1240), and fix its references,
+leaving the space 0x388-0xFE7 as dead/unused.
+
+- Pros: much easier and faster to implement than 1. More safe because it is less prone to mistakess.
+- Cons: ~3KB of memory will be wasted.
+
+Method 2 will be used. Its simplicity well worths to waste 3K of memory.
+
+Half of the implementation can be done in the xml. Only the C++ object increase, and array resize must be done in the .dll because the new size must be computed at runtime.
+
+-->
+
+	<Patch name="IncreaseChaselMemory" type="notify" search_start="0x38D311" comment="Signature is 1.05" >
+		<Instruction code="45 33 C9" comment="xor r9d, r9d" />
+		<Instruction code="41 83 C8 FF" comment="or r8d, 0FFFFFFFFh" />
+		<Instruction code="33 D2" comment="xor edx, edx" />
+		<Instruction code="B9 40120000" comment="mov ecx, 1240h" />
+		<Instruction code="FF 15 XXXXXXXX" comment="call operator new" />
+		<Instruction code="48 89 44 24 70" comment="mov [rsp+70h], rax" />
+		
+		<Notify inst_index="3" inst_offset="1" value="IncreaseChaselMemory" />
+	</Patch>
+	
+	<Patch name="IncreaseChaselSlotsArray" type="hook" search_start="0x4F0676" comment="Takes place in chasel_ctor. Signature is 1.06" >
+		<Instruction code="48 8D 8F 98 03 00 00" comment="lea rcx, [rdi+398h]" />
+		<Instruction code="4C 89 6C 24 20" comment="mov [rsp+20h], r13" />
+		<Instruction code="4C 8D 0D XXXXXXXX" comment="lea r9, some_function_ptr" />
+		<Instruction code="BA 20 00 00 00" comment="mov edx, 20h" />
+		<Instruction code="44 8D 42 43" comment="lea r8d, [rdx+43h]; 0x20+0x43=0x63=99 decimal" />
+		<Instruction code="E8 XXXXXXXX" comment="call XXXXXXXX" />
+		
+		<Hook type="call" inst_index="5" value="IncreaseChaselSlotsArray" setup="SetupIncreaseChaselSlotsArray" />
+	</Patch>
+	
+	<Patch name="IncreaseChaselSlotsArray2" type="hook" search_start="0x4F0D6F" comment="Takes place in chasel_func15, the function with most of the destructor implementation. Signature is 1.06" >
+		<Instruction code="48 8D 8B 98 03 00 00" comment="lea rcx, [rbx+398h]" />
+		<Instruction code="4C 8D 0D XXXXXXXX" comment="lea r9, some_function_ptr" />
+		<Instruction code="BA 20 00 00 00" comment="mov edx, 20h" />
+		<Instruction code="44 8D 42 43" comment="lea r8d, [rdx+43h]; 0x20+0x43=0x63=99 decimal" />
+		<Instruction code="E8 XXXXXXXX" comment="call XXXXXXXX" />
+		<Instruction code="90" comment="nop" />
+		
+		<Hook type="call" inst_index="4" value="IncreaseChaselSlotsArray2" setup="SetupIncreaseChaselSlotsArray2" />
+	</Patch>
+	
+	<!-- The following two patches signature are identical to the above two one, that is not an error -->
+	<Patch name="ModifyArrayOffset1" type="write" search_start="0x4F0676" comment="Takes place in chasel_ctor. Signature is 1.06" >
+		<Instruction code="48 8D 8F 98 03 00 00" comment="lea rcx, [rdi+398h]" />
+		<Instruction code="4C 89 6C 24 20" comment="mov [rsp+20h], r13" />
+		<Instruction code="4C 8D 0D XXXXXXXX" comment="lea r9, some_function_ptr" />
+		<Instruction code="BA 20 00 00 00" comment="mov edx, 20h" />
+		<Instruction code="44 8D 42 43" comment="lea r8d, [rdx+43h]; 0x20+0x43=0x63=99 decimal" />
+		<Instruction code="E8 XXXXXXXX" comment="call XXXXXXXX" />
+		
+		<Write inst_index="0" inst_offset="3" value="40 12" />
+	</Patch>
+	
+	<Patch name="ModifyArrayOffset2" type="write" search_start="0x4F0D6F" comment="Takes place in chasel_func15, the function with most of the destructor implementation. Signature is 1.06." >
+		<Instruction code="48 8D 8B 98 03 00 00" comment="lea rcx, [rbx+398h]" />
+		<Instruction code="4C 8D 0D XXXXXXXX" comment="lea r9, some_function_ptr" />
+		<Instruction code="BA 20 00 00 00" comment="mov edx, 20h" />
+		<Instruction code="44 8D 42 43" comment="lea r8d, [rdx+43h]; 0x20+0x43=0x63=99 decimal" />
+		<Instruction code="E8 XXXXXXXX" comment="call XXXXXXXX" />
+		<Instruction code="90" comment="nop" />
+		
+		<Write inst_index="0" inst_offset="3" value="40 12" />
+	</Patch>
+	
+	<Patch name="ModifyArrayOffset3_Multi" type="write" search_start="0x4F327D" comment="Takes place in chasel_func5. Signature is 1.06." >
+		<Instruction code="48 8D BE 98 03 00 00" comment="lea rdi, [rsi+398h]" />
+		<Instruction code="49 8B DE" comment="mov rbx, r14" />
+		<Instruction code="89 6C 24 28" comment="mov [rsp+28h], ebp" />
+		<Instruction code="48 C1 E3 05" comment="shl rbx, 5" />
+		<Instruction code="48 8D 8E 48 11 00 00" comment="lea rcx, [rsi+1148h]" />
+		<Instruction code="48 03 FB" comment="add rdi, rbx" />
+		<Instruction code="48 C7 44 24 20 00 00 00 00" comment="mov qword ptr[rsp+20h], 0" />
+		<Instruction code="48 8B D7" comment="mov rdx, rdi" />
+		<Instruction code="45 33 C0" comment="xor r8d, r8d" />
+		<Instruction code="E8 XXXXXXXX" comment="call XXXXXXXX" />
+		<Instruction code="48 83 BC 33 A8 03 00 00 00" comment="cmp qword ptr [rbx+rsi+3A8h], 0" />
+		
+		<Write value="XXXXXX40120000 XXXXXX XXXXXXXX XXXXXXXX XXXXXXXXXXXXXX XXXXXX XXXXXXXXXXXXXXXXXX XXXXXX XXXXXX XXXXXXXXXX XXXXXXXX4012"  /> 
+	</Patch>
+
+</EternityPatchFile>
