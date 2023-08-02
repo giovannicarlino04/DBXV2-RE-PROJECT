@@ -661,7 +661,7 @@ namespace XV2Reborn
 
                         foreach (string s in File.ReadAllLines(Charalist))
                         {
-                            text3.AppendLine(s.Replace("[[\"GKB\",0,0,0,false,[160,161]]]", "[[\"GKB\",0,0,0,false,[160,161]]],[[\"" + id + "\",0,0,0,false,[-1,-1]]]"));
+                            text3.AppendLine(s.Replace("]]]", "]],[[\"" + id + "\",0,0,0,false,[-1,-1],Dlc_Def]]]"));
                         }
 
                         using (var file = new StreamWriter(File.Create(Charalist)))
@@ -864,7 +864,7 @@ namespace XV2Reborn
 
                     foreach (string s in File.ReadAllLines(Charalist))
                     {
-                        text3.AppendLine(s.Replace(",[[\"" + id + "\",0,0,0,false,[-1,-1]]]", ""));
+                        text3.AppendLine(s.Replace(",[[\"" + id + "\",0,0,0,false,[-1,-1],Dlc_Def]]]", ""));
                     }
 
                     using (var file = new StreamWriter(File.Create(Charalist)))
@@ -1331,7 +1331,7 @@ namespace XV2Reborn
             for (int i = 0; i < characterArrays.Length; i++)
             {
                 // Split each character array to get individual character data.
-                string[] characterData = characterArrays[i].Replace("[[", "").Replace("]]", "").Split(new string[] { "],[" }, StringSplitOptions.RemoveEmptyEntries);
+                string[] characterData = characterArrays[i].Replace("[[", "").Replace("]", "").Split(new string[] { "],[" }, StringSplitOptions.RemoveEmptyEntries);
 
                 // Initialize the character data array for the current character.
                 charaList[i] = new string[characterData.Length][];
@@ -1548,11 +1548,11 @@ namespace XV2Reborn
 
                     // Convert the costume data and voice IDs to strings.
                     List<string> costumeDataStrings = new List<string>();
-                    for (int k = 1; k < characterData.Length; k += 7)
+                    for (int k = 1; k < characterData.Length; k += 8)
                     {
                         string costumeData = "[\"" + characterCode + "\"," + characterData[k] + "," + characterData[k + 1] + "," +
                                              characterData[k + 2] + "," + characterData[k + 3] + ",[" + characterData[k + 4] + "," +
-                                             characterData[k + 5] + "]]";
+                                             characterData[k + 5] + "]," + characterData[k + 6] + "]"; // ["HUM",0,0,0,[-1,-1],Dlc_Def]
                         costumeDataStrings.Add(costumeData);
                     }
 
