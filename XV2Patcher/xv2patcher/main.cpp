@@ -304,7 +304,7 @@ static bool load_patch_file(const std::string &path, bool is_directory, void *cu
 			
 			if (!patch.Apply())
 			{
-				UPRINTF("Failed to apply patch \"%s:%s\"\n", epf.GetName().c_str(), patch.GetName().c_str());
+				UPRINTF("Failed to apply patch \"%s:%s\"\n", epf.GetName().c_str(), patch.GetName().c_str(), ERROR);
 				exit(-1);
 			}
 		}

@@ -70,19 +70,16 @@ static constexpr const int ReceiveType_CharaSelectedStart = ReceiveType_ImageStr
 static constexpr const int ReceiveType_CharaSelectedEnd = ReceiveType_CharaSelectedStart + CharacterMax - 1;
 static constexpr const int ReceiveType_CharaVariationStart = ReceiveType_CharaSelectedEnd + 1;
 static constexpr const int ReceiveType_CharaVariationEnd = ReceiveType_CharaVariationStart + CharaVarIndexNum - 1;
-static constexpr const int ReceiveType_DLCUnlockFlag = ReceiveType_CharaVariationEnd + 1; // 0xD66
-static constexpr const int ReceiveType_WaitLoadNum = ReceiveType_DLCUnlockFlag; // 0xD66 Same value!!!!!!!!!!!!!!!!  I hope this isn't a game bug...
-static constexpr const int ReceiveType_UseCustomList = ReceiveType_DLCUnlockFlag + 1; // 0xD67
-static constexpr const int ReceiveType_CustomListNum = ReceiveType_UseCustomList + 1; // 0xD68
-static constexpr const int ReceiveType_CustomList_CID_Start = ReceiveType_CustomListNum + 1; // 0xD69
-static constexpr const int ReceiveType_CustomList_CID_End = ReceiveType_CustomList_CID_Start + CustomListMax - 1; // 0xE68
-static constexpr const int ReceiveType_CustomList_MID_Start = ReceiveType_CustomList_CID_End + 1; // 0xE69
-static constexpr const int ReceiveType_CustomList_MID_End = ReceiveType_CustomList_MID_Start + CustomListMax - 1; // 0xF68
-static constexpr const int ReceiveType_CustomList_PID_Start = ReceiveType_CustomList_MID_End + 1; // 0xF69
-static constexpr const int ReceiveType_CustomList_PID_End = ReceiveType_CustomList_PID_Start + CustomListMax - 1; // 0x1068
+static constexpr const int ReceiveType_WaitLoadNum = ReceiveType_CharaVariationEnd;
+static constexpr const int ReceiveType_UseCustomList = ReceiveType_CharaVariationEnd + 1;
+static constexpr const int ReceiveType_CustomListNum = ReceiveType_UseCustomList + 1; 
+static constexpr const int ReceiveType_CustomList_CID_Start = ReceiveType_CustomListNum + 1; 
+static constexpr const int ReceiveType_CustomList_CID_End = ReceiveType_CustomList_CID_Start + CustomListMax - 1;
+static constexpr const int ReceiveType_CustomList_MID_Start = ReceiveType_CustomList_CID_End + 1;
+static constexpr const int ReceiveType_CustomList_MID_End = ReceiveType_CustomList_MID_Start + CustomListMax - 1;
+static constexpr const int ReceiveType_CustomList_PID_Start = ReceiveType_CustomList_MID_End + 1;
+static constexpr const int ReceiveType_CustomList_PID_End = ReceiveType_CustomList_PID_Start + CustomListMax - 1;
 static constexpr const int ReceiveType_Num = ReceiveType_CustomList_PID_End + 1;
-
-static_assert(ReceiveType_Num == 4201, "Error");
 
 extern "C" 
 {
@@ -107,7 +104,6 @@ static int n_ReceiveType_CharaSelectedStart;
 static int n_ReceiveType_CharaSelectedEnd;
 static int n_ReceiveType_CharaVariationStart;
 static int n_ReceiveType_CharaVariationEnd;
-static int n_ReceiveType_DLCUnlockFlag;
 static int n_ReceiveType_WaitLoadNum;
 static int n_ReceiveType_UseCustomList;
 static int n_ReceiveType_CustomListNum;
@@ -126,7 +122,6 @@ static Func1Type func1;
 static Func2Type func2;
 static CheckUnlockType check_unlock;
 static SetBodyShapeType SetBodyShape;
-//static ResultPortraitsType ResultPortraits;
 static ResultPortraits2Type ResultPortraits2;
 static Behaviour10FuncType Behaviour10Func;
 
@@ -166,34 +161,23 @@ static uint32_t guess_character_max()
 		return CharacterMax;
 	}
 	
-	if (!find_blob_string(abc_blob, size, "Ver_TU4"))
-	{
-		UPRINTF("The version of CHARASELE.iggy at data/ui/iggy is not longer compatible with this game version.\n"
-				"Delete your old mods install and update your mods/tools to compatible versions.\n");
-				
-		exit(-1);
-	}
-	
 	uint8_t *ptr = abc_blob;
 	for (uint32_t i = 0; i < 0x40; i++, ptr++)
 	{
 		uint64_t double_val = *(uint64_t *)ptr;
 		
-		if (double_val == 0x4018000000000000) // 6.0
+		// Read next double
+		double ImageStrEnd_double = *(double *)(ptr+8);
+		
+		if (!std::isfinite(ImageStrEnd_double) || ImageStrEnd_double < 23.0 || ImageStrEnd_double > 100013.0)
 		{
-			// Read next double
-			double ImageStrEnd_double = *(double *)(ptr+8);
-			
-			if (!std::isfinite(ImageStrEnd_double) || ImageStrEnd_double < 23.0 || ImageStrEnd_double > 100013.0)
-			{
-				DPRINTF("Auto detecting character max failed. We'll asume the default of %d.\n", CharacterMax);
-				return CharacterMax;
-			}
-			
-			uint32_t ret = lrint(ImageStrEnd_double) - 13;
-			DPRINTF("Auto character max has been estimated: %d\n", ret);
-			return ret;
+			DPRINTF("Auto detecting character max failed. We'll asume the default of %d.\n", CharacterMax);
+			return CharacterMax;
 		}
+		
+		uint32_t ret = lrint(ImageStrEnd_double) - 13;
+		DPRINTF("Auto character max has been estimated: %d\n", ret);
+		return ret;
 	}
 	
 	DPRINTF("Auto detecting character max failed (2). We'll asume the default of %d.\n", CharacterMax);
@@ -230,9 +214,8 @@ PUBLIC void CharaSetup(SendToAS3Type orig)
 	n_ReceiveType_CharaSelectedEnd = n_ReceiveType_CharaSelectedStart + n_CharacterMax - 1;
 	n_ReceiveType_CharaVariationStart = n_ReceiveType_CharaSelectedEnd + 1;
 	n_ReceiveType_CharaVariationEnd = n_ReceiveType_CharaVariationStart + CharaVarIndexNum - 1;
-	n_ReceiveType_DLCUnlockFlag = n_ReceiveType_CharaVariationEnd + 1;
-	n_ReceiveType_WaitLoadNum = n_ReceiveType_DLCUnlockFlag; // !!!!! Same value
-	n_ReceiveType_UseCustomList = n_ReceiveType_DLCUnlockFlag + 1; 
+	n_ReceiveType_WaitLoadNum = n_ReceiveType_CharaVariationEnd;
+	n_ReceiveType_UseCustomList = n_ReceiveType_CharaVariationEnd + 1; 
 	n_ReceiveType_CustomListNum = n_ReceiveType_UseCustomList + 1; 
 	n_ReceiveType_CustomList_CID_Start = n_ReceiveType_CustomListNum + 1; 
 	n_ReceiveType_CustomList_CID_End = n_ReceiveType_CustomList_CID_Start + CustomListMax - 1; 
@@ -343,20 +326,6 @@ PUBLIC void PatchReceiveTypeUnlockVar(void *pthis, int32_t code, uint64_t data)
 	else
 	{
 		code = (code - ReceiveType_UnlockVarStart) + n_ReceiveType_UnlockVarStart;
-	}
-	
-	SendToAS3_2(pthis, code, data);
-}
-
-PUBLIC void PatchReceiveTypeDLCUnlockFlag(void *pthis, int32_t code, uint64_t data)
-{
-	if (code != ReceiveType_DLCUnlockFlag)
-	{
-		DPRINTF("ERROR: unexpected code at PatchReceiveTypeDLCUnlockFlag. Code=0x%x\n", code);
-	}
-	else
-	{
-		code = (code - ReceiveType_DLCUnlockFlag) + n_ReceiveType_DLCUnlockFlag;
 	}
 	
 	SendToAS3_2(pthis, code, data);

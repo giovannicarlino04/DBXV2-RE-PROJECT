@@ -12,7 +12,7 @@ CFLAGS +=-Wall -I. -I../eternity_common -std=gnu99 -mms-bitfields -s -O2 -masm=i
 CFLAGS += -static -static-libgcc -static-libstdc++
 CFLAGS += -DXV2 
 CXXFLAGS +=-Wall -Wno-strict-aliasing -I../eternity_common -O2 -std=c++11 -mms-bitfields -DTIXML_USE_STL
-CXXFLAGS += -static-libgcc -static-libstdc++ -static -Wl,--subsystem,windows,--kill-at -fpermissive
+CXXFLAGS += -static-libgcc -static-libstdc++ -static -Wl,--subsystem,windows,--kill-at -fpermissive 
 CPPFLAGS += -DXV2 -DNO_ZLIB 
 LDFLAGS=-L. -static xinput.def
 LIBS = -lstdc++ -lversion -lminhook
