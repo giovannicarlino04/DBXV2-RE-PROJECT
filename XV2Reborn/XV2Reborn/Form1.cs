@@ -550,8 +550,8 @@ namespace XV2Reborn
                         ///////////////////////////////////
 
                         // ADD DATA TO THE CUS FILE HEREEEEE
-
-                        if (this.tabControl1.SelectedIndex == 0)
+                            
+                        if (this.tabControl2.SelectedIndex == 0)
                         {
                             this.CUSfile.css.Add(new charSkillSet()
                             {
@@ -2335,7 +2335,7 @@ namespace XV2Reborn
 
         private void CUSaddToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (this.tabControl1.SelectedIndex == 0)
+            if (this.tabControl2.SelectedIndex == 0)
             {
                 this.CUSfile.css.Add(new charSkillSet()
                 {
@@ -2384,7 +2384,7 @@ namespace XV2Reborn
 
         private void CUSremoveToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (this.tabControl1.SelectedIndex == 0)
+            if (this.tabControl2.SelectedIndex == 0)
             {
                 this.CUSfile.css.RemoveAt(this.CUScbChar.SelectedIndex);
                 this.CUSlck = false;
@@ -2423,7 +2423,7 @@ namespace XV2Reborn
 
         private void CUScopyToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (this.tabControl1.SelectedIndex == 0)
+            if (this.tabControl2.SelectedIndex == 0)
                 this.CUScopySet = this.CUScurrentSet;
             else
                 this.CUScopySkill = this.CUScurrentSkill;
@@ -2431,7 +2431,7 @@ namespace XV2Reborn
 
         private void CUSpasteToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (this.tabControl1.SelectedIndex == 0)
+            if (this.tabControl2.SelectedIndex == 0)
             {
                 this.CUScurrentSet.skill = this.CUScopySet.skill;
                 this.CUSfile.css[this.CUScbChar.SelectedIndex] = this.CUScurrentSet;

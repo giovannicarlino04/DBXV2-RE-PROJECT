@@ -1980,40 +1980,40 @@
             // CUSaddToolStripMenuItem
             // 
             this.CUSaddToolStripMenuItem.Name = "CUSaddToolStripMenuItem";
-            this.CUSaddToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
+            this.CUSaddToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.CUSaddToolStripMenuItem.Text = "Add";
             this.CUSaddToolStripMenuItem.Click += new System.EventHandler(this.CUSaddToolStripMenuItem_Click);
             // 
             // CUSremoveToolStripMenuItem
             // 
             this.CUSremoveToolStripMenuItem.Name = "CUSremoveToolStripMenuItem";
-            this.CUSremoveToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
+            this.CUSremoveToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.CUSremoveToolStripMenuItem.Text = "Remove";
             this.CUSremoveToolStripMenuItem.Click += new System.EventHandler(this.CUSremoveToolStripMenuItem_Click);
             // 
             // CUScopyToolStripMenuItem
             // 
             this.CUScopyToolStripMenuItem.Name = "CUScopyToolStripMenuItem";
-            this.CUScopyToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
+            this.CUScopyToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.CUScopyToolStripMenuItem.Text = "Copy";
             this.CUScopyToolStripMenuItem.Click += new System.EventHandler(this.CUScopyToolStripMenuItem_Click);
             // 
             // CUSpasteToolStripMenuItem
             // 
             this.CUSpasteToolStripMenuItem.Name = "CUSpasteToolStripMenuItem";
-            this.CUSpasteToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
+            this.CUSpasteToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.CUSpasteToolStripMenuItem.Text = "Paste";
             this.CUSpasteToolStripMenuItem.Click += new System.EventHandler(this.CUSpasteToolStripMenuItem_Click);
             // 
             // toolStripSeparator4
             // 
             this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(137, 6);
+            this.toolStripSeparator4.Size = new System.Drawing.Size(177, 6);
             // 
             // editCUSFileToolStripMenuItem
             // 
             this.editCUSFileToolStripMenuItem.Name = "editCUSFileToolStripMenuItem";
-            this.editCUSFileToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
+            this.editCUSFileToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.editCUSFileToolStripMenuItem.Text = "Edit CUS File";
             this.editCUSFileToolStripMenuItem.Click += new System.EventHandler(this.editCUSFileToolStripMenuItem_Click);
             // 
