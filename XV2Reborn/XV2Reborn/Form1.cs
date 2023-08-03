@@ -551,51 +551,15 @@ namespace XV2Reborn
 
                         // ADD DATA TO THE CUS FILE HEREEEEE
                             
-                        if (this.tabControl2.SelectedIndex == 0)
+                        this.CUSfile.css.Add(new charSkillSet()
                         {
-                            this.CUSfile.css.Add(new charSkillSet()
-                            {
-                                skill = new short[10],
-                                charID = numberid
-                            });
-                            this.CUSlck = false;
-                            this.UpdateCharlist();
-                            this.CUSlck = true;
-                        }
-                        else
-                        {
-                            skill skill = new skill();
-                            skill.Paths = new string[7];
-                            SkillReg skillReg = new SkillReg();
-                            skillReg.name = "";
-                            skillReg.shortName = id;
-                            switch (this.cbTypeCUS.SelectedIndex)
-                            {
-                                case 0:
-                                    this.CUSfile.Super.Add(skill);
-                                    this.CUSfile.superReg.Add(skillReg);
-                                    break;
-                                case 1:
-                                    this.CUSfile.Ultimate.Add(skill);
-                                    this.CUSfile.ultimateReg.Add(skillReg);
-                                    break;
-                                case 2:
-                                    this.CUSfile.Evasive.Add(skill);
-                                    this.CUSfile.evasiveReg.Add(skillReg);
-                                    break;
-                                case 3:
-                                    this.CUSfile.blast.Add(skill);
-                                    this.CUSfile.blastReg.Add(skillReg);
-                                    break;
-                                case 4:
-                                    this.CUSfile.Awaken.Add(skill);
-                                    this.CUSfile.awakenReg.Add(skillReg);
-                                    break;
-                            }
-                            this.cbSkillCUS.SelectedIndex = 0;
-                            this.UpdateSkillList();
-                        }
-
+                            skill = new short[10],
+                            charID = numberid
+                        });
+                        this.CUSlck = false;
+                        this.UpdateCharlist();
+                        this.CUSlck = true;
+                       
                         CUSfile.writeCUS(CUSFileName);
 
                         ///////////////////////////////////
