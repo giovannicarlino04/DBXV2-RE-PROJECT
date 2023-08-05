@@ -3,6 +3,12 @@ C:\Users\Giovanni Carlino\Desktop\Repos\DBXV2-RE-PROJECT\XV2Reborn\XV2Reborn\bin
 C:\Users\Giovanni Carlino\Desktop\Repos\DBXV2-RE-PROJECT\XV2Reborn\XV2Reborn\bin\Debug\XV2Reborn.pdb
 C:\Users\Giovanni Carlino\Desktop\Repos\DBXV2-RE-PROJECT\XV2Reborn\XV2Reborn\bin\Debug\FreeImage.Standard.dll
 C:\Users\Giovanni Carlino\Desktop\Repos\DBXV2-RE-PROJECT\XV2Reborn\XV2Reborn\bin\Debug\System.Drawing.Common.dll
+C:\Games\DB Xenoverse 2\XV2Reborn\FreeImage.dll
+C:\Games\DB Xenoverse 2\XV2Reborn\IDB_Schema.csv
+C:\Games\DB Xenoverse 2\XV2Reborn\PSC_Schema.csv
+C:\Games\DB Xenoverse 2\XV2Reborn\XV2Reborn.exe.config
+C:\Games\DB Xenoverse 2\XV2Reborn\XV2Reborn.exe
+C:\Games\DB Xenoverse 2\XV2Reborn\XV2Reborn.pdb
 C:\Users\Giovanni Carlino\Desktop\Repos\DBXV2-RE-PROJECT\XV2Reborn\XV2Reborn\obj\Debug\XV2Reborn.csproj.AssemblyReference.cache
 C:\Users\Giovanni Carlino\Desktop\Repos\DBXV2-RE-PROJECT\XV2Reborn\XV2Reborn\obj\Debug\XV2Reborn.csproj.SuggestedBindingRedirects.cache
 C:\Users\Giovanni Carlino\Desktop\Repos\DBXV2-RE-PROJECT\XV2Reborn\XV2Reborn\obj\Debug\XV2Reborn.Form1.resources
@@ -12,9 +18,3 @@ C:\Users\Giovanni Carlino\Desktop\Repos\DBXV2-RE-PROJECT\XV2Reborn\XV2Reborn\obj
 C:\Users\Giovanni Carlino\Desktop\Repos\DBXV2-RE-PROJECT\XV2Reborn\XV2Reborn\obj\Debug\XV2Reborn.csproj.CopyComplete
 C:\Users\Giovanni Carlino\Desktop\Repos\DBXV2-RE-PROJECT\XV2Reborn\XV2Reborn\obj\Debug\XV2Reborn.exe
 C:\Users\Giovanni Carlino\Desktop\Repos\DBXV2-RE-PROJECT\XV2Reborn\XV2Reborn\obj\Debug\XV2Reborn.pdb
-C:\Games\DB Xenoverse 2\XV2Reborn\XV2Reborn.exe.config
-C:\Games\DB Xenoverse 2\XV2Reborn\XV2Reborn.exe
-C:\Games\DB Xenoverse 2\XV2Reborn\XV2Reborn.pdb
-C:\Games\DB Xenoverse 2\XV2Reborn\PSC_Schema.csv
-C:\Games\DB Xenoverse 2\XV2Reborn\IDB_Schema.csv
-C:\Games\DB Xenoverse 2\XV2Reborn\FreeImage.dll

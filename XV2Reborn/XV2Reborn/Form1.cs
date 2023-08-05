@@ -174,6 +174,10 @@ namespace XV2Reborn
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            if (Properties.Settings.Default.addonmodlist.Contains("Test123456789"))
+            {
+                Properties.Settings.Default.addonmodlist.Clear();
+            }
             if(Properties.Settings.Default.language.Length == 0) 
             {
                 comboBox1.SelectedIndex = 5;
@@ -312,7 +316,6 @@ namespace XV2Reborn
             // Load listview Items
             loadLvItems();
 
-
             // Load the default MSG file
             MSGFileName = Properties.Settings.Default.datafolder + @"\msg\proper_noun_character_name_" + language + ".msg";
             MSGfile = msgStream.Load(MSGFileName);
@@ -421,9 +424,9 @@ namespace XV2Reborn
                 lstData.Items.Add(Item);
             }
         }
-
-        void InstallMod(string arg)
+        void InstallModx2m(string arg)
         {
+            Clean();
 
             string temp = Properties.Settings.Default.datafolder + @"\temp";
 
@@ -434,19 +437,20 @@ namespace XV2Reborn
 
             ZipFile.ExtractToDirectory(arg, temp);
 
-            string xmlfile = temp + "//modinfo.xml";
+            string xmlfile = temp + "//x2m.xml";
 
             if (File.Exists(xmlfile))
             {
-                string modname = File.ReadLines(xmlfile).First();
-                string modauthor = File.ReadAllLines(xmlfile)[1];
-                var lineCount = File.ReadLines(xmlfile).Count();
-                string Modid = File.ReadAllLines(xmlfile).Last();
+
+                string modtype = File.ReadAllLines(xmlfile)[1].Replace("<X2M type=\"", "").Replace("\">", "");
+                string modname = File.ReadAllLines(xmlfile)[3].Replace("    <MOD_NAME value=\"", "").Replace("\" />", "");
+                string modauthor = File.ReadAllLines(xmlfile)[4].Replace("    <MOD_AUTHOR value=\"", "").Replace("\" />", "");
+
                 var files = Directory.EnumerateFiles(temp, "*.*", SearchOption.AllDirectories);
 
-                if (lineCount == 3)
+                if (modtype == "NEW_CHARACTER")
                 {
-                    // Added Character
+                    string Modid = File.ReadAllLines(xmlfile)[7].Replace("    <ENTRY_NAME value=\"", "").Replace("\" />", "");
 
                     if (Directory.Exists(Properties.Settings.Default.datafolder + @"\chara\" + Modid) == false)
                     {
@@ -468,9 +472,12 @@ namespace XV2Reborn
 
                         string text = File.ReadAllText(Properties.Settings.Default.datafolder + @"\installed\" + modname + @".xml");
                         text = text.Replace(@"\temp", "");
+                        text = text.Replace(@"\UI\SEL.DDS", @"\ui\texture\CHARA01\" + Modid + @"_000.dds");
+                        text = text.Replace(@"data\" + Modid, @"data\chara\" + Modid);
                         File.WriteAllText(Properties.Settings.Default.datafolder + @"\installed\" + modname + @".xml", text);
 
-                        MoveDirectory(temp, Properties.Settings.Default.datafolder);
+                        MoveDirectory(temp + @"/" + Modid, Properties.Settings.Default.datafolder + @"/chara/" + Modid);
+                        File.Move(temp + @"/UI/SEL.DDS", Properties.Settings.Default.datafolder + @"/ui/texture/CHARA01/" + Modid + "_000.dds");
 
                         Process p = new Process();
                         ProcessStartInfo info = new ProcessStartInfo();
@@ -491,9 +498,6 @@ namespace XV2Reborn
                                 sw.WriteLine(@"embpack.exe CHARA01");
                             }
                         }
-
-                        string id = File.ReadAllLines(Properties.Settings.Default.datafolder + "//modinfo.xml").Last();
-                        Properties.Settings.Default.addonmodlist = new StringCollection();
                         Properties.Settings.Default.addonmodlist.Add(modname);
                         Properties.Settings.Default.Save();
 
@@ -503,22 +507,22 @@ namespace XV2Reborn
 
                         Char_Model_Spec c = new Char_Model_Spec();
                         c.Paths = new string[9];
-                        c.Paths[0] = id;
-                        c.Paths[1] = "../GOK/GOK";
-                        c.Paths[2] = "../GOK/GOK";
-                        c.Paths[3] = "../GOK/GOK";
-                        c.Paths[4] = "../GOK/GOK";
-                        c.Paths[5] = "../GOK/GOK";
-                        c.Paths[6] = "../GOK/GOK";
-                        c.Paths[7] = "../GOK/GOK";
-                        c.Paths[8] = "../GOK/GOK";
-                        c.shortname = id;
+                        c.Paths[0] = Modid;
+                        c.Paths[1] = Modid;
+                        c.Paths[2] = Modid;
+                        c.Paths[3] = Modid;
+                        c.Paths[4] = Modid;
+                        c.Paths[5] = Modid;
+                        c.Paths[6] = Modid;
+                        c.Paths[7] = Modid;
+                        c.Paths[8] = Modid;
+                        c.shortname = Modid;
                         c.id = numberid;
 
                         cms.Add(c);
                         CMSCombobox.Items.Clear();
                         for (int i = 0; i < cms.Count; i++)
-                            CMSCombobox.Items.Add(cms[i].id.ToString(numberid.ToString()) + " - " + id);
+                            CMSCombobox.Items.Add(cms[i].id.ToString(numberid.ToString()) + " - " + Modid);
 
                         Array.Resize<bool>(ref CMSselective, CMSselective.Length + 1);
 
@@ -550,7 +554,6 @@ namespace XV2Reborn
                         ///////////////////////////////////
 
                         // ADD DATA TO THE CUS FILE HEREEEEE
-                            
                         this.CUSfile.css.Add(new charSkillSet()
                         {
                             skill = new short[10],
@@ -559,7 +562,7 @@ namespace XV2Reborn
                         this.CUSlck = false;
                         this.UpdateCharlist();
                         this.CUSlck = true;
-                       
+
                         CUSfile.writeCUS(CUSFileName);
 
                         ///////////////////////////////////
@@ -625,7 +628,7 @@ namespace XV2Reborn
 
                         foreach (string s in File.ReadAllLines(Charalist))
                         {
-                            text3.AppendLine(s.Replace("]]]", "]],[[\"" + id + "\",0,0,0,false,[-1,-1],Dlc_Def]]]"));
+                            text3.AppendLine(s.Replace("]]]", "]],[[\"" + Modid + "\",0,0,0,false,[-1,-1],Dlc_Def]]]"));
                         }
 
                         using (var file = new StreamWriter(File.Create(Charalist)))
@@ -640,7 +643,7 @@ namespace XV2Reborn
                         string nameid = MSGfile.data[MSGfile.data.Length - 1].NameID;
                         expand[expand.Length - 1].ID = MSGfile.data.Length;
                         expand[expand.Length - 1].Lines = new string[] { modname };
-                        expand[expand.Length - 1].NameID = "chara_" + id + "_" + "000";
+                        expand[expand.Length - 1].NameID = "chara_" + Modid + "_" + "000";
 
                         MSGfile.data = expand;
 
@@ -656,85 +659,11 @@ namespace XV2Reborn
                         MessageBox.Show("A Mod with that character id is already installed", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
-                else if (lineCount == 2)
+                else if(modtype == "REPLACER")
                 {
-                    // Replacer
-
-                    if (Directory.Exists(Properties.Settings.Default.datafolder + @"\installed") == false)
-                    {
-                        Directory.CreateDirectory(Properties.Settings.Default.datafolder + @"\installed");
-                        File.WriteAllLines(Properties.Settings.Default.datafolder + @"\installed\" + modname + @".xml", files);
-                    }
-                    else
-                    {
-                        File.WriteAllLines(Properties.Settings.Default.datafolder + @"\installed\" + modname + @".xml", files);
-                    }
-
-                    string text = File.ReadAllText(Properties.Settings.Default.datafolder + @"\installed\" + modname + @".xml");
-                    text = text.Replace(@"\temp", "");
-                    string txt = text;
-                    string[] lines = text.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
-
                     string[] row = { modname, modauthor, "Replacer" };
                     ListViewItem lvi = new ListViewItem(row);
-                    if (lvMods.Items.Contains(lvi) == false)
-                    {
-                        foreach (string line in lines)
-                        {
-                            if (File.Exists(line))
-                            {
-                                if (MessageBox.Show("A mod containing file \"" + line + "\" is already installed, do you want to replace that file with the new one? \n\nWARNING: THIS COULD CORRUPT YOUR MODS INSTALLATION, ALWAYS KNOW WHAT YOU'RE DOING WHEN REPLACING STUFF", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
-                                {
-
-                                }
-                                else
-                                {
-                                    if (File.Exists(Properties.Settings.Default.datafolder + @"\installed\" + modname + @".xml"))
-                                        File.Delete(Properties.Settings.Default.datafolder + @"\installed\" + modname + @".xml");
-                                    Clean();
-                                    return;
-                                }
-                            }
-                        }
-                        
-                        lvMods.Items.Add(lvi);
-
-                        string text2 = File.ReadAllText(Properties.Settings.Default.datafolder + @"\installed\" + modname + @".xml");
-                        text2 = text2.Replace(@"\temp", "");
-                        File.WriteAllText(Properties.Settings.Default.datafolder + @"\installed\" + modname + @".xml", text2);
-
-                        MoveDirectory(temp, Properties.Settings.Default.datafolder);
-
-                        Process p = new Process();
-                        ProcessStartInfo info = new ProcessStartInfo();
-                        info.FileName = "cmd.exe";
-                        info.CreateNoWindow = true;
-                        info.WindowStyle = ProcessWindowStyle.Hidden;
-                        info.RedirectStandardInput = true;
-                        info.UseShellExecute = false;
-
-                        p.StartInfo = info;
-                        p.Start();
-
-                        using (StreamWriter sw = p.StandardInput)
-                        {
-                            if (sw.BaseStream.CanWrite)
-                            {
-                                sw.WriteLine("cd " + Properties.Settings.Default.datafolder + @"\ui\texture");
-                                sw.WriteLine(@"embpack.exe CHARA01");
-                            }
-                        }
-                        Clean();
-                    }
-                    else
-                    {
-                        Clean();
-                        MessageBox.Show("A Mod with that name is already installed", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
-                }
-                else if (lineCount == 4)
-                {
-                    // Added Skill
+                    lvMods.Items.Add(lvi);
 
                     if (Directory.Exists(Properties.Settings.Default.datafolder + @"\installed") == false)
                     {
@@ -748,43 +677,14 @@ namespace XV2Reborn
 
                     string text = File.ReadAllText(Properties.Settings.Default.datafolder + @"\installed\" + modname + @".xml");
                     text = text.Replace(@"\temp", "");
-                    string txt = text;
-                    string[] lines = text.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
+                    text = text.Replace(@"\JUNGLE\data", "");
+                    File.WriteAllText(Properties.Settings.Default.datafolder + @"\installed\" + modname + @".xml", text);
 
-                    string[] row = { modname, modauthor, "Added skill" };
-                    ListViewItem lvi = new ListViewItem(row);
-                    if (lvMods.Items.Contains(lvi) == false)
-                    {
-                        foreach (string line in lines)
-                        {
-                            if (File.Exists(line))
-                            {
-                                if(MessageBox.Show("A mod containing file \"" + line + "\" is already installed, do you want to replace that file with the new one? \n WARNING: THIS COULD CORRUPT YOUR MODS INSTALLATION, ALWAYS KNOW WHAT YOU'RE DOING WHEN REPLACING STUFF", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
-                                {
-
-                                }
-                                else
-                                {
-                                    File.Delete(Properties.Settings.Default.datafolder + @"\installed\" + modname + @".xml");
-                                    Clean();
-                                    return;
-                                }
-                            }
-                        }
-
-                        lvMods.Items.Add(lvi);
-
-                        string text2 = File.ReadAllText(Properties.Settings.Default.datafolder + @"\installed\" + modname + @".xml");
-                        text2 = text2.Replace(@"\temp", "");
-                        File.WriteAllText(Properties.Settings.Default.datafolder + @"\installed\" + modname + @".xml", text2);
-
-                        MoveDirectory(temp, Properties.Settings.Default.datafolder);
-                    }
-                    else
-                    {
-                        Clean();
-                        MessageBox.Show("A Mod with that name is already installed", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
+                    MoveDirectory(temp + @"/JUNGLE/data" , Properties.Settings.Default.datafolder + @"/");
+                }
+                else
+                {
+                    MessageBox.Show("X2M Format \"" + modtype + "\" not currently implemented");
                 }
             }
             Clean();
@@ -812,8 +712,11 @@ namespace XV2Reborn
 
                     foreach (string line in lines)
                     {
-                        File.Delete(line);
+                        if(File.Exists(line))
+                            File.Delete(line);
                     }
+
+                    File.Delete(Properties.Settings.Default.datafolder + @"\installed\" + lvMods.SelectedItems[0].Text + @".xml");
 
                     //End
                 }
@@ -828,7 +731,7 @@ namespace XV2Reborn
 
                     foreach (string s in File.ReadAllLines(Charalist))
                     {
-                        text3.AppendLine(s.Replace(",[[\"" + id + "\",0,0,0,false,[-1,-1],Dlc_Def]]]", ""));
+                        text3.AppendLine(s.Replace(",[[\"" + id + "\",0,0,0,false,[-1,-1],Dlc_Def]]]", "]"));
                     }
 
                     using (var file = new StreamWriter(File.Create(Charalist)))
@@ -839,6 +742,7 @@ namespace XV2Reborn
 
                     //string qxd = Properties.Settings.Default.datafolder + @"\quest\TMQ\tmq_data.qxd";
                     //ReplaceTextInFile(qxd, id, "XXX");
+                    File.Delete(Properties.Settings.Default.datafolder + @"\installed\" + lvMods.SelectedItems[0].Text + @"2.xml");
 
                 }
 
@@ -969,20 +873,20 @@ namespace XV2Reborn
         private void installModToolStripMenuItem_Click(object sender, EventArgs e)
         {
             OpenFileDialog moddialog = new OpenFileDialog();
-            moddialog.Filter = "Xenoverse 2 mod files | *.xv2mod";
+            moddialog.Filter = "Xenoverse 2 mod files | *.x2m";
             moddialog.Multiselect = true;
             moddialog.RestoreDirectory = true;
             moddialog.Title = "Install Mod";
-            
-            if(moddialog.ShowDialog()==DialogResult.OK)
+
+            if (moddialog.ShowDialog() == DialogResult.OK)
             {
                 foreach(var mod in moddialog.FileNames) 
                 {
-                    InstallMod(mod);
+                    if (MessageBox.Show("Do you want to install mod \"" + Path.GetFileName(mod) + "\"?", "Mod Installation", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Information) == DialogResult.Yes)
+                        InstallModx2m(mod);
                 }
             }
         }
-
 
         private void CompileScripts()
         {
@@ -3839,5 +3743,28 @@ namespace XV2Reborn
         }
 
         //////////////////////////////////////////////////////////////////
+        private void exitToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void lvMods_DragDrop(object sender, DragEventArgs e)
+        {
+            string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
+            foreach(string file in files)
+            {
+                if (file.EndsWith(".x2m"))
+                {
+                    if (MessageBox.Show("Do you want to install mod \"" + Path.GetFileName(file) + "\"?", "Mod Installation", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Information) == DialogResult.Yes)
+                        InstallModx2m(file);
+                }
+            }
+
+        }
+
+        private void lvMods_DragEnter(object sender, DragEventArgs e)
+        {
+            e.Effect = DragDropEffects.All;
+        }
     }
 }
