@@ -3,7 +3,6 @@ C:\Users\Giovanni Carlino\Desktop\Repos\DBXV2-RE-PROJECT\XV2Reborn\XV2Reborn\bin
 C:\Users\Giovanni Carlino\Desktop\Repos\DBXV2-RE-PROJECT\XV2Reborn\XV2Reborn\bin\Debug\XV2Reborn.pdb
 C:\Users\Giovanni Carlino\Desktop\Repos\DBXV2-RE-PROJECT\XV2Reborn\XV2Reborn\bin\Debug\FreeImage.Standard.dll
 C:\Users\Giovanni Carlino\Desktop\Repos\DBXV2-RE-PROJECT\XV2Reborn\XV2Reborn\bin\Debug\System.Drawing.Common.dll
-C:\Games\DB Xenoverse 2\XV2Reborn\FreeImage.dll
 C:\Games\DB Xenoverse 2\XV2Reborn\IDB_Schema.csv
 C:\Games\DB Xenoverse 2\XV2Reborn\PSC_Schema.csv
 C:\Games\DB Xenoverse 2\XV2Reborn\XV2Reborn.exe.config
@@ -23,6 +22,5 @@ C:\Users\Giovanni Carlino\Desktop\Repositories\DBXV2-RE-PROJECT\XV2Reborn\XV2Reb
 C:\Users\Giovanni Carlino\Desktop\Repositories\DBXV2-RE-PROJECT\XV2Reborn\XV2Reborn\obj\Debug\XV2Reborn.Properties.Resources.resources
 C:\Users\Giovanni Carlino\Desktop\Repositories\DBXV2-RE-PROJECT\XV2Reborn\XV2Reborn\obj\Debug\XV2Reborn.csproj.GenerateResource.cache
 C:\Users\Giovanni Carlino\Desktop\Repositories\DBXV2-RE-PROJECT\XV2Reborn\XV2Reborn\obj\Debug\XV2Reborn.csproj.CoreCompileInputs.cache
-C:\Users\Giovanni Carlino\Desktop\Repositories\DBXV2-RE-PROJECT\XV2Reborn\XV2Reborn\obj\Debug\XV2Reborn.csproj.CopyComplete
 C:\Users\Giovanni Carlino\Desktop\Repositories\DBXV2-RE-PROJECT\XV2Reborn\XV2Reborn\obj\Debug\XV2Reborn.exe
 C:\Users\Giovanni Carlino\Desktop\Repositories\DBXV2-RE-PROJECT\XV2Reborn\XV2Reborn\obj\Debug\XV2Reborn.pdb

@@ -358,6 +358,8 @@
             this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.editCSSFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator10 = new System.Windows.Forms.ToolStripSeparator();
             this.menuStrip1.SuspendLayout();
             this.tabPage8.SuspendLayout();
             this.tabPage6.SuspendLayout();
@@ -412,26 +414,28 @@
             // installModToolStripMenuItem2
             // 
             this.installModToolStripMenuItem2.Name = "installModToolStripMenuItem2";
-            this.installModToolStripMenuItem2.Size = new System.Drawing.Size(133, 22);
+            this.installModToolStripMenuItem2.Size = new System.Drawing.Size(180, 22);
             this.installModToolStripMenuItem2.Text = "Install Mod";
             this.installModToolStripMenuItem2.Click += new System.EventHandler(this.installModToolStripMenuItem_Click);
             // 
             // toolStripSeparator9
             // 
             this.toolStripSeparator9.Name = "toolStripSeparator9";
-            this.toolStripSeparator9.Size = new System.Drawing.Size(130, 6);
+            this.toolStripSeparator9.Size = new System.Drawing.Size(177, 6);
             // 
             // exitToolStripMenuItem2
             // 
             this.exitToolStripMenuItem2.Name = "exitToolStripMenuItem2";
-            this.exitToolStripMenuItem2.Size = new System.Drawing.Size(133, 22);
+            this.exitToolStripMenuItem2.Size = new System.Drawing.Size(180, 22);
             this.exitToolStripMenuItem2.Text = "Exit";
             this.exitToolStripMenuItem2.Click += new System.EventHandler(this.exitToolStripMenuItem1_Click);
             // 
             // editToolStripMenuItem1
             // 
             this.editToolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.uninstallModToolStripMenuItem1});
+            this.uninstallModToolStripMenuItem1,
+            this.toolStripSeparator10,
+            this.editCSSFileToolStripMenuItem});
             this.editToolStripMenuItem1.Name = "editToolStripMenuItem1";
             this.editToolStripMenuItem1.Size = new System.Drawing.Size(39, 20);
             this.editToolStripMenuItem1.Text = "Edit";
@@ -439,7 +443,7 @@
             // uninstallModToolStripMenuItem1
             // 
             this.uninstallModToolStripMenuItem1.Name = "uninstallModToolStripMenuItem1";
-            this.uninstallModToolStripMenuItem1.Size = new System.Drawing.Size(148, 22);
+            this.uninstallModToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
             this.uninstallModToolStripMenuItem1.Text = "Uninstall Mod";
             this.uninstallModToolStripMenuItem1.Click += new System.EventHandler(this.uninstallModToolStripMenuItem_Click);
             // 
@@ -456,19 +460,19 @@
             // compileScriptsToolStripMenuItem1
             // 
             this.compileScriptsToolStripMenuItem1.Name = "compileScriptsToolStripMenuItem1";
-            this.compileScriptsToolStripMenuItem1.Size = new System.Drawing.Size(162, 22);
+            this.compileScriptsToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
             this.compileScriptsToolStripMenuItem1.Text = "Compile Scripts";
             this.compileScriptsToolStripMenuItem1.Click += new System.EventHandler(this.compileScriptsToolStripMenuItem_Click);
             // 
             // toolStripSeparator7
             // 
             this.toolStripSeparator7.Name = "toolStripSeparator7";
-            this.toolStripSeparator7.Size = new System.Drawing.Size(159, 6);
+            this.toolStripSeparator7.Size = new System.Drawing.Size(177, 6);
             // 
             // clearInstallationToolStripMenuItem1
             // 
             this.clearInstallationToolStripMenuItem1.Name = "clearInstallationToolStripMenuItem1";
-            this.clearInstallationToolStripMenuItem1.Size = new System.Drawing.Size(162, 22);
+            this.clearInstallationToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
             this.clearInstallationToolStripMenuItem1.Text = "Clear Installation";
             this.clearInstallationToolStripMenuItem1.Click += new System.EventHandler(this.clearInstallationToolStripMenuItem_Click);
             // 
@@ -3381,6 +3385,18 @@
             this.tabControl1.Size = new System.Drawing.Size(1025, 510);
             this.tabControl1.TabIndex = 1;
             // 
+            // editCSSFileToolStripMenuItem
+            // 
+            this.editCSSFileToolStripMenuItem.Name = "editCSSFileToolStripMenuItem";
+            this.editCSSFileToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.editCSSFileToolStripMenuItem.Text = "Edit CSS File";
+            this.editCSSFileToolStripMenuItem.Click += new System.EventHandler(this.editCSSFileToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator10
+            // 
+            this.toolStripSeparator10.Name = "toolStripSeparator10";
+            this.toolStripSeparator10.Size = new System.Drawing.Size(177, 6);
+            // 
             // Form1
             // 
             this.AllowDrop = true;
@@ -3780,6 +3796,8 @@
         private System.Windows.Forms.ColumnHeader columnHeader2;
         private System.Windows.Forms.ColumnHeader columnHeader4;
         private System.Windows.Forms.TabControl tabControl1;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator10;
+        private System.Windows.Forms.ToolStripMenuItem editCSSFileToolStripMenuItem;
     }
 }
 

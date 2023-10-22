@@ -1,27 +1,16 @@
-﻿using FreeImageAPI;
-using System;
-using System.Collections;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
-using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
-using System.Net.Security;
 using System.Reflection;
-using System.Reflection.Emit;
-using System.Runtime.InteropServices;
-using System.Runtime.InteropServices.ComTypes;
-using System.Security.AccessControl;
-using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Xml.Linq;
 using XV2Reborn.Properties;
 
 namespace XV2Reborn
@@ -3249,5 +3238,14 @@ namespace XV2Reborn
             e.Effect = DragDropEffects.All;
         }
 
+        private void editCSSFileToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Process p2 = Process.Start(Properties.Settings.Default.datafolder + @"\scripts\action_script\Charalist.as");
+
+            p2.WaitForExit();
+
+            CompileScripts();
+            loadFiles();
+        }
     }
 }
