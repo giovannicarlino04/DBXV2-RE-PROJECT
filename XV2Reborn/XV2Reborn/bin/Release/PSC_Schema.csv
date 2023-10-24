@@ -1,0 +1,38 @@
+Costume ID,0,int32
+Costume ID 2,4,int32
+Camera Position,8,int32
+2?,12,int32
+3?,16,int32
+Health,20,float
+4?,24,float
+Ki,28,float
+Ki Recharge,32,float
+5?,36,int32
+6?,40,int32
+7?,44,int32
+Stamina,48,float
+Stamina Recharge (Moving),52,float
+Stamina Recharge (Air while idle),56,float
+Stamina Recharge (Ground while idle),60,float
+Stamina Drain Rate (Enemy Blocking you strong attacks),64,float
+Stamina Drain Rate (you Blocking enemy strong attacks),68,float
+8?,72,float
+Basic Attack,76,float
+Basic Ki Attack,80,float
+Strike Attack Damage,84,float
+Super Attack Damage,88,float
+Basic Physical Defense,92,float
+Basic Ki Defense,96,float
+Strike Attack Defense,100,float
+Super Ki Blast Defense,104,float
+Ground speed,108,float
+Air Speed,112,float
+Boosting Speed,116,float
+Dash Distance,120,float
+9?,124,float
+Reinforcement Skill Duration,128,float
+10?,132,float
+Revival HP Amount,136,float
+11?,140,float
+Reviving Speed,144,float
+Super Soul,180,int32

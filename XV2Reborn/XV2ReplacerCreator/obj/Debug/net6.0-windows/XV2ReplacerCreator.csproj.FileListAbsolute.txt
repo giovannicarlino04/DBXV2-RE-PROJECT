@@ -1,0 +1,19 @@
+C:\Users\Giovanni Carlino\Desktop\Repositories\DBXV2-RE-PROJECT\Projects\XV2ModManager\XV2ReplacerCreator\bin\Debug\net6.0-windows\XV2ReplacerCreator.exe
+C:\Users\Giovanni Carlino\Desktop\Repositories\DBXV2-RE-PROJECT\Projects\XV2ModManager\XV2ReplacerCreator\bin\Debug\net6.0-windows\XV2ReplacerCreator.deps.json
+C:\Users\Giovanni Carlino\Desktop\Repositories\DBXV2-RE-PROJECT\Projects\XV2ModManager\XV2ReplacerCreator\bin\Debug\net6.0-windows\XV2ReplacerCreator.runtimeconfig.json
+C:\Users\Giovanni Carlino\Desktop\Repositories\DBXV2-RE-PROJECT\Projects\XV2ModManager\XV2ReplacerCreator\bin\Debug\net6.0-windows\XV2ReplacerCreator.dll
+C:\Users\Giovanni Carlino\Desktop\Repositories\DBXV2-RE-PROJECT\Projects\XV2ModManager\XV2ReplacerCreator\bin\Debug\net6.0-windows\XV2ReplacerCreator.pdb
+C:\Users\Giovanni Carlino\Desktop\Repositories\DBXV2-RE-PROJECT\Projects\XV2ModManager\XV2ReplacerCreator\obj\Debug\net6.0-windows\XV2ReplacerCreator.Form1.resources
+C:\Users\Giovanni Carlino\Desktop\Repositories\DBXV2-RE-PROJECT\Projects\XV2ModManager\XV2ReplacerCreator\obj\Debug\net6.0-windows\XV2ReplacerCreator.csproj.GenerateResource.cache
+C:\Users\Giovanni Carlino\Desktop\Repositories\DBXV2-RE-PROJECT\Projects\XV2ModManager\XV2ReplacerCreator\obj\Debug\net6.0-windows\XV2ReplacerCreator.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Giovanni Carlino\Desktop\Repositories\DBXV2-RE-PROJECT\Projects\XV2ModManager\XV2ReplacerCreator\obj\Debug\net6.0-windows\XV2ReplacerCreator.AssemblyInfoInputs.cache
+C:\Users\Giovanni Carlino\Desktop\Repositories\DBXV2-RE-PROJECT\Projects\XV2ModManager\XV2ReplacerCreator\obj\Debug\net6.0-windows\XV2ReplacerCreator.AssemblyInfo.cs
+C:\Users\Giovanni Carlino\Desktop\Repositories\DBXV2-RE-PROJECT\Projects\XV2ModManager\XV2ReplacerCreator\obj\Debug\net6.0-windows\XV2ReplacerCreator.csproj.CoreCompileInputs.cache
+C:\Users\Giovanni Carlino\Desktop\Repositories\DBXV2-RE-PROJECT\Projects\XV2ModManager\XV2ReplacerCreator\obj\Debug\net6.0-windows\XV2ReplacerCreator.dll
+C:\Users\Giovanni Carlino\Desktop\Repositories\DBXV2-RE-PROJECT\Projects\XV2ModManager\XV2ReplacerCreator\obj\Debug\net6.0-windows\refint\XV2ReplacerCreator.dll
+C:\Users\Giovanni Carlino\Desktop\Repositories\DBXV2-RE-PROJECT\Projects\XV2ModManager\XV2ReplacerCreator\obj\Debug\net6.0-windows\XV2ReplacerCreator.genruntimeconfig.cache
+C:\Users\Giovanni Carlino\Desktop\Repositories\DBXV2-RE-PROJECT\Projects\XV2ModManager\XV2ReplacerCreator\obj\Debug\net6.0-windows\ref\XV2ReplacerCreator.dll
+C:\Program Files (x86)\Steam\steamapps\common\DB Xenoverse 2\Debug\net6.0-windows\XV2ReplacerCreator.exe
+C:\Program Files (x86)\Steam\steamapps\common\DB Xenoverse 2\Debug\net6.0-windows\XV2ReplacerCreator.deps.json
+C:\Program Files (x86)\Steam\steamapps\common\DB Xenoverse 2\Debug\net6.0-windows\XV2ReplacerCreator.runtimeconfig.json
+C:\Program Files (x86)\Steam\steamapps\common\DB Xenoverse 2\Debug\net6.0-windows\XV2ReplacerCreator.dll

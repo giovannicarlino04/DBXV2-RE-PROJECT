@@ -45,8 +45,79 @@ namespace XV2Reborn
             this.Awaken.AddRange((IEnumerable<skill>)Awaken);
         }
 
-        public void BuildRegistry()
+        public void BuildRegistry(string Msgfolder, string lang)
         {
+            if (Directory.Exists(Msgfolder))
+            {
+                msg msg1 = msgStream.Load(Msgfolder + "\\proper_noun_skill_spa_name_" + lang + ".msg");
+                this.superReg.Clear();
+                SkillReg skillReg;
+                skill skill;
+                for (int index = 0; index < this.Super.Count; ++index)
+                {
+                    skillReg.id = this.Super[index].id;
+                    skillReg.shortName = this.Super[index].shortName;
+                    string str1 = "spe_skill_";
+                    skill = this.Super[index];
+                    string str2 = skill.id2.ToString("0000");
+                    string id = str1 + str2;
+                    string str3 = msg1.Find(id);
+                    skillReg.name = str3;
+                    this.superReg.Add(skillReg);
+                }
+                msg msg2 = msgStream.Load(Msgfolder + "\\proper_noun_skill_ult_name_" + lang + ".msg");
+                this.ultimateReg.Clear();
+                for (int index = 0; index < this.Ultimate.Count; ++index)
+                {
+                    skillReg.id = this.Ultimate[index].id;
+                    skillReg.shortName = this.Ultimate[index].shortName;
+                    string str1 = "ult_";
+                    skill = this.Ultimate[index];
+                    string str2 = skill.id2.ToString("0000");
+                    string id = str1 + str2;
+                    string str3 = msg2.Find(id);
+                    skillReg.name = str3;
+                    this.ultimateReg.Add(skillReg);
+                }
+                msg msg3 = msgStream.Load(Msgfolder + "\\proper_noun_skill_esc_name_" + lang + ".msg");
+                this.evasiveReg.Clear();
+                for (int index = 0; index < this.Evasive.Count; ++index)
+                {
+                    skillReg.id = this.Evasive[index].id;
+                    skillReg.shortName = this.Evasive[index].shortName;
+                    string str1 = "avoid_skill_";
+                    skill = this.Evasive[index];
+                    string str2 = skill.id2.ToString("0000");
+                    string id = str1 + str2;
+                    string str3 = msg2.Find(id);
+                    skillReg.name = str3;
+                    this.evasiveReg.Add(skillReg);
+                }
+                this.blastReg.Clear();
+                for (int index = 0; index < this.blast.Count; ++index)
+                {
+                    skillReg.id = this.blast[index].id;
+                    skillReg.shortName = this.blast[index].shortName;
+                    skillReg.name = "";
+                    this.blastReg.Add(skillReg);
+                }
+                msg msg4 = msgStream.Load(Msgfolder + "\\proper_noun_skill_met_name_" + lang + ".msg");
+                this.awakenReg.Clear();
+                for (int index = 0; index < this.Awaken.Count; ++index)
+                {
+                    skillReg.id = this.Awaken[index].id;
+                    skillReg.shortName = this.Awaken[index].shortName;
+                    string str1 = "met_skill_";
+                    skill = this.Awaken[index];
+                    string str2 = skill.id2.ToString("0000");
+                    string id = str1 + str2;
+                    string str3 = msg4.Find(id);
+                    skillReg.name = str3;
+                    this.awakenReg.Add(skillReg);
+                }
+            }
+            else
+            {
                 this.superReg.Clear();
                 SkillReg skillReg;
                 for (int index = 0; index < this.Super.Count; ++index)
@@ -88,7 +159,7 @@ namespace XV2Reborn
                     skillReg.name = "";
                     this.awakenReg.Add(skillReg);
                 }
-            
+            }
         }
 
         public void writeCUS(string cusPath)

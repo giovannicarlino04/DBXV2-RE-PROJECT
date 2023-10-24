@@ -73,15 +73,16 @@ namespace XV2CharaCreator
                     WriteElementWithValue(writer, "CSO_4", txtCSO4.Text);
 
 
-                    SetComboBoxValue(writer, cbSuper1, "CUS_SUPER_1");
-                    SetComboBoxValue(writer, cbSuper2, "CUS_SUPER_2");
-                    SetComboBoxValue(writer, cbSuper3, "CUS_SUPER_3");
-                    SetComboBoxValue(writer, cbSuper4, "CUS_SUPER_4");
-                    SetComboBoxValue(writer, cbUltimate1, "CUS_ULTIMATE_1");
-                    SetComboBoxValue(writer, cbUltimate2, "CUS_ULTIMATE_2");
-                    SetComboBoxValue(writer, cbEvasive, "CUS_EVASIVE");
-                    SetComboBoxValue(writer, cbBlast, "CUS_BLAST");
-                    SetComboBoxValue(writer, cbAwaken, "CUS_AWAKEN");
+                    WriteElementWithValue(writer, "CUS_SUPER_1", txtCUS1.Text);
+                    WriteElementWithValue(writer, "CUS_SUPER_2", txtCUS2.Text);
+                    WriteElementWithValue(writer, "CUS_SUPER_3", txtCUS3.Text);
+                    WriteElementWithValue(writer, "CUS_SUPER_4", txtCUS4.Text);
+                    WriteElementWithValue(writer, "CUS_ULTIMATE_1", txtCUS5.Text);
+                    WriteElementWithValue(writer, "CUS_ULTIMATE_2",txtCUS6.Text);
+                    WriteElementWithValue(writer, "CUS_EVASIVE", txtCUS7.Text);
+                    WriteElementWithValue(writer, "CUS_BLAST", txtCUS8.Text);
+                    WriteElementWithValue(writer, "CUS_AWAKEN", txtCUS9.Text);
+
 
                     WriteElementWithValue(writer, "MSG_CHARACTER_NAME", txtMSG1.Text);
                     WriteElementWithValue(writer, "MSG_COSTUME_NAME", txtMSG2.Text);
@@ -114,14 +115,6 @@ namespace XV2CharaCreator
             writer.WriteAttributeString("value", value);
             writer.WriteEndElement();
         }
-        private void SetComboBoxValue(XmlWriter xmlWriter, ComboBox comboBox, string elementName)
-        {
-            if (comboBox.SelectedIndex >= 0)
-                WriteElementWithValue(xmlWriter, elementName, comboBox.SelectedItem.ToString());
-            else
-                WriteElementWithValue(xmlWriter, elementName, "");
-        }
-
 
         private void btnGenID_Click(object sender, EventArgs e)
         {
@@ -166,56 +159,8 @@ namespace XV2CharaCreator
         }
         private void Form1_Load(object sender, EventArgs e)
         {
-            if (!Directory.Exists("C:/Games/DB Xenoverse 2/data"))
-            {
-                FolderBrowserDialog fbd = new FolderBrowserDialog();
-                fbd.UseDescriptionForTitle = true;
-                fbd.Description = "Select XV2 Data Folder, if you can't find it PLEASE START XV2Reborn FIRST";
 
-                if (fbd.ShowDialog() == DialogResult.OK)
-                {
-                    string datapath = fbd.SelectedPath;
-                    string CUSFileName;
-                    CUSRegistry CUSfile = new CUSRegistry();
-
-                    // Load the CUS File
-                    CUSFileName = datapath + @"/system/custom_skill.cus";
-                    CUSfile.readCUS(CUSFileName);
-                    CUSfile.BuildRegistry();
-
-                    cbSuper1.Items.AddRange((object[])CUSfile.getSkillList(0));
-                    cbSuper2.Items.AddRange((object[])CUSfile.getSkillList(0));
-                    cbSuper3.Items.AddRange((object[])CUSfile.getSkillList(0));
-                    cbSuper4.Items.AddRange((object[])CUSfile.getSkillList(0));
-                    cbUltimate1.Items.AddRange((object[])CUSfile.getSkillList(1));
-                    cbUltimate2.Items.AddRange((object[])CUSfile.getSkillList(1));
-                    cbEvasive.Items.AddRange((object[])CUSfile.getSkillList(2));
-                    cbBlast.Items.AddRange((object[])CUSfile.getSkillList(4));
-                    cbAwaken.Items.AddRange((object[])CUSfile.getSkillList(5));
-                }
-
-            }
-            else
-            {
-                string datapath = "C:/Games/DB Xenoverse 2/data";
-                string CUSFileName;
-                CUSRegistry CUSfile = new CUSRegistry();
-
-                // Load the CUS File
-                CUSFileName = datapath + @"/system/custom_skill.cus";
-                CUSfile.readCUS(CUSFileName);
-                CUSfile.BuildRegistry();
-
-                cbSuper1.Items.AddRange((object[])CUSfile.getSkillList(0));
-                cbSuper2.Items.AddRange((object[])CUSfile.getSkillList(0));
-                cbSuper3.Items.AddRange((object[])CUSfile.getSkillList(0));
-                cbSuper4.Items.AddRange((object[])CUSfile.getSkillList(0));
-                cbUltimate1.Items.AddRange((object[])CUSfile.getSkillList(1));
-                cbUltimate2.Items.AddRange((object[])CUSfile.getSkillList(1));
-                cbEvasive.Items.AddRange((object[])CUSfile.getSkillList(2));
-                cbBlast.Items.AddRange((object[])CUSfile.getSkillList(4));
-                cbAwaken.Items.AddRange((object[])CUSfile.getSkillList(5));
-            }
+            
         }
         private void txtAuraID_KeyPress(object sender, KeyPressEventArgs e)
         {

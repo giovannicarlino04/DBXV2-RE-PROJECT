@@ -1,0 +1,16 @@
+C:\Games\DB Xenoverse 2\XV2Reborn\win-x64\XV2CharaCreator.exe
+C:\Games\DB Xenoverse 2\XV2Reborn\win-x64\IDB_Schema.csv
+C:\Games\DB Xenoverse 2\XV2Reborn\win-x64\PSC_Schema.csv
+C:\Games\DB Xenoverse 2\XV2Reborn\win-x64\XV2CharaCreator.deps.json
+C:\Games\DB Xenoverse 2\XV2Reborn\win-x64\XV2CharaCreator.runtimeconfig.json
+C:\Games\DB Xenoverse 2\XV2Reborn\win-x64\XV2CharaCreator.dll
+C:\Users\Giovanni Carlino\Desktop\Repositories\DBXV2-RE-PROJECT\XV2Reborn\XV2CharaCreator\obj\Release\win-x64\XV2CharaCreator.csproj.AssemblyReference.cache
+C:\Users\Giovanni Carlino\Desktop\Repositories\DBXV2-RE-PROJECT\XV2Reborn\XV2CharaCreator\obj\Release\win-x64\XV2CharaCreator.Form1.resources
+C:\Users\Giovanni Carlino\Desktop\Repositories\DBXV2-RE-PROJECT\XV2Reborn\XV2CharaCreator\obj\Release\win-x64\XV2CharaCreator.csproj.GenerateResource.cache
+C:\Users\Giovanni Carlino\Desktop\Repositories\DBXV2-RE-PROJECT\XV2Reborn\XV2CharaCreator\obj\Release\win-x64\XV2CharaCreator.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Giovanni Carlino\Desktop\Repositories\DBXV2-RE-PROJECT\XV2Reborn\XV2CharaCreator\obj\Release\win-x64\XV2CharaCreator.AssemblyInfoInputs.cache
+C:\Users\Giovanni Carlino\Desktop\Repositories\DBXV2-RE-PROJECT\XV2Reborn\XV2CharaCreator\obj\Release\win-x64\XV2CharaCreator.AssemblyInfo.cs
+C:\Users\Giovanni Carlino\Desktop\Repositories\DBXV2-RE-PROJECT\XV2Reborn\XV2CharaCreator\obj\Release\win-x64\XV2CharaCreator.csproj.CoreCompileInputs.cache
+C:\Users\Giovanni Carlino\Desktop\Repositories\DBXV2-RE-PROJECT\XV2Reborn\XV2CharaCreator\obj\Release\win-x64\XV2CharaCreator.csproj.CopyComplete
+C:\Users\Giovanni Carlino\Desktop\Repositories\DBXV2-RE-PROJECT\XV2Reborn\XV2CharaCreator\obj\Release\win-x64\XV2CharaCreator.dll
+C:\Users\Giovanni Carlino\Desktop\Repositories\DBXV2-RE-PROJECT\XV2Reborn\XV2CharaCreator\obj\Release\win-x64\XV2CharaCreator.genruntimeconfig.cache

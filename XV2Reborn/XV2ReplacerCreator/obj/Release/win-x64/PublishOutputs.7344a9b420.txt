@@ -1,0 +1,6 @@
+C:\Games\DB Xenoverse 2\XV2Reborn\D3DCompiler_47_cor3.dll
+C:\Games\DB Xenoverse 2\XV2Reborn\PenImc_cor3.dll
+C:\Games\DB Xenoverse 2\XV2Reborn\PresentationNative_cor3.dll
+C:\Games\DB Xenoverse 2\XV2Reborn\vcruntime140_cor3.dll
+C:\Games\DB Xenoverse 2\XV2Reborn\wpfgfx_cor3.dll
+C:\Games\DB Xenoverse 2\XV2Reborn\XV2ReplacerCreator.exe

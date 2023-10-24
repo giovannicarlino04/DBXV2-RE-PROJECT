@@ -1,14 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
-using System.Data;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using System.Reflection;
-using System.Security.Cryptography;
 using System.Text;
 using System.Threading;
 using System.Windows.Forms;
@@ -274,6 +272,7 @@ namespace XV2Reborn
             {
                 Properties.Settings.Default.modlist = new StringCollection();
             }
+            listBox1.Items.Clear();
             foreach (string item in Settings.Default.modlist)
             {
                 listBox1.Items.Add(item);
@@ -315,7 +314,7 @@ namespace XV2Reborn
             // Load the CUS File
             CUSFileName = datapath + @"/system/custom_skill.cus";
             CUSfile.readCUS(CUSFileName);
-            CUSfile.BuildRegistry();
+            CUSfile.BuildRegistry(datapath + @"/msg", language);
             CUScbChar.Items.Clear();
             for (int i = 0; i < CUSfile.css.Count; i++)
                 CUScbChar.Items.Add("Character " + CUSfile.css[i].charID.ToString("000") + " - Costume " + CUSfile.css[i].costumeID.ToString("00"));
@@ -422,15 +421,15 @@ namespace XV2Reborn
             string CSO_2 = "";
             string CSO_3 = "";
             string CSO_4 = "";
-            string CUS_SUPER_1 = "";
-            string CUS_SUPER_2 = "";
-            string CUS_SUPER_3 = "";
-            string CUS_SUPER_4 = "";
-            string CUS_ULTIMATE_1 = "";
-            string CUS_ULTIMATE_2 = "";
-            string CUS_EVASIVE = "";
-            string CUS_BLAST = "";
-            string CUS_AWAKEN = "";
+            short CUS_SUPER_1 = 0;
+            short CUS_SUPER_2 = 0;
+            short CUS_SUPER_3 = 0;
+            short CUS_SUPER_4 = 0;
+            short CUS_ULTIMATE_1 = 0;
+            short CUS_ULTIMATE_2 = 0;
+            short CUS_EVASIVE = 0;
+            short CUS_BLAST = 0;
+            short CUS_AWAKEN = 0;
             string MSG_CHARACTER_NAME = "";
             string MSG_COSTUME_NAME = "";
 
@@ -608,63 +607,90 @@ namespace XV2Reborn
                                 {
                                     if (reader.HasAttributes)
                                     {
-                                        CUS_SUPER_1 = reader.GetAttribute("value").Trim();
+                                        bool parseSuccess = Int16.TryParse(reader.GetAttribute("value").Trim(), out CUS_SUPER_1);
+                                        if (!parseSuccess)
+                                        {
+                                        }
                                     }
                                 }
                                 if (reader.Name == "CUS_SUPER_2")
                                 {
                                     if (reader.HasAttributes)
                                     {
-                                        CUS_SUPER_2 = reader.GetAttribute("value").Trim();
+                                        bool parseSuccess = Int16.TryParse(reader.GetAttribute("value").Trim(), out CUS_SUPER_2);
+                                        if (!parseSuccess)
+                                        {
+                                        }
                                     }
                                 }
                                 if (reader.Name == "CUS_SUPER_3")
                                 {
                                     if (reader.HasAttributes)
                                     {
-                                        CUS_SUPER_3 = reader.GetAttribute("value").Trim();
+                                        bool parseSuccess = Int16.TryParse(reader.GetAttribute("value").Trim(), out CUS_SUPER_3);
+                                        if (!parseSuccess)
+                                        {
+                                        }
                                     }
                                 }
                                 if (reader.Name == "CUS_SUPER_4")
                                 {
                                     if (reader.HasAttributes)
                                     {
-                                        CUS_SUPER_4 = reader.GetAttribute("value").Trim();
+                                        bool parseSuccess = Int16.TryParse(reader.GetAttribute("value").Trim(), out CUS_SUPER_4);
+                                        if (!parseSuccess)
+                                        {
+                                        }
                                     }
                                 }
                                 if (reader.Name == "CUS_ULTIMATE_1")
                                 {
                                     if (reader.HasAttributes)
                                     {
-                                        CUS_ULTIMATE_1 = reader.GetAttribute("value").Trim();
+                                        bool parseSuccess = Int16.TryParse(reader.GetAttribute("value").Trim(), out CUS_ULTIMATE_1);
+                                        if (!parseSuccess)
+                                        {
+                                        }
                                     }
                                 }
                                 if (reader.Name == "CUS_ULTIMATE_2")
                                 {
                                     if (reader.HasAttributes)
                                     {
-                                        CUS_ULTIMATE_2 = reader.GetAttribute("value").Trim();
+                                        bool parseSuccess = Int16.TryParse(reader.GetAttribute("value").Trim(), out CUS_ULTIMATE_2);
+                                        if (!parseSuccess)
+                                        {
+                                        }
                                     }
                                 }
                                 if (reader.Name == "CUS_EVASIVE")
                                 {
                                     if (reader.HasAttributes)
                                     {
-                                        CUS_EVASIVE = reader.GetAttribute("value").Trim();
+                                        bool parseSuccess = Int16.TryParse(reader.GetAttribute("value").Trim(), out CUS_EVASIVE);
+                                        if (!parseSuccess)
+                                        {
+                                        }
                                     }
                                 }
                                 if (reader.Name == "CUS_BLAST")
                                 {
                                     if (reader.HasAttributes)
                                     {
-                                        CUS_BLAST = reader.GetAttribute("value").Trim();
+                                        bool parseSuccess = Int16.TryParse(reader.GetAttribute("value").Trim(), out CUS_BLAST);
+                                        if (!parseSuccess)
+                                        {
+                                        }
                                     }
                                 }
                                 if (reader.Name == "CUS_AWAKEN")
                                 {
                                     if (reader.HasAttributes)
                                     {
-                                        CUS_AWAKEN = reader.GetAttribute("value").Trim();
+                                        bool parseSuccess = Int16.TryParse(reader.GetAttribute("value").Trim(), out CUS_AWAKEN);
+                                        if (!parseSuccess)
+                                        {
+                                        }
                                     }
                                 }
                                 if (reader.Name == "MSG_CHARACTER_NAME")
@@ -692,12 +718,15 @@ namespace XV2Reborn
                         MergeDirectoriesWithConfirmation(temp_path, datapath);
 
                         Clean();
-                        listBox1.Items.Add(modname);
-                        foreach (string item in listBox1.Items)
+
+                        Settings.Default.modlist.Add(modname);
+                        Properties.Settings.Default.Save();
+                        listBox1.Items.Clear();
+                        foreach (string item in Settings.Default.modlist)
                         {
-                            Properties.Settings.Default.modlist.Add(item);
-                            Properties.Settings.Default.Save();
+                            listBox1.Items.Add(item);
                         }
+
                         MessageBox.Show("Mod installed successfully", "Success", MessageBoxButtons.OK,
                             MessageBoxIcon.Information);
                     }
@@ -723,8 +752,8 @@ namespace XV2Reborn
                         c.Paths[4] = CMS_BAC;
                         c.Paths[5] = CMS_BCM;
                         c.Paths[6] = CMS_BAI;
-                        c.Paths[7] = CMS_BCS;
-                        c.Paths[8] = CMS_BCS;
+                        c.Paths[7] = CMS_BAI;
+                        c.Paths[8] = CMS_BAI;
                         c.shortname = CMS_BCS;
                         c.id = numberid;
 
@@ -763,27 +792,21 @@ namespace XV2Reborn
                         ///////////////////////////////////
 
                         // ADD DATA TO THE CUS FILE HEREEEEE
-                        skill[] Super = new skill[1];
-                        skill[] Ultimate = new skill[1];
-                        skill[] Evasive = new skill[1];
-                        skill[] blast = new skill[1];
-                        skill[] Awaken = new skill[1];
 
-                        this.CUSfile.css.Add(new charSkillSet()
+                        CUSfile.css.Add(new charSkillSet()
                         {
                             skill = new short[10]
                             {
-                                CUS.FindSuperByName(CUS_SUPER_1, Super),
-                                CUS.FindSuperByName(CUS_SUPER_2, Super),
-                                CUS.FindSuperByName(CUS_SUPER_3, Super),
-                                CUS.FindSuperByName(CUS_SUPER_4, Super),
-                                CUS.FindUltimateByName(CUS_ULTIMATE_1, Ultimate),
-                                CUS.FindUltimateByName(CUS_ULTIMATE_2, Ultimate),
-                                CUS.FindEvasiveByName(CUS_EVASIVE, Evasive),
-                                CUS.FindBlastByName(CUS_BLAST, blast),
-                                CUS.FindAwakenByName(CUS_AWAKEN, Awaken),
-                                CUS.FindAwakenByName(CUS_AWAKEN, Awaken), //THIS IS ACTUALLY UNKNOWN
-
+                                CUS_SUPER_1,
+                                CUS_SUPER_2,
+                                CUS_SUPER_3,
+                                CUS_SUPER_4,
+                                CUS_ULTIMATE_1,
+                                CUS_ULTIMATE_2,
+                                CUS_EVASIVE,
+                                CUS_BLAST,
+                                CUS_AWAKEN,
+                                CUS_AWAKEN
                             },
                             charID = numberid
                         });
@@ -877,7 +900,7 @@ namespace XV2Reborn
                         Array.Copy(MSGfile.data, expand, MSGfile.data.Length);
                         string nameid = MSGfile.data[MSGfile.data.Length - 1].NameID;
                         expand[expand.Length - 1].ID = MSGfile.data.Length;
-                        expand[expand.Length - 1].Lines = new string[] { modname };
+                        expand[expand.Length - 1].Lines = new string[] { MSG_CHARACTER_NAME };
                         expand[expand.Length - 1].NameID = "chara_" + CMS_BCS + "_" + "000";
 
                         MSGfile.data = expand;
@@ -888,8 +911,18 @@ namespace XV2Reborn
 
                         msgStream.Save(MSGfile, MSGFileName);
 
+                        Settings.Default.modlist.Add(modname);
+                        Properties.Settings.Default.Save();
+                        listBox1.Items.Clear();
+                        foreach (string item in Settings.Default.modlist)
+                        {
+                            listBox1.Items.Add(item);
+                        }
+
                         MessageBox.Show("Mod installed successfully", "Success", MessageBoxButtons.OK,
                             MessageBoxIcon.Information);
+
+                        loadFiles();
                     }
                     else
                     {
@@ -961,6 +994,7 @@ namespace XV2Reborn
         }
         private void uninstallModToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            if(listBox1.SelectedIndices.Count > 0) {
                 Process p = new Process();
                 ProcessStartInfo info = new ProcessStartInfo();
                 info.FileName = "cmd.exe";
@@ -975,7 +1009,7 @@ namespace XV2Reborn
 
                     foreach (string line in lines)
                     {
-                        if(File.Exists(line))
+                        if (File.Exists(line))
                             File.Delete(line);
                     }
 
@@ -1011,6 +1045,7 @@ namespace XV2Reborn
 
                 listBox1.Items.Remove(listBox1.SelectedItems[0]);
                 MessageBox.Show("Mod uninstalled successfully", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
         }
 
         private void processDirectory(string startLocation)
