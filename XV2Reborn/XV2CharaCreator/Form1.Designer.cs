@@ -104,6 +104,11 @@
             label25 = new Label();
             txtMSG2 = new TextBox();
             txtMSG1 = new TextBox();
+            tabPage6 = new TabPage();
+            label32 = new Label();
+            label31 = new Label();
+            txtVox2 = new TextBox();
+            txtVox1 = new TextBox();
             menuStrip1.SuspendLayout();
             tabControl1.SuspendLayout();
             tabPage1.SuspendLayout();
@@ -112,6 +117,7 @@
             tabPage4.SuspendLayout();
             tabPage5.SuspendLayout();
             tabPage7.SuspendLayout();
+            tabPage6.SuspendLayout();
             SuspendLayout();
             // 
             // menuStrip1
@@ -133,19 +139,19 @@
             // buildXV2ModFileToolStripMenuItem
             // 
             buildXV2ModFileToolStripMenuItem.Name = "buildXV2ModFileToolStripMenuItem";
-            buildXV2ModFileToolStripMenuItem.Size = new Size(170, 22);
+            buildXV2ModFileToolStripMenuItem.Size = new Size(180, 22);
             buildXV2ModFileToolStripMenuItem.Text = "Build XV2Mod File";
             buildXV2ModFileToolStripMenuItem.Click += buildXV2ModFileToolStripMenuItem_Click;
             // 
             // toolStripSeparator1
             // 
             toolStripSeparator1.Name = "toolStripSeparator1";
-            toolStripSeparator1.Size = new Size(167, 6);
+            toolStripSeparator1.Size = new Size(177, 6);
             // 
             // sToolStripMenuItem
             // 
             sToolStripMenuItem.Name = "sToolStripMenuItem";
-            sToolStripMenuItem.Size = new Size(170, 22);
+            sToolStripMenuItem.Size = new Size(180, 22);
             sToolStripMenuItem.Text = "Exit";
             sToolStripMenuItem.Click += sToolStripMenuItem_Click;
             // 
@@ -157,6 +163,7 @@
             tabControl1.Controls.Add(tabPage4);
             tabControl1.Controls.Add(tabPage5);
             tabControl1.Controls.Add(tabPage7);
+            tabControl1.Controls.Add(tabPage6);
             tabControl1.Dock = DockStyle.Fill;
             tabControl1.Location = new Point(0, 24);
             tabControl1.Name = "tabControl1";
@@ -804,6 +811,52 @@
             txtMSG1.Size = new Size(248, 23);
             txtMSG1.TabIndex = 0;
             // 
+            // tabPage6
+            // 
+            tabPage6.BackColor = SystemColors.Control;
+            tabPage6.Controls.Add(label32);
+            tabPage6.Controls.Add(label31);
+            tabPage6.Controls.Add(txtVox2);
+            tabPage6.Controls.Add(txtVox1);
+            tabPage6.Location = new Point(4, 24);
+            tabPage6.Name = "tabPage6";
+            tabPage6.Padding = new Padding(3);
+            tabPage6.Size = new Size(425, 398);
+            tabPage6.TabIndex = 7;
+            tabPage6.Text = "VOX";
+            // 
+            // label32
+            // 
+            label32.AutoSize = true;
+            label32.Location = new Point(117, 31);
+            label32.Name = "label32";
+            label32.Size = new Size(47, 15);
+            label32.TabIndex = 1;
+            label32.Text = "Voice 2:";
+            // 
+            // label31
+            // 
+            label31.AutoSize = true;
+            label31.Location = new Point(31, 31);
+            label31.Name = "label31";
+            label31.Size = new Size(47, 15);
+            label31.TabIndex = 1;
+            label31.Text = "Voice 1:";
+            // 
+            // txtVox2
+            // 
+            txtVox2.Location = new Point(117, 49);
+            txtVox2.Name = "txtVox2";
+            txtVox2.Size = new Size(64, 23);
+            txtVox2.TabIndex = 0;
+            // 
+            // txtVox1
+            // 
+            txtVox1.Location = new Point(31, 49);
+            txtVox1.Name = "txtVox1";
+            txtVox1.Size = new Size(64, 23);
+            txtVox1.TabIndex = 0;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -832,6 +885,8 @@
             tabPage5.PerformLayout();
             tabPage7.ResumeLayout(false);
             tabPage7.PerformLayout();
+            tabPage6.ResumeLayout(false);
+            tabPage6.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -912,5 +967,10 @@
         private TextBox txtCUS3;
         private TextBox txtCUS2;
         private TextBox txtCUS1;
+        private TabPage tabPage6;
+        private Label label32;
+        private Label label31;
+        private TextBox txtVox2;
+        private TextBox txtVox1;
     }
 }

@@ -14,6 +14,10 @@ C:\Program Files (x86)\Steam\steamapps\common\DB Xenoverse 2\XV2Reborn\XV2Replac
 C:\Program Files (x86)\Steam\steamapps\common\DB Xenoverse 2\XV2Reborn\XV2ReplacerCreator.deps.json
 C:\Program Files (x86)\Steam\steamapps\common\DB Xenoverse 2\XV2Reborn\XV2ReplacerCreator.runtimeconfig.json
 C:\Program Files (x86)\Steam\steamapps\common\DB Xenoverse 2\XV2Reborn\XV2ReplacerCreator.dll
+C:\Games\DB Xenoverse 2\XV2Reborn\XV2ReplacerCreator.exe
+C:\Games\DB Xenoverse 2\XV2Reborn\XV2ReplacerCreator.deps.json
+C:\Games\DB Xenoverse 2\XV2Reborn\XV2ReplacerCreator.runtimeconfig.json
+C:\Games\DB Xenoverse 2\XV2Reborn\XV2ReplacerCreator.dll
 C:\Users\Giovanni Carlino\Desktop\Repositories\DBXV2-RE-PROJECT\XV2Reborn\XV2ReplacerCreator\obj\Debug\XV2ReplacerCreator.Form1.resources
 C:\Users\Giovanni Carlino\Desktop\Repositories\DBXV2-RE-PROJECT\XV2Reborn\XV2ReplacerCreator\obj\Debug\XV2ReplacerCreator.csproj.GenerateResource.cache
 C:\Users\Giovanni Carlino\Desktop\Repositories\DBXV2-RE-PROJECT\XV2Reborn\XV2ReplacerCreator\obj\Debug\XV2ReplacerCreator.GeneratedMSBuildEditorConfig.editorconfig
@@ -22,7 +26,3 @@ C:\Users\Giovanni Carlino\Desktop\Repositories\DBXV2-RE-PROJECT\XV2Reborn\XV2Rep
 C:\Users\Giovanni Carlino\Desktop\Repositories\DBXV2-RE-PROJECT\XV2Reborn\XV2ReplacerCreator\obj\Debug\XV2ReplacerCreator.csproj.CoreCompileInputs.cache
 C:\Users\Giovanni Carlino\Desktop\Repositories\DBXV2-RE-PROJECT\XV2Reborn\XV2ReplacerCreator\obj\Debug\XV2ReplacerCreator.dll
 C:\Users\Giovanni Carlino\Desktop\Repositories\DBXV2-RE-PROJECT\XV2Reborn\XV2ReplacerCreator\obj\Debug\XV2ReplacerCreator.genruntimeconfig.cache
-C:\Games\DB Xenoverse 2\XV2Reborn\XV2ReplacerCreator.exe
-C:\Games\DB Xenoverse 2\XV2Reborn\XV2ReplacerCreator.deps.json
-C:\Games\DB Xenoverse 2\XV2Reborn\XV2ReplacerCreator.runtimeconfig.json
-C:\Games\DB Xenoverse 2\XV2Reborn\XV2ReplacerCreator.dll

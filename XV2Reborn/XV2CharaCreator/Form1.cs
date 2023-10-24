@@ -78,7 +78,7 @@ namespace XV2CharaCreator
                     WriteElementWithValue(writer, "CUS_SUPER_3", txtCUS3.Text);
                     WriteElementWithValue(writer, "CUS_SUPER_4", txtCUS4.Text);
                     WriteElementWithValue(writer, "CUS_ULTIMATE_1", txtCUS5.Text);
-                    WriteElementWithValue(writer, "CUS_ULTIMATE_2",txtCUS6.Text);
+                    WriteElementWithValue(writer, "CUS_ULTIMATE_2", txtCUS6.Text);
                     WriteElementWithValue(writer, "CUS_EVASIVE", txtCUS7.Text);
                     WriteElementWithValue(writer, "CUS_BLAST", txtCUS8.Text);
                     WriteElementWithValue(writer, "CUS_AWAKEN", txtCUS9.Text);
@@ -86,6 +86,9 @@ namespace XV2CharaCreator
 
                     WriteElementWithValue(writer, "MSG_CHARACTER_NAME", txtMSG1.Text);
                     WriteElementWithValue(writer, "MSG_COSTUME_NAME", txtMSG2.Text);
+
+                    WriteElementWithValue(writer, "VOX_1", txtVox1.Text);
+                    WriteElementWithValue(writer, "VOX_2", txtVox2.Text);
 
                     writer.WriteEndElement(); // Close XV2MOD
                     writer.WriteEndDocument(); // Close the document
@@ -160,7 +163,7 @@ namespace XV2CharaCreator
         private void Form1_Load(object sender, EventArgs e)
         {
 
-            
+
         }
         private void txtAuraID_KeyPress(object sender, KeyPressEventArgs e)
         {

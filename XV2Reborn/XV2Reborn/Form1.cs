@@ -431,7 +431,9 @@ namespace XV2Reborn
             short CUS_BLAST = 0;
             short CUS_AWAKEN = 0;
             string MSG_CHARACTER_NAME = "";
-            string MSG_COSTUME_NAME = "";
+            string MSG_COSTUME_NAME = ""; 
+            short VOX_1 = -1;
+            short VOX_2 = -1;
 
             string temp_path = "C:/XV2RebornTemp";
 
@@ -693,6 +695,26 @@ namespace XV2Reborn
                                         }
                                     }
                                 }
+                                if (reader.Name == "VOX_1")
+                                {
+                                    if (reader.HasAttributes)
+                                    {
+                                        bool parseSuccess = Int16.TryParse(reader.GetAttribute("value").Trim(), out VOX_1);
+                                        if (!parseSuccess)
+                                        {
+                                        }
+                                    }
+                                }
+                                if (reader.Name == "VOX_2")
+                                {
+                                    if (reader.HasAttributes)
+                                    {
+                                        bool parseSuccess = Int16.TryParse(reader.GetAttribute("value").Trim(), out VOX_2);
+                                        if (!parseSuccess)
+                                        {
+                                        }
+                                    }
+                                }
                                 if (reader.Name == "MSG_CHARACTER_NAME")
                                 {
                                     if (reader.HasAttributes)
@@ -886,7 +908,7 @@ namespace XV2Reborn
 
                         foreach (string s in File.ReadAllLines(Charalist))
                         {
-                            text3.AppendLine(s.Replace("]]]", "]],[[\"" + CMS_BCS + "\",0,0,0,false,[-1,-1],Dlc_Def]]]"));
+                            text3.AppendLine(s.Replace("]]]", "]],[[\"" + CMS_BCS + $"\",0,0,0,false,[{VOX_1},{VOX_2}],Dlc_Def]]]"));
                         }
 
                         using (var file2 = new StreamWriter(File.Create(Charalist)))
