@@ -919,6 +919,24 @@ namespace XV2Reborn
                             listBox1.Items.Add(item);
                         }
 
+                        info.FileName = "cmd.exe";
+                        info.CreateNoWindow = true;
+                        info.WindowStyle = ProcessWindowStyle.Hidden;
+                        info.RedirectStandardInput = true;
+                        info.UseShellExecute = false;
+
+                        p.StartInfo = info;
+                        p.Start();
+
+                        using (StreamWriter sw = p.StandardInput)
+                        {
+                            if (sw.BaseStream.CanWrite)
+                            {
+                                sw.WriteLine("cd " + datapath + @"\ui\texture");
+                                sw.WriteLine(@"embpack.exe CHARA01");
+                            }
+                        }
+
                         MessageBox.Show("Mod installed successfully", "Success", MessageBoxButtons.OK,
                             MessageBoxIcon.Information);
 
