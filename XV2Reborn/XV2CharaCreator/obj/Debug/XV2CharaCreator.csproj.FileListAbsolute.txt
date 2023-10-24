@@ -1,0 +1,44 @@
+C:\Program Files (x86)\Steam\steamapps\common\DB Xenoverse 2\XV2CharaCreator.exe
+C:\Program Files (x86)\Steam\steamapps\common\DB Xenoverse 2\XV2CharaCreator.deps.json
+C:\Program Files (x86)\Steam\steamapps\common\DB Xenoverse 2\XV2CharaCreator.runtimeconfig.json
+C:\Program Files (x86)\Steam\steamapps\common\DB Xenoverse 2\XV2CharaCreator.dll
+C:\Users\Giovanni Carlino\Desktop\Repositories\DBXV2-RE-PROJECT\Projects\XV2ModManager\XV2CharaCreator\obj\Debug\XV2CharaCreator.csproj.AssemblyReference.cache
+C:\Users\Giovanni Carlino\Desktop\Repositories\DBXV2-RE-PROJECT\Projects\XV2ModManager\XV2CharaCreator\obj\Debug\XV2CharaCreator.Form1.resources
+C:\Users\Giovanni Carlino\Desktop\Repositories\DBXV2-RE-PROJECT\Projects\XV2ModManager\XV2CharaCreator\obj\Debug\XV2CharaCreator.csproj.GenerateResource.cache
+C:\Users\Giovanni Carlino\Desktop\Repositories\DBXV2-RE-PROJECT\Projects\XV2ModManager\XV2CharaCreator\obj\Debug\XV2CharaCreator.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Giovanni Carlino\Desktop\Repositories\DBXV2-RE-PROJECT\Projects\XV2ModManager\XV2CharaCreator\obj\Debug\XV2CharaCreator.AssemblyInfoInputs.cache
+C:\Users\Giovanni Carlino\Desktop\Repositories\DBXV2-RE-PROJECT\Projects\XV2ModManager\XV2CharaCreator\obj\Debug\XV2CharaCreator.AssemblyInfo.cs
+C:\Users\Giovanni Carlino\Desktop\Repositories\DBXV2-RE-PROJECT\Projects\XV2ModManager\XV2CharaCreator\obj\Debug\XV2CharaCreator.csproj.CoreCompileInputs.cache
+C:\Users\Giovanni Carlino\Desktop\Repositories\DBXV2-RE-PROJECT\Projects\XV2ModManager\XV2CharaCreator\obj\Debug\XV2CharaCreator.csproj.CopyComplete
+C:\Users\Giovanni Carlino\Desktop\Repositories\DBXV2-RE-PROJECT\Projects\XV2ModManager\XV2CharaCreator\obj\Debug\XV2CharaCreator.dll
+C:\Users\Giovanni Carlino\Desktop\Repositories\DBXV2-RE-PROJECT\Projects\XV2ModManager\XV2CharaCreator\obj\Debug\XV2CharaCreator.genruntimeconfig.cache
+C:\Program Files (x86)\Steam\steamapps\common\DB Xenoverse2\XV2CharaCreator.exe
+C:\Program Files (x86)\Steam\steamapps\common\DB Xenoverse2\XV2CharaCreator.deps.json
+C:\Program Files (x86)\Steam\steamapps\common\DB Xenoverse2\XV2CharaCreator.runtimeconfig.json
+C:\Program Files (x86)\Steam\steamapps\common\DB Xenoverse2\XV2CharaCreator.dll
+C:\Games\DB Xenoverse 2\XV2CharaCreator.exe
+C:\Games\DB Xenoverse 2\XV2CharaCreator.deps.json
+C:\Games\DB Xenoverse 2\XV2CharaCreator.runtimeconfig.json
+C:\Games\DB Xenoverse 2\XV2CharaCreator.dll
+C:\Games\DB Xenoverse 2\XV2ModManager\XV2CharaCreator.exe
+C:\Games\DB Xenoverse 2\XV2ModManager\XV2CharaCreator.deps.json
+C:\Games\DB Xenoverse 2\XV2ModManager\XV2CharaCreator.runtimeconfig.json
+C:\Games\DB Xenoverse 2\XV2ModManager\XV2CharaCreator.dll
+C:\Games\DB Xenoverse 2\XV2ModManager\IDB_Schema.csv
+C:\Games\DB Xenoverse 2\XV2ModManager\PSC_Schema.csv
+C:\Users\Giovanni Carlino\Desktop\Repositories\DBXV2-RE-PROJECT\XV2Reborn\XV2CharaCreator\obj\Debug\XV2CharaCreator.csproj.AssemblyReference.cache
+C:\Users\Giovanni Carlino\Desktop\Repositories\DBXV2-RE-PROJECT\XV2Reborn\XV2CharaCreator\obj\Debug\XV2CharaCreator.Form1.resources
+C:\Users\Giovanni Carlino\Desktop\Repositories\DBXV2-RE-PROJECT\XV2Reborn\XV2CharaCreator\obj\Debug\XV2CharaCreator.csproj.GenerateResource.cache
+C:\Users\Giovanni Carlino\Desktop\Repositories\DBXV2-RE-PROJECT\XV2Reborn\XV2CharaCreator\obj\Debug\XV2CharaCreator.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Giovanni Carlino\Desktop\Repositories\DBXV2-RE-PROJECT\XV2Reborn\XV2CharaCreator\obj\Debug\XV2CharaCreator.AssemblyInfoInputs.cache
+C:\Users\Giovanni Carlino\Desktop\Repositories\DBXV2-RE-PROJECT\XV2Reborn\XV2CharaCreator\obj\Debug\XV2CharaCreator.AssemblyInfo.cs
+C:\Users\Giovanni Carlino\Desktop\Repositories\DBXV2-RE-PROJECT\XV2Reborn\XV2CharaCreator\obj\Debug\XV2CharaCreator.csproj.CoreCompileInputs.cache
+C:\Users\Giovanni Carlino\Desktop\Repositories\DBXV2-RE-PROJECT\XV2Reborn\XV2CharaCreator\obj\Debug\XV2CharaCreator.csproj.CopyComplete
+C:\Users\Giovanni Carlino\Desktop\Repositories\DBXV2-RE-PROJECT\XV2Reborn\XV2CharaCreator\obj\Debug\XV2CharaCreator.dll
+C:\Users\Giovanni Carlino\Desktop\Repositories\DBXV2-RE-PROJECT\XV2Reborn\XV2CharaCreator\obj\Debug\XV2CharaCreator.genruntimeconfig.cache
+C:\Games\DB Xenoverse 2\XV2Reborn\XV2CharaCreator.exe
+C:\Games\DB Xenoverse 2\XV2Reborn\IDB_Schema.csv
+C:\Games\DB Xenoverse 2\XV2Reborn\PSC_Schema.csv
+C:\Games\DB Xenoverse 2\XV2Reborn\XV2CharaCreator.deps.json
+C:\Games\DB Xenoverse 2\XV2Reborn\XV2CharaCreator.runtimeconfig.json
+C:\Games\DB Xenoverse 2\XV2Reborn\XV2CharaCreator.dll

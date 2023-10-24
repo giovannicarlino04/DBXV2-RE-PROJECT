@@ -8,9 +8,11 @@ using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using System.Reflection;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading;
 using System.Windows.Forms;
+using System.Xml;
 using XV2Reborn.Properties;
 
 namespace XV2Reborn
@@ -139,7 +141,7 @@ namespace XV2Reborn
         string[][][] charaList; // Class-level variable to store the parsed character data.
         Image defaultImage; // Class-level variable to store the default image.
 
-        string datapath;
+        public string datapath;
         string flexsdkpath;
         string language;
 
@@ -166,7 +168,7 @@ namespace XV2Reborn
             {
                 Properties.Settings.Default.addonmodlist.Clear();
             }
-            if(Properties.Settings.Default.language.Length == 0) 
+            if (Properties.Settings.Default.language.Length == 0)
             {
                 comboBox1.SelectedIndex = 5;
                 Settings.Default.language = comboBox1.SelectedItem.ToString();
@@ -198,9 +200,9 @@ namespace XV2Reborn
                 Properties.Settings.Default.Save();
             }
 
-            if(Properties.Settings.Default.flexsdkfolder.Length == 0 || Properties.Settings.Default.datafolder.Length == 0)
+            if (Properties.Settings.Default.flexsdkfolder.Length == 0 || Properties.Settings.Default.datafolder.Length == 0)
             {
-                if(datadialog.ShowDialog() == DialogResult.OK)
+                if (datadialog.ShowDialog() == DialogResult.OK)
                 {
                     Properties.Settings.Default.datafolder = datadialog.SelectedPath;
                     Properties.Settings.Default.Save();
@@ -233,9 +235,9 @@ namespace XV2Reborn
                     File.Delete(zipFilePath);
             }
 
-            if(!Directory.Exists(Path.Combine(datapath, "../XV2PATCHER")))
+            if (!Directory.Exists(Path.Combine(datapath, "../XV2PATCHER")))
             {
-                //Extract XV2Patcher version 0.2 blob
+                //Extract XV2Patcher Blob
                 Directory.CreateDirectory(Path.Combine(datapath, @"../XV2PATCHER"));
 
                 var zipFilePath = Path.Combine(datapath, "../XV2Patcher.zip");
@@ -265,15 +267,6 @@ namespace XV2Reborn
             return "Unknown Character";
         }
 
-        private void saveLvItems()
-        {
-            Properties.Settings.Default.modlist = new StringCollection();
-            Properties.Settings.Default.modlist.AddRange((from i in this.lvMods.Items.Cast<ListViewItem>()
-                                                          select string.Join("|", from si in i.SubItems.Cast<ListViewItem.ListViewSubItem>()
-                                                                                  select si.Text)).ToArray());
-            Properties.Settings.Default.Save();
-            label1.Text = "Installed Mods: " + lvMods.Items.Count.ToString();
-        }
 
         private void loadLvItems()
         {
@@ -281,12 +274,10 @@ namespace XV2Reborn
             {
                 Properties.Settings.Default.modlist = new StringCollection();
             }
-
-            lvMods.Items.Clear();
-            this.lvMods.Items.AddRange((from i in Properties.Settings.Default.modlist.Cast<string>()
-                                        select new ListViewItem(i.Split('|'))).ToArray());
-
-            label1.Text = "Installed Mods: " + lvMods.Items.Count.ToString();
+            foreach (string item in Settings.Default.modlist)
+            {
+                listBox1.Items.Add(item);
+            }
         }
 
         private void loadFiles()
@@ -324,7 +315,7 @@ namespace XV2Reborn
             // Load the CUS File
             CUSFileName = datapath + @"/system/custom_skill.cus";
             CUSfile.readCUS(CUSFileName);
-            CUSfile.BuildRegistry(datapath + "\\msg", language);
+            CUSfile.BuildRegistry();
             CUScbChar.Items.Clear();
             for (int i = 0; i < CUSfile.css.Count; i++)
                 CUScbChar.Items.Add("Character " + CUSfile.css[i].charID.ToString("000") + " - Costume " + CUSfile.css[i].costumeID.ToString("00"));
@@ -403,82 +394,321 @@ namespace XV2Reborn
                 lstData.Items.Add(Item);
             }
         }
-        void InstallModx2m(string arg)
+
+
+        private void installmodxv2mod(object sender, EventArgs e)
         {
-            Clean();
 
-            string temp = Properties.Settings.Default.datafolder + @"\temp";
+            OpenFileDialog ofd = new OpenFileDialog();
+            ofd.Title = "Install Mod";
+            ofd.Filter = "Xenoverse 2 Mod Files (*.xv2mod)|*.xv2mod";
+            ofd.Multiselect = true;
+            ofd.CheckFileExists = true;
 
-            if (Directory.Exists(temp) == false)
+            string modtype = "";
+            string modname = "";
+            string modauthor = "";
+            string modversion = "";
+            int AUR_ID = 0;
+            int AUR_GLARE = 0;
+            string CMS_BCS = "";
+            string CMS_EAN = "";
+            string CMS_FCE_EAN = "";
+            string CMS_CAM_EAN = "";
+            string CMS_BAC = "";
+            string CMS_BCM = "";
+            string CMS_BAI = "";
+            string CSO_1 = "";
+            string CSO_2 = "";
+            string CSO_3 = "";
+            string CSO_4 = "";
+            string CUS_SUPER_1 = "";
+            string CUS_SUPER_2 = "";
+            string CUS_SUPER_3 = "";
+            string CUS_SUPER_4 = "";
+            string CUS_ULTIMATE_1 = "";
+            string CUS_ULTIMATE_2 = "";
+            string CUS_EVASIVE = "";
+            string CUS_BLAST = "";
+            string CUS_AWAKEN = "";
+            string MSG_CHARACTER_NAME = "";
+            string MSG_COSTUME_NAME = "";
+
+            string temp_path = "C:/XV2RebornTemp";
+
+            if (Directory.Exists(temp_path))
+                Directory.Delete(temp_path, true);
+            if (ofd.ShowDialog() == DialogResult.OK)
             {
-                Directory.CreateDirectory(temp);
-            }
-
-            ZipFile.ExtractToDirectory(arg, temp);
-
-            string xmlfile = temp + "//x2m.xml";
-
-            if (File.Exists(xmlfile))
-            {
-
-                string modtype = File.ReadAllLines(xmlfile)[1].Replace("<X2M type=\"", "").Replace("\">", "");
-                string modname = File.ReadAllLines(xmlfile)[3].Replace("    <MOD_NAME value=\"", "").Replace("\" />", "");
-                string modauthor = File.ReadAllLines(xmlfile)[4].Replace("    <MOD_AUTHOR value=\"", "").Replace("\" />", "");
-
-                var files = Directory.EnumerateFiles(temp, "*.*", SearchOption.AllDirectories);
-
-                if (modtype == "NEW_CHARACTER")
+                foreach (string file in ofd.FileNames)
                 {
-                    string Modid = File.ReadAllLines(xmlfile)[7].Replace("    <ENTRY_NAME value=\"", "").Replace("\" />", "");
 
-                    if (Directory.Exists(Properties.Settings.Default.datafolder + @"\chara\" + Modid) == false)
+                    ZipFile.ExtractToDirectory(file, temp_path);
+
+                    string xmlfile = temp_path + @"/xv2mod.xml";
+
+                    if (!File.Exists(xmlfile))
+                        MessageBox.Show("xv2mod.xml file not found.",
+                        "Invalid mod file", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                    string xmlData = System.IO.File.ReadAllText(xmlfile);
+
+                    using (XmlReader reader = XmlReader.Create(new StringReader(xmlData)))
                     {
-                        string[] row = { modname, modauthor, "Added character" };
-                        ListViewItem lvi = new ListViewItem(row);
-                        lvMods.Items.Add(lvi);
-
-                        if (Directory.Exists(Properties.Settings.Default.datafolder + @"\installed") == false)
+                        while (reader.Read())
                         {
-                            Directory.CreateDirectory(Properties.Settings.Default.datafolder + @"\installed");
-                            File.WriteAllLines(Properties.Settings.Default.datafolder + @"\installed\" + modname + @".xml", files);
-                            File.WriteAllText(Properties.Settings.Default.datafolder + @"\installed\" + modname + " 2.xml", Modid);
-                        }
-                        else
-                        {
-                            File.WriteAllLines(Properties.Settings.Default.datafolder + @"\installed\" + modname + @".xml", files);
-                            File.WriteAllText(Properties.Settings.Default.datafolder + @"\installed\" + modname + " 2.xml", Modid);
-                        }
-
-                        string text = File.ReadAllText(Properties.Settings.Default.datafolder + @"\installed\" + modname + @".xml");
-                        text = text.Replace(@"\temp", "");
-                        text = text.Replace(@"\UI\SEL.DDS", @"\ui\texture\CHARA01\" + Modid + @"_000.dds");
-                        text = text.Replace(@"data\" + Modid, @"data\chara\" + Modid);
-                        File.WriteAllText(Properties.Settings.Default.datafolder + @"\installed\" + modname + @".xml", text);
-
-                        MoveDirectory(temp + @"/" + Modid, Properties.Settings.Default.datafolder + @"/chara/" + Modid);
-                        File.Move(temp + @"/UI/SEL.DDS", Properties.Settings.Default.datafolder + @"/ui/texture/CHARA01/" + Modid + "_000.dds");
-
-                        Process p = new Process();
-                        ProcessStartInfo info = new ProcessStartInfo();
-                        info.FileName = "cmd.exe";
-                        info.CreateNoWindow = true;
-                        info.WindowStyle = ProcessWindowStyle.Hidden;
-                        info.RedirectStandardInput = true;
-                        info.UseShellExecute = false;
-
-                        p.StartInfo = info;
-                        p.Start();
-
-                        using (StreamWriter sw = p.StandardInput)
-                        {
-                            if (sw.BaseStream.CanWrite)
+                            if (reader.NodeType == XmlNodeType.Element)
                             {
-                                sw.WriteLine("cd " + Properties.Settings.Default.datafolder + @"\ui\texture");
-                                sw.WriteLine(@"embpack.exe CHARA01");
+                                if (reader.Name == "XV2MOD")
+                                {
+                                    if (reader.GetAttribute("type").Length == 0)
+                                    {
+                                        MessageBox.Show("Invalid xmlreader attribute.",
+                                        "Invalid mod file", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                    }
+
+                                    modtype = reader.GetAttribute("type");
+
+                                }
+
+                                if (reader.Name == "XV2MOD")
+                                {
+                                    if (reader.GetAttribute("type").Length == 0)
+                                    {
+                                        MessageBox.Show("Invalid xmlreader attribute.", "Invalid mod file", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                    }
+                                    modtype = reader.GetAttribute("type");
+                                }
+                                if (reader.Name == "MOD_NAME")
+                                {
+                                    if (reader.HasAttributes)
+                                    {
+                                        modname = reader.GetAttribute("value").Trim();
+                                    }
+                                }
+                                if (reader.Name == "MOD_AUTHOR")
+                                {
+                                    if (reader.HasAttributes)
+                                    {
+                                        modauthor = reader.GetAttribute("value").Trim();
+                                    }
+                                }
+                                if (reader.Name == "MOD_VERSION")
+                                {
+                                    if (reader.HasAttributes)
+                                    {
+                                        modversion = reader.GetAttribute("value").Trim();
+                                    }
+                                }
+
+                                if (reader.Name == "AUR_ID")
+                                {
+                                    if (reader.HasAttributes)
+                                    {
+                                        bool parseSuccess = Int32.TryParse(reader.GetAttribute("value").Trim(), out AUR_ID);
+                                        if (!parseSuccess)
+                                        {
+                                            // Gestisci il caso in cui la conversione non riesce, ad esempio, fornisci un valore predefinito o mostra un messaggio di errore.
+                                            MessageBox.Show("AUR_GLARE value not recognized", "Error", MessageBoxButtons.OK);
+                                            return;
+                                        }
+                                    }
+                                }
+                                if (reader.Name == "AUR_GLARE")
+                                {
+                                    if (reader.HasAttributes)
+                                    {
+                                        bool parseSuccess = Int32.TryParse(reader.GetAttribute("value").Trim(), out AUR_GLARE);
+                                        if (!parseSuccess)
+                                        {
+                                            // Gestisci il caso in cui la conversione non riesce, ad esempio, fornisci un valore predefinito o mostra un messaggio di errore.
+                                            MessageBox.Show("AUR_GLARE value not recognized", "Error", MessageBoxButtons.OK);
+                                            return;
+                                        }
+                                    }
+                                }
+                                if (reader.Name == "CMS_BCS")
+                                {
+                                    if (reader.HasAttributes)
+                                    {
+                                        CMS_BCS = reader.GetAttribute("value").Trim();
+                                    }
+                                }
+                                if (reader.Name == "CMS_EAN")
+                                {
+                                    if (reader.HasAttributes)
+                                    {
+                                        CMS_EAN = reader.GetAttribute("value").Trim();
+                                    }
+                                }
+                                if (reader.Name == "CMS_FCE_EAN")
+                                {
+                                    if (reader.HasAttributes)
+                                    {
+                                        CMS_FCE_EAN = reader.GetAttribute("value").Trim();
+                                    }
+                                }
+                                if (reader.Name == "CMS_CAM_EAN")
+                                {
+                                    if (reader.HasAttributes)
+                                    {
+                                        CMS_CAM_EAN = reader.GetAttribute("value").Trim();
+                                    }
+                                }
+                                if (reader.Name == "CMS_BAC")
+                                {
+                                    if (reader.HasAttributes)
+                                    {
+                                        CMS_BAC = reader.GetAttribute("value").Trim();
+                                    }
+                                }
+                                if (reader.Name == "CMS_BCM")
+                                {
+                                    if (reader.HasAttributes)
+                                    {
+                                        CMS_BCM = reader.GetAttribute("value").Trim();
+                                    }
+                                }
+                                if (reader.Name == "CMS_BAI")
+                                {
+                                    if (reader.HasAttributes)
+                                    {
+                                        CMS_BAI = reader.GetAttribute("value").Trim();
+                                    }
+                                }
+                                if (reader.Name == "CSO_1")
+                                {
+                                    if (reader.HasAttributes)
+                                    {
+                                        CSO_1 = reader.GetAttribute("value").Trim();
+                                    }
+                                }
+                                if (reader.Name == "CSO_2")
+                                {
+                                    if (reader.HasAttributes)
+                                    {
+                                        CSO_2 = reader.GetAttribute("value").Trim();
+                                    }
+                                }
+                                if (reader.Name == "CSO_3")
+                                {
+                                    if (reader.HasAttributes)
+                                    {
+                                        CSO_3 = reader.GetAttribute("value").Trim();
+                                    }
+                                }
+                                if (reader.Name == "CSO_4")
+                                {
+                                    if (reader.HasAttributes)
+                                    {
+                                        CSO_4 = reader.GetAttribute("value").Trim();
+                                    }
+                                }
+                                if (reader.Name == "CUS_SUPER_1")
+                                {
+                                    if (reader.HasAttributes)
+                                    {
+                                        CUS_SUPER_1 = reader.GetAttribute("value").Trim();
+                                    }
+                                }
+                                if (reader.Name == "CUS_SUPER_2")
+                                {
+                                    if (reader.HasAttributes)
+                                    {
+                                        CUS_SUPER_2 = reader.GetAttribute("value").Trim();
+                                    }
+                                }
+                                if (reader.Name == "CUS_SUPER_3")
+                                {
+                                    if (reader.HasAttributes)
+                                    {
+                                        CUS_SUPER_3 = reader.GetAttribute("value").Trim();
+                                    }
+                                }
+                                if (reader.Name == "CUS_SUPER_4")
+                                {
+                                    if (reader.HasAttributes)
+                                    {
+                                        CUS_SUPER_4 = reader.GetAttribute("value").Trim();
+                                    }
+                                }
+                                if (reader.Name == "CUS_ULTIMATE_1")
+                                {
+                                    if (reader.HasAttributes)
+                                    {
+                                        CUS_ULTIMATE_1 = reader.GetAttribute("value").Trim();
+                                    }
+                                }
+                                if (reader.Name == "CUS_ULTIMATE_2")
+                                {
+                                    if (reader.HasAttributes)
+                                    {
+                                        CUS_ULTIMATE_2 = reader.GetAttribute("value").Trim();
+                                    }
+                                }
+                                if (reader.Name == "CUS_EVASIVE")
+                                {
+                                    if (reader.HasAttributes)
+                                    {
+                                        CUS_EVASIVE = reader.GetAttribute("value").Trim();
+                                    }
+                                }
+                                if (reader.Name == "CUS_BLAST")
+                                {
+                                    if (reader.HasAttributes)
+                                    {
+                                        CUS_BLAST = reader.GetAttribute("value").Trim();
+                                    }
+                                }
+                                if (reader.Name == "CUS_AWAKEN")
+                                {
+                                    if (reader.HasAttributes)
+                                    {
+                                        CUS_AWAKEN = reader.GetAttribute("value").Trim();
+                                    }
+                                }
+                                if (reader.Name == "MSG_CHARACTER_NAME")
+                                {
+                                    if (reader.HasAttributes)
+                                    {
+                                        MSG_CHARACTER_NAME = reader.GetAttribute("value").Trim();
+                                    }
+                                }
+                                if (reader.Name == "MSG_COSTUME_NAME")
+                                {
+                                    if (reader.HasAttributes)
+                                    {
+                                        MSG_COSTUME_NAME = reader.GetAttribute("value").Trim();
+                                    }
+                                }
+
                             }
                         }
-                        Properties.Settings.Default.addonmodlist.Add(modname);
-                        Properties.Settings.Default.Save();
+
+                    }
+                    if (modtype == "REPLACER")
+                    {
+
+                        MergeDirectoriesWithConfirmation(temp_path, datapath);
+
+                        Clean();
+                        listBox1.Items.Add(modname);
+                        foreach (string item in listBox1.Items)
+                        {
+                            Properties.Settings.Default.modlist.Add(item);
+                            Properties.Settings.Default.Save();
+                        }
+                        MessageBox.Show("Mod installed successfully", "Success", MessageBoxButtons.OK,
+                            MessageBoxIcon.Information);
+                    }
+
+                    else if (modtype == "ADDED_CHARACTER")
+                    {
+                        int CharID = 108 + Properties.Settings.Default.modlist.Count;
+                        MergeDirectoriesWithConfirmation(temp_path, datapath);
+
+                        Clean();
+
 
                         int numberid = 160 + Properties.Settings.Default.addonmodlist.Count; //160 is a fixed number
 
@@ -486,22 +716,22 @@ namespace XV2Reborn
 
                         Char_Model_Spec c = new Char_Model_Spec();
                         c.Paths = new string[9];
-                        c.Paths[0] = Modid;
-                        c.Paths[1] = Modid;
-                        c.Paths[2] = Modid;
-                        c.Paths[3] = Modid;
-                        c.Paths[4] = Modid;
-                        c.Paths[5] = Modid;
-                        c.Paths[6] = Modid;
-                        c.Paths[7] = Modid;
-                        c.Paths[8] = Modid;
-                        c.shortname = Modid;
+                        c.Paths[0] = CMS_BCS;
+                        c.Paths[1] = CMS_EAN;
+                        c.Paths[2] = CMS_CAM_EAN;
+                        c.Paths[3] = CMS_FCE_EAN;
+                        c.Paths[4] = CMS_BAC;
+                        c.Paths[5] = CMS_BCM;
+                        c.Paths[6] = CMS_BAI;
+                        c.Paths[7] = CMS_BCS;
+                        c.Paths[8] = CMS_BCS;
+                        c.shortname = CMS_BCS;
                         c.id = numberid;
 
                         cms.Add(c);
                         CMSCombobox.Items.Clear();
                         for (int i = 0; i < cms.Count; i++)
-                            CMSCombobox.Items.Add(cms[i].id.ToString(numberid.ToString()) + " - " + Modid);
+                            CMSCombobox.Items.Add(cms[i].id.ToString(numberid.ToString()) + " - " + CMS_BCS);
 
                         Array.Resize<bool>(ref CMSselective, CMSselective.Length + 1);
 
@@ -516,10 +746,10 @@ namespace XV2Reborn
 
                         CSO_Data c2 = new CSO_Data();
                         c2.Paths = new string[4];
-                        c2.Paths[0] = "";
-                        c2.Paths[1] = "";
-                        c2.Paths[2] = "";
-                        c2.Paths[3] = "";
+                        c2.Paths[0] = CSO_1;
+                        c2.Paths[1] = CSO_2;
+                        c2.Paths[2] = CSO_3;
+                        c2.Paths[3] = CSO_4;
                         c2.Char_ID = numberid;
                         CSOData.Add(c2);
 
@@ -533,9 +763,28 @@ namespace XV2Reborn
                         ///////////////////////////////////
 
                         // ADD DATA TO THE CUS FILE HEREEEEE
+                        skill[] Super = new skill[1];
+                        skill[] Ultimate = new skill[1];
+                        skill[] Evasive = new skill[1];
+                        skill[] blast = new skill[1];
+                        skill[] Awaken = new skill[1];
+
                         this.CUSfile.css.Add(new charSkillSet()
                         {
-                            skill = new short[10],
+                            skill = new short[10]
+                            {
+                                CUS.FindSuperByName(CUS_SUPER_1, Super),
+                                CUS.FindSuperByName(CUS_SUPER_2, Super),
+                                CUS.FindSuperByName(CUS_SUPER_3, Super),
+                                CUS.FindSuperByName(CUS_SUPER_4, Super),
+                                CUS.FindUltimateByName(CUS_ULTIMATE_1, Ultimate),
+                                CUS.FindUltimateByName(CUS_ULTIMATE_2, Ultimate),
+                                CUS.FindEvasiveByName(CUS_EVASIVE, Evasive),
+                                CUS.FindBlastByName(CUS_BLAST, blast),
+                                CUS.FindAwakenByName(CUS_AWAKEN, Awaken),
+                                CUS.FindAwakenByName(CUS_AWAKEN, Awaken), //THIS IS ACTUALLY UNKNOWN
+
+                            },
                             charID = numberid
                         });
                         this.CUSlck = false;
@@ -554,6 +803,13 @@ namespace XV2Reborn
 
                         // ADD DATA TO THE AUR FILE HEREEEEE
 
+                        Process p = new Process();
+                        ProcessStartInfo info = new ProcessStartInfo();
+                        info.FileName = "cmd.exe";
+                        info.CreateNoWindow = true;
+                        info.WindowStyle = ProcessWindowStyle.Hidden;
+                        info.RedirectStandardInput = true;
+                        info.UseShellExecute = false;
                         info.FileName = "cmd.exe";
                         info.CreateNoWindow = true;
                         info.WindowStyle = ProcessWindowStyle.Hidden;
@@ -574,7 +830,7 @@ namespace XV2Reborn
                         p.WaitForExit();
 
                         string aurtext = File.ReadAllText(datapath + @"/system/aura_setting.aur.xml");
-                        aurtext = aurtext.Replace("  </CharacterAuras>\r\n</AUR>", "    <CharacterAura Chara_ID=\"" + numberid + "\" Costume=\"0\" Aura_ID=\"0\" Glare=\"False\" />\r\n  </CharacterAuras>\r\n</AUR>");
+                        aurtext = aurtext.Replace("  </CharacterAuras>\r\n</AUR>", "    <CharacterAura Chara_ID=\"" + numberid + "\" Costume=\"0\" Aura_ID=\"" + AUR_ID + "\" Glare=\"" + AUR_GLARE +"\" />\r\n  </CharacterAuras>\r\n</AUR>");
                         File.WriteAllText(datapath + @"/system/aura_setting.aur.xml", aurtext);
 
                         Thread.Sleep(1000);
@@ -607,12 +863,12 @@ namespace XV2Reborn
 
                         foreach (string s in File.ReadAllLines(Charalist))
                         {
-                            text3.AppendLine(s.Replace("]]]", "]],[[\"" + Modid + "\",0,0,0,false,[-1,-1],Dlc_Def]]]"));
+                            text3.AppendLine(s.Replace("]]]", "]],[[\"" + CMS_BCS + "\",0,0,0,false,[-1,-1],Dlc_Def]]]"));
                         }
 
-                        using (var file = new StreamWriter(File.Create(Charalist)))
+                        using (var file2 = new StreamWriter(File.Create(Charalist)))
                         {
-                            file.Write(text3.ToString());
+                            file2.Write(text3.ToString());
                         }
 
                         CompileScripts();
@@ -622,7 +878,7 @@ namespace XV2Reborn
                         string nameid = MSGfile.data[MSGfile.data.Length - 1].NameID;
                         expand[expand.Length - 1].ID = MSGfile.data.Length;
                         expand[expand.Length - 1].Lines = new string[] { modname };
-                        expand[expand.Length - 1].NameID = "chara_" + Modid + "_" + "000";
+                        expand[expand.Length - 1].NameID = "chara_" + CMS_BCS + "_" + "000";
 
                         MSGfile.data = expand;
 
@@ -631,53 +887,80 @@ namespace XV2Reborn
                             cbListMSG.Items.Add(MSGfile.data[i].ID.ToString() + "-" + MSGfile.data[i].NameID);
 
                         msgStream.Save(MSGfile, MSGFileName);
+
+                        MessageBox.Show("Mod installed successfully", "Success", MessageBoxButtons.OK,
+                            MessageBoxIcon.Information);
                     }
                     else
                     {
-                        Clean();
-                        MessageBox.Show("A Mod with that character id is already installed", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                        MessageBox.Show("File already exists in data folder, cannot proceed with installation.", "Error",
+                            MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
-                else if(modtype == "REPLACER")
+            }
+            else
+            {
+                MessageBox.Show("Mod type not implemented", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+
+        public static void MergeDirectoriesWithConfirmation(string sourceDir, string destDir)
+        {
+            if (!Directory.Exists(sourceDir) || !Directory.Exists(destDir))
+            {
+                throw new DirectoryNotFoundException("Source or destination directory does not exist.");
+            }
+
+            // Get the subdirectories in the source directory.
+            string[] sourceSubDirs = Directory.GetDirectories(sourceDir);
+
+            // Copy the files from the source to the destination.
+            foreach (string sourceFile in Directory.GetFiles(sourceDir))
+            {
+                string fileName = Path.GetFileName(sourceFile);
+                string destFile = Path.Combine(destDir, fileName);
+
+                if (File.Exists(destFile))
                 {
-                    string[] row = { modname, modauthor, "Replacer" };
-                    ListViewItem lvi = new ListViewItem(row);
-                    lvMods.Items.Add(lvi);
+                    // Ask for confirmation to replace the existing file.
+                    var result = MessageBox.Show($"A file with the name '{fileName}' already exists. Do you want to replace it?", "File Replace Confirmation", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning);
 
-                    if (Directory.Exists(Properties.Settings.Default.datafolder + @"\installed") == false)
+                    if (result == DialogResult.Yes)
                     {
-                        Directory.CreateDirectory(Properties.Settings.Default.datafolder + @"\installed");
-                        File.WriteAllLines(Properties.Settings.Default.datafolder + @"\installed\" + modname + @".xml", files);
+                        File.Copy(sourceFile, destFile, true); // Replace the existing file.
                     }
-                    else
+                    else if (result == DialogResult.Cancel)
                     {
-                        File.WriteAllLines(Properties.Settings.Default.datafolder + @"\installed\" + modname + @".xml", files);
+                        return; // Cancel the entire operation.
                     }
-
-                    string text = File.ReadAllText(Properties.Settings.Default.datafolder + @"\installed\" + modname + @".xml");
-                    text = text.Replace(@"\temp", "");
-                    text = text.Replace(@"\JUNGLE\data", "");
-                    File.WriteAllText(Properties.Settings.Default.datafolder + @"\installed\" + modname + @".xml", text);
-
-                    MoveDirectory(temp + @"/JUNGLE/data" , Properties.Settings.Default.datafolder + @"/");
+                    // If 'No' is chosen, the existing file will not be replaced.
                 }
                 else
                 {
-                    MessageBox.Show("X2M Format \"" + modtype + "\" not currently implemented");
+                    File.Copy(sourceFile, destFile);
                 }
             }
-            Clean();
-            saveLvItems();
-            loadFiles();
-            MessageBox.Show("Installation Completed", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-        }
 
+            // Recursively merge the subdirectories.
+            foreach (string sourceSubDir in sourceSubDirs)
+            {
+                string dirName = Path.GetFileName(sourceSubDir);
+                string destSubDir = Path.Combine(destDir, dirName);
+
+                // If the destination subdirectory doesn't exist, create it.
+                if (!Directory.Exists(destSubDir))
+                {
+                    Directory.CreateDirectory(destSubDir);
+                }
+
+                // Recursively merge this subdirectory.
+                MergeDirectoriesWithConfirmation(sourceSubDir, destSubDir);
+            }
+        }
         private void uninstallModToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
-            ListView.SelectedIndexCollection indices = lvMods.SelectedIndices;
-            if (indices.Count > 0)
-            {
                 Process p = new Process();
                 ProcessStartInfo info = new ProcessStartInfo();
                 info.FileName = "cmd.exe";
@@ -686,9 +969,9 @@ namespace XV2Reborn
                 info.RedirectStandardInput = true;
                 info.UseShellExecute = false;
 
-                if (File.Exists(Properties.Settings.Default.datafolder + @"\installed\" + lvMods.SelectedItems[0].Text + @".xml"))
+                if (File.Exists(Properties.Settings.Default.datafolder + @"\installed\" + listBox1.SelectedItems[0] + @".xml"))
                 {
-                    string[] lines = File.ReadAllLines(Properties.Settings.Default.datafolder + @"\installed\" + lvMods.SelectedItems[0].Text + @".xml");
+                    string[] lines = File.ReadAllLines(Properties.Settings.Default.datafolder + @"\installed\" + listBox1.SelectedItems[0] + @".xml");
 
                     foreach (string line in lines)
                     {
@@ -696,14 +979,14 @@ namespace XV2Reborn
                             File.Delete(line);
                     }
 
-                    File.Delete(Properties.Settings.Default.datafolder + @"\installed\" + lvMods.SelectedItems[0].Text + @".xml");
+                    File.Delete(Properties.Settings.Default.datafolder + @"\installed\" + listBox1.SelectedItems[0] + @".xml");
 
                     //End
                 }
 
-                if (File.Exists(Properties.Settings.Default.datafolder + @"\installed\" + lvMods.SelectedItems[0].Text + @" 2.xml"))
+                if (File.Exists(Properties.Settings.Default.datafolder + @"\installed\" + listBox1.SelectedItems[0] + @" 2.xml"))
                 {
-                    string id = File.ReadAllLines(Properties.Settings.Default.datafolder + @"\installed\" + lvMods.SelectedItems[0].Text + @" 2.xml").First();
+                    string id = File.ReadAllLines(Properties.Settings.Default.datafolder + @"\installed\" + listBox1.SelectedItems[0] + @" 2.xml").First();
 
                     string Charalist = Properties.Settings.Default.datafolder + @"\scripts\action_script\Charalist.as";
 
@@ -722,14 +1005,12 @@ namespace XV2Reborn
 
                     //string qxd = Properties.Settings.Default.datafolder + @"\quest\TMQ\tmq_data.qxd";
                     //ReplaceTextInFile(qxd, id, "XXX");
-                    File.Delete(Properties.Settings.Default.datafolder + @"\installed\" + lvMods.SelectedItems[0].Text + @"2.xml");
+                    File.Delete(Properties.Settings.Default.datafolder + @"\installed\" + listBox1.SelectedItems[0] + @"2.xml");
 
                 }
 
-                lvMods.Items.Remove(lvMods.SelectedItems[0]);
+                listBox1.Items.Remove(listBox1.SelectedItems[0]);
                 MessageBox.Show("Mod uninstalled successfully", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                saveLvItems();
-            }
         }
 
         private void processDirectory(string startLocation)
@@ -847,24 +1128,6 @@ namespace XV2Reborn
             {
                 Source = source;
                 Target = target;
-            }
-        }
-
-        private void installModToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            OpenFileDialog moddialog = new OpenFileDialog();
-            moddialog.Filter = "Xenoverse 2 mod files | *.x2m";
-            moddialog.Multiselect = true;
-            moddialog.RestoreDirectory = true;
-            moddialog.Title = "Install Mod";
-
-            if (moddialog.ShowDialog() == DialogResult.OK)
-            {
-                foreach(var mod in moddialog.FileNames) 
-                {
-                    if (MessageBox.Show("Do you want to install mod \"" + Path.GetFileName(mod) + "\"?", "Mod Installation", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Information) == DialogResult.Yes)
-                        InstallModx2m(mod);
-                }
             }
         }
 
@@ -3218,26 +3481,6 @@ namespace XV2Reborn
         {
             this.Close();
         }
-
-        private void lvMods_DragDrop(object sender, DragEventArgs e)
-        {
-            string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
-            foreach(string file in files)
-            {
-                if (file.EndsWith(".x2m"))
-                {
-                    if (MessageBox.Show("Do you want to install mod \"" + Path.GetFileName(file) + "\"?", "Mod Installation", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Information) == DialogResult.Yes)
-                        InstallModx2m(file);
-                }
-            }
-
-        }
-
-        private void lvMods_DragEnter(object sender, DragEventArgs e)
-        {
-            e.Effect = DragDropEffects.All;
-        }
-
         private void editCSSFileToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Process p2 = Process.Start(Properties.Settings.Default.datafolder + @"\scripts\action_script\Charalist.as");

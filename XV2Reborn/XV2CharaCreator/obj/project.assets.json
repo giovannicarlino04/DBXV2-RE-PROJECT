@@ -1,0 +1,93 @@
+{
+  "version": 3,
+  "targets": {
+    "net6.0-windows7.0": {
+      "XV2Reborn/1.0.0": {
+        "type": "project",
+        "compile": {
+          "bin/placeholder/XV2Reborn.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/XV2Reborn.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "XV2Reborn/1.0.0": {
+      "type": "project",
+      "path": "../XV2Reborn/XV2Reborn.csproj",
+      "msbuildProject": "../XV2Reborn/XV2Reborn.csproj"
+    }
+  },
+  "projectFileDependencyGroups": {
+    "net6.0-windows7.0": [
+      "XV2Reborn >= 1.0.0"
+    ]
+  },
+  "packageFolders": {
+    "C:\\Users\\Giovanni Carlino\\.nuget\\packages\\": {}
+  },
+  "project": {
+    "version": "1.0.0",
+    "restore": {
+      "projectUniqueName": "C:\\Users\\Giovanni Carlino\\Desktop\\Repositories\\DBXV2-RE-PROJECT\\XV2Reborn\\XV2CharaCreator\\XV2CharaCreator.csproj",
+      "projectName": "XV2CharaCreator",
+      "projectPath": "C:\\Users\\Giovanni Carlino\\Desktop\\Repositories\\DBXV2-RE-PROJECT\\XV2Reborn\\XV2CharaCreator\\XV2CharaCreator.csproj",
+      "packagesPath": "C:\\Users\\Giovanni Carlino\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Giovanni Carlino\\Desktop\\Repositories\\DBXV2-RE-PROJECT\\XV2Reborn\\XV2CharaCreator\\obj\\",
+      "projectStyle": "PackageReference",
+      "configFilePaths": [
+        "C:\\Users\\Giovanni Carlino\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+      ],
+      "originalTargetFrameworks": [
+        "net6.0-windows"
+      ],
+      "sources": {
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "https://api.nuget.org/v3/index.json": {}
+      },
+      "frameworks": {
+        "net6.0-windows7.0": {
+          "targetAlias": "net6.0-windows",
+          "projectReferences": {
+            "C:\\Users\\Giovanni Carlino\\Desktop\\Repositories\\DBXV2-RE-PROJECT\\XV2Reborn\\XV2Reborn\\XV2Reborn.csproj": {
+              "projectPath": "C:\\Users\\Giovanni Carlino\\Desktop\\Repositories\\DBXV2-RE-PROJECT\\XV2Reborn\\XV2Reborn\\XV2Reborn.csproj"
+            }
+          }
+        }
+      },
+      "warningProperties": {
+        "warnAsError": [
+          "NU1605"
+        ]
+      }
+    },
+    "frameworks": {
+      "net6.0-windows7.0": {
+        "targetAlias": "net6.0-windows",
+        "imports": [
+          "net461",
+          "net462",
+          "net47",
+          "net471",
+          "net472",
+          "net48",
+          "net481"
+        ],
+        "assetTargetFallback": true,
+        "warn": true,
+        "frameworkReferences": {
+          "Microsoft.NETCore.App": {
+            "privateAssets": "all"
+          },
+          "Microsoft.WindowsDesktop.App.WindowsForms": {
+            "privateAssets": "none"
+          }
+        },
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.402\\RuntimeIdentifierGraph.json"
+      }
+    }
+  }
+}

@@ -38,6 +38,11 @@ namespace XV2Reborn
 
     public static class CUS
     {
+        public static skill[] Super;
+        public static skill[] Ultimate;
+        public static skill[] Evasive;
+        public static skill[] Awaken;
+        public static skill[] Blast;
         public static void Read(string path, ref charSkillSet[] css, ref skill[] Super, ref skill[] Ultimate, ref skill[] Evasive, ref skill[] Awaken, ref skill[] blast)
         {
             ReadCharSet(path, ref css);
@@ -96,7 +101,6 @@ namespace XV2Reborn
             Super = new skill[supCount];
             Ultimate = new skill[ultCount];
             Evasive = new skill[evaCount];
-            //unknown = new skill[unkCount];
             blast = new skill[blaCount];
             Awaken = new skill[awaCount];
 
@@ -276,6 +280,93 @@ namespace XV2Reborn
             
         }
 
+        public static short FindSuperByName(string name, skill[] Super)
+        {
+            if (Super != null && !string.IsNullOrEmpty(name))
+            {
+                // Case-insensitive comparison
+                for (int i = 0; i < Super.Length; i++)
+                {
+                    if (string.Equals(Super[i].shortName, name, StringComparison.OrdinalIgnoreCase))
+                    {
+                        return Super[i].id;
+                    }
+                }
+            }
+
+            return -1; // Return a special value (e.g., -1) if the skill is not found or if the input is invalid.
+        }
+
+        public static short FindUltimateByName(string name, skill[] Ultimate)
+        {
+            if (Ultimate != null && !string.IsNullOrEmpty(name))
+            {
+                // Case-insensitive comparison
+                for (int i = 0; i < Ultimate.Length; i++)
+                {
+                    if (string.Equals(Ultimate[i].shortName, name, StringComparison.OrdinalIgnoreCase))
+                    {
+                        return Ultimate[i].id;
+                    }
+                }
+            }
+
+            return -1; // Return a special value (e.g., -1) if the skill is not found or if the input is invalid.
+        }
+
+        public static short FindEvasiveByName(string name, skill[] Evasive)
+        {
+            if (Evasive != null && !string.IsNullOrEmpty(name))
+            {
+                // Case-insensitive comparison
+                for (int i = 0; i < Evasive.Length; i++)
+                {
+                    if (string.Equals(Evasive[i].shortName, name, StringComparison.OrdinalIgnoreCase))
+                    {
+                        return Evasive[i].id;
+                    }
+                }
+            }
+
+            return -1; // Return a special value (e.g., -1) if the skill is not found or if the input is invalid.
+        }
+
+        public static short FindBlastByName(string name, skill[] Blast)
+        {
+            if (Blast != null && !string.IsNullOrEmpty(name))
+            {
+                // Case-insensitive comparison
+                for (int i = 0; i < Blast.Length; i++)
+                {
+                    if (string.Equals(Blast[i].shortName, name, StringComparison.OrdinalIgnoreCase))
+                    {
+                        return Blast[i].id;
+                    }
+                }
+            }
+
+            return -1; // Return a special value (e.g., -1) if the skill is not found or if the input is invalid.
+        }
+
+        public static short FindAwakenByName(string name, skill[] Awaken)
+        {
+            if (Awaken != null && !string.IsNullOrEmpty(name))
+            {
+                // Case-insensitive comparison
+                for (int i = 0; i < Awaken.Length; i++)
+                {
+                    if (string.Equals(Awaken[i].shortName, name, StringComparison.OrdinalIgnoreCase))
+                    {
+                        return Awaken[i].id;
+                    }
+                }
+            }
+
+            return -1; // Return a special value (e.g., -1) if the skill is not found or if the input is invalid.
+        }
+
+
+
         public static void Write(string path, ref charSkillSet[] css, ref skill[] Super, ref skill[] Ultimate, ref skill[] Evasive, ref skill[] Awaken, ref skill[] blast)
         {
             List<string> CmnText = new List<string>();
@@ -422,14 +513,4 @@ namespace XV2Reborn
         }
     }
 
-    static class CUSMod
-    {
-        static void PatchSkillset(string path, charSkillSet cs)
-        {
-
-
-
-
-        }
-    }
 }

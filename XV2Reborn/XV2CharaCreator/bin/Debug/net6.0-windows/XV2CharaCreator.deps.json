@@ -1,0 +1,36 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v6.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v6.0": {
+      "XV2CharaCreator/1.0.0": {
+        "dependencies": {
+          "Xenoverse 2": "1.0.0"
+        },
+        "runtime": {
+          "XV2CharaCreator.dll": {}
+        }
+      },
+      "Xenoverse 2/1.0.0": {
+        "runtime": {
+          "Xenoverse 2.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "XV2CharaCreator/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Xenoverse 2/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

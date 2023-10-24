@@ -36,6 +36,8 @@
             this.exitToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.editToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.uninstallModToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator10 = new System.Windows.Forms.ToolStripSeparator();
+            this.editCSSFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolsToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.compileScriptsToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
@@ -352,14 +354,9 @@
             this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
             this.editCMSFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.listBox1 = new System.Windows.Forms.ListBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.lvMods = new System.Windows.Forms.ListView();
-            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.editCSSFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator10 = new System.Windows.Forms.ToolStripSeparator();
             this.menuStrip1.SuspendLayout();
             this.tabPage8.SuspendLayout();
             this.tabPage6.SuspendLayout();
@@ -416,7 +413,7 @@
             this.installModToolStripMenuItem2.Name = "installModToolStripMenuItem2";
             this.installModToolStripMenuItem2.Size = new System.Drawing.Size(180, 22);
             this.installModToolStripMenuItem2.Text = "Install Mod";
-            this.installModToolStripMenuItem2.Click += new System.EventHandler(this.installModToolStripMenuItem_Click);
+            this.installModToolStripMenuItem2.Click += new System.EventHandler(this.installmodxv2mod);
             // 
             // toolStripSeparator9
             // 
@@ -443,9 +440,21 @@
             // uninstallModToolStripMenuItem1
             // 
             this.uninstallModToolStripMenuItem1.Name = "uninstallModToolStripMenuItem1";
-            this.uninstallModToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
+            this.uninstallModToolStripMenuItem1.Size = new System.Drawing.Size(148, 22);
             this.uninstallModToolStripMenuItem1.Text = "Uninstall Mod";
             this.uninstallModToolStripMenuItem1.Click += new System.EventHandler(this.uninstallModToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator10
+            // 
+            this.toolStripSeparator10.Name = "toolStripSeparator10";
+            this.toolStripSeparator10.Size = new System.Drawing.Size(145, 6);
+            // 
+            // editCSSFileToolStripMenuItem
+            // 
+            this.editCSSFileToolStripMenuItem.Name = "editCSSFileToolStripMenuItem";
+            this.editCSSFileToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            this.editCSSFileToolStripMenuItem.Text = "Edit CSS File";
+            this.editCSSFileToolStripMenuItem.Click += new System.EventHandler(this.editCSSFileToolStripMenuItem_Click);
             // 
             // toolsToolStripMenuItem2
             // 
@@ -460,19 +469,19 @@
             // compileScriptsToolStripMenuItem1
             // 
             this.compileScriptsToolStripMenuItem1.Name = "compileScriptsToolStripMenuItem1";
-            this.compileScriptsToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
+            this.compileScriptsToolStripMenuItem1.Size = new System.Drawing.Size(162, 22);
             this.compileScriptsToolStripMenuItem1.Text = "Compile Scripts";
             this.compileScriptsToolStripMenuItem1.Click += new System.EventHandler(this.compileScriptsToolStripMenuItem_Click);
             // 
             // toolStripSeparator7
             // 
             this.toolStripSeparator7.Name = "toolStripSeparator7";
-            this.toolStripSeparator7.Size = new System.Drawing.Size(177, 6);
+            this.toolStripSeparator7.Size = new System.Drawing.Size(159, 6);
             // 
             // clearInstallationToolStripMenuItem1
             // 
             this.clearInstallationToolStripMenuItem1.Name = "clearInstallationToolStripMenuItem1";
-            this.clearInstallationToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
+            this.clearInstallationToolStripMenuItem1.Size = new System.Drawing.Size(162, 22);
             this.clearInstallationToolStripMenuItem1.Text = "Clear Installation";
             this.clearInstallationToolStripMenuItem1.Click += new System.EventHandler(this.clearInstallationToolStripMenuItem_Click);
             // 
@@ -481,7 +490,7 @@
             this.installModToolStripMenuItem1.Name = "installModToolStripMenuItem1";
             this.installModToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
             this.installModToolStripMenuItem1.Text = "Install Mod";
-            this.installModToolStripMenuItem1.Click += new System.EventHandler(this.installModToolStripMenuItem_Click);
+            this.installModToolStripMenuItem1.Click += new System.EventHandler(this.installmodxv2mod);
             // 
             // toolStripSeparator8
             // 
@@ -510,7 +519,7 @@
             this.installModToolStripMenuItem.Name = "installModToolStripMenuItem";
             this.installModToolStripMenuItem.Size = new System.Drawing.Size(133, 22);
             this.installModToolStripMenuItem.Text = "Install Mod";
-            this.installModToolStripMenuItem.Click += new System.EventHandler(this.installModToolStripMenuItem_Click);
+            this.installModToolStripMenuItem.Click += new System.EventHandler(this.installmodxv2mod);
             // 
             // toolStripSeparator1
             // 
@@ -3314,14 +3323,23 @@
             // tabPage1
             // 
             this.tabPage1.BackColor = System.Drawing.SystemColors.Control;
+            this.tabPage1.Controls.Add(this.listBox1);
             this.tabPage1.Controls.Add(this.label1);
-            this.tabPage1.Controls.Add(this.lvMods);
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage1.Size = new System.Drawing.Size(1017, 484);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Mods";
+            // 
+            // listBox1
+            // 
+            this.listBox1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.listBox1.FormattingEnabled = true;
+            this.listBox1.Location = new System.Drawing.Point(3, 3);
+            this.listBox1.Name = "listBox1";
+            this.listBox1.Size = new System.Drawing.Size(1011, 465);
+            this.listBox1.TabIndex = 2;
             // 
             // label1
             // 
@@ -3332,39 +3350,6 @@
             this.label1.Size = new System.Drawing.Size(87, 13);
             this.label1.TabIndex = 1;
             this.label1.Text = "Installed Mods: 0";
-            // 
-            // lvMods
-            // 
-            this.lvMods.AllowDrop = true;
-            this.lvMods.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader1,
-            this.columnHeader2,
-            this.columnHeader4});
-            this.lvMods.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lvMods.HideSelection = false;
-            this.lvMods.Location = new System.Drawing.Point(3, 3);
-            this.lvMods.Name = "lvMods";
-            this.lvMods.Size = new System.Drawing.Size(1011, 478);
-            this.lvMods.TabIndex = 0;
-            this.lvMods.UseCompatibleStateImageBehavior = false;
-            this.lvMods.View = System.Windows.Forms.View.Details;
-            this.lvMods.DragDrop += new System.Windows.Forms.DragEventHandler(this.lvMods_DragDrop);
-            this.lvMods.DragEnter += new System.Windows.Forms.DragEventHandler(this.lvMods_DragEnter);
-            // 
-            // columnHeader1
-            // 
-            this.columnHeader1.Text = "Name";
-            this.columnHeader1.Width = 348;
-            // 
-            // columnHeader2
-            // 
-            this.columnHeader2.Text = "Author";
-            this.columnHeader2.Width = 200;
-            // 
-            // columnHeader4
-            // 
-            this.columnHeader4.Text = "Type";
-            this.columnHeader4.Width = 455;
             // 
             // tabControl1
             // 
@@ -3384,18 +3369,6 @@
             this.tabControl1.SelectedIndex = 0;
             this.tabControl1.Size = new System.Drawing.Size(1025, 510);
             this.tabControl1.TabIndex = 1;
-            // 
-            // editCSSFileToolStripMenuItem
-            // 
-            this.editCSSFileToolStripMenuItem.Name = "editCSSFileToolStripMenuItem";
-            this.editCSSFileToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.editCSSFileToolStripMenuItem.Text = "Edit CSS File";
-            this.editCSSFileToolStripMenuItem.Click += new System.EventHandler(this.editCSSFileToolStripMenuItem_Click);
-            // 
-            // toolStripSeparator10
-            // 
-            this.toolStripSeparator10.Name = "toolStripSeparator10";
-            this.toolStripSeparator10.Size = new System.Drawing.Size(177, 6);
             // 
             // Form1
             // 
@@ -3791,13 +3764,10 @@
         private System.Windows.Forms.ToolStripMenuItem editCMSFileToolStripMenuItem;
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.ListView lvMods;
-        private System.Windows.Forms.ColumnHeader columnHeader1;
-        private System.Windows.Forms.ColumnHeader columnHeader2;
-        private System.Windows.Forms.ColumnHeader columnHeader4;
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator10;
         private System.Windows.Forms.ToolStripMenuItem editCSSFileToolStripMenuItem;
+        private System.Windows.Forms.ListBox listBox1;
     }
 }
 
